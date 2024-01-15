@@ -10,6 +10,7 @@ app.get('/', function(req, res) {
 } );
 
 app.use('/login.css', express.static(__dirname + '/login.css'));
+app.use('/assets', express.static(__dirname + '/assets'));
 
 var port = process.env.PORT || 5000;
 
