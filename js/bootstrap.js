@@ -5,7 +5,6 @@
   */
 
 var socket = io.connect('https://memoralife.onrender.com/');
-socket.emit("client")
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('jquery'), require('popper.js')) :
