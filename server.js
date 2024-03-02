@@ -26,4 +26,8 @@ var SOCKET_LIST = {};
 
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
+
+	socket.on("client", function(){
+		console.log("client loaded.")
+	});
 });
