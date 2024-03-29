@@ -1,5 +1,22 @@
 const express = require ('express');
 const socketio = require('socket.io');
+const bcrypt = require('bcrypt');
+const { Client } = require('pg');
+const dotenv = require('dotenv');
+dotenv.config();
+
+/*process.on('uncaughtException', function (err) {
+	console.error(err);
+	console.log("Node NOT Exiting...");
+  });
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});*/
+
 
 //SETUP++++++
 var app = express();
@@ -26,8 +43,86 @@ var SOCKET_LIST = {};
 
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
+	var newID;
+	newId();
 
 	socket.on("client", function(){
 		console.log("client loaded.")
 	});
+
+	//check credentials for user login + send user information to client
+	socket.on('attemptLogin', function(data){
+		var email = data.email.trim();
+		var password = data.pass;
+
+		client.query('SELECT password FROM users WHERE email = $1;', [email])
+			.then(results => {
+				if(results.rows[0] != null && validateHash(password, results.rows[0].password)){
+					return client.query('SELECT * FROM users WHERE email = $1', [email])
+					.then((results) =>{
+						var dbInfo = JSON.stringify(results.rows[0]);
+						var user = JSON.parse(dbInfo);
+						var userInfo;
+
+						var uname = user.username;
+						var information = user.information;
+
+						userInfo = [uname, information];
+
+						socket.emit('userInfo', userInfo);
+					})
+				}
+				else{
+					var msg = "Λανθασμένος συνδυασμός email και κωδικού χρήστη!"
+					socket.emit('showMessage', msg);
+				}
+			})
+	});
+
+	//check credentials for SIGN UP
+	function checkCredentials(data){
+		var username = data.username.trim();
+		var email = data.email.trim();
+		var pass = data.pass;
+		
+		//hash password given by user
+		password = hashPass(pass);
+		
+		client.query('SELECT email FROM users WHERE email = $1', [email])
+			.then(results => { //check if email already exists
+				if(results.rows[0] != null && results.rows[0].email == email){
+					var data = "Υπάρχει ήδη λογαριασμός με το συγκεκριμένο email.";
+					socket.emit('show_error', data);
+					return false;
+				}
+			})
+			.then( () => { //if email doesnt already exist continue with account creation
+				client.query('INSERT INTO users(id, email, password, username, accStatus, subscriptionDate) VALUES($1, $2, $3, $4, $5, $6)', [newID, email, password, username, 'free', '31.12.2023'])
+			})
+	}
+
+	//create new account ID
+	function newId(){
+		client.query('SELECT id FROM users ORDER BY id DESC LIMIT 1')
+			  .then(results => {
+					newID = results.rows[0].id +1;
+			  })
+			  
+	}
+
+	//hash password given by user
+	function hashPass(originalPass){
+		const saltRounds = 10;
+
+		const hashedPass = bcrypt.hashSync(originalPass, saltRounds);
+
+		return hashedPass;
+	}
+
+	//compare and validate password given by user to hashed version
+	function validateHash(pass, hashed){
+		const match = bcrypt.compareSync(pass, hashed);
+
+		return match;
+	}
 });
