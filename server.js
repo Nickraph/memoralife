@@ -54,6 +54,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	socket.on('attemptLogin', function(data){
 		var email = data.email.trim();
 		var password = data.pass;
+		var stayLoggedIn = false; //replace with data.stayLoggedIn
 
 		client.query('SELECT password FROM users WHERE email = $1;', [email])
 			.then(results => {
@@ -67,8 +68,8 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 						var uname = user.username;
 						var information = user.information;
 
-						userInfo = [uname, information];
-
+						userInfo = [uname, stayLoggedIn, information];//replace * FROM users w only necessary information
+						
 						socket.emit('userInfo', userInfo);
 					})
 				}
