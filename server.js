@@ -18,6 +18,37 @@ const client = new Client({
   }
 });*/
 
+
+
+
+
+
+//SETUP++++++
+var app = express();
+app.use(express.json());//added from https://sodiqfarhan.hashnode.dev/building-a-nodejs-app-with-postgres-database-on-render-a-step-by-step-guide-beginner-friendly#heading-connecting-the-nodejs-api-with-the-database
+var server = require('http').Server(app);
+
+app.get('/', function(req, res) {
+	res.sendFile(__dirname + '/index.html')
+} );
+
+app.use('/login.css', express.static(__dirname + '/login.css'));
+app.use('/css', express.static(__dirname + '/css'));
+app.use('/js', express.static(__dirname + '/js'));
+app.use('/images', express.static(__dirname + '/images'));
+app.use('/assets', express.static(__dirname + '/assets'));
+
+var port = process.env.PORT || 5000;
+
+server.listen(port);
+console.log("Server Running!");
+var io = require('socket.io') (server, {});
+
+var SOCKET_LIST = {};
+
+
+// DB CODE +++
+
 app.get('/api/items', async(req, res) => {
     try {
         const allItems = await itemsPool.query(
@@ -46,32 +77,7 @@ app.post('/api/items', async (req, res) => {
     }
 })
 
-
-
-
-//SETUP++++++
-var app = express();
-app.use(express.json());//added from https://sodiqfarhan.hashnode.dev/building-a-nodejs-app-with-postgres-database-on-render-a-step-by-step-guide-beginner-friendly#heading-connecting-the-nodejs-api-with-the-database
-var server = require('http').Server(app);
-
-app.get('/', function(req, res) {
-	res.sendFile(__dirname + '/index.html')
-} );
-
-app.use('/login.css', express.static(__dirname + '/login.css'));
-app.use('/css', express.static(__dirname + '/css'));
-app.use('/js', express.static(__dirname + '/js'));
-app.use('/images', express.static(__dirname + '/images'));
-app.use('/assets', express.static(__dirname + '/assets'));
-
-var port = process.env.PORT || 5000;
-
-server.listen(port);
-console.log("Server Running!");
-var io = require('socket.io') (server, {});
-
-var SOCKET_LIST = {};
-
+// DB CODE ---
 
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
