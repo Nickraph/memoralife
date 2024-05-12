@@ -82,12 +82,12 @@ app.post('/api/items', async (req, res) => {
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
 	var newID;
-	newId();
+	//newId();
 
 	socket.on("client", function(){
 		console.log("client loaded.")
 	});
-
+/*
 	//check credentials for user login + send user information to client
 	socket.on('attemptLogin', function(data){
 		var email = data.email.trim();
@@ -163,5 +163,5 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		const match = bcrypt.compareSync(pass, hashed);
 
 		return match;
-	}
+	}*/
 });
