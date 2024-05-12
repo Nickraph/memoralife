@@ -47,7 +47,7 @@ var io = require('socket.io') (server, {});
 var SOCKET_LIST = {};
 
 
-// DB CODE +++
+/*/ DB CODE +++
 
 app.get('/api/items', async(req, res) => {
     try {
@@ -77,7 +77,7 @@ app.post('/api/items', async (req, res) => {
     }
 })
 
-// DB CODE ---
+// DB CODE ---*/
 
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
