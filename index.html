@@ -147,16 +147,16 @@
                         <!--USERNAME-->
                         <div class="username">
                         <label for="uname"><b>Username</b></label>
-                        <input type="text" placeholder="Enter Username" name="uname" required>
+                        <input type="text" placeholder="Enter Username" id="username_field" name="uname" required>
                         </div>
                         <!-- Password -->
                         <div class="password">
                         <label for="psw"><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" name="psw" required>
+                        <input type="password" placeholder="Enter Password" id="password_field" name="psw" required>
                         </div>
                         <!-- Submit Button -->
                         <div class="login-remember-create">
-                        <button type="submit" class="btn btn-success">Login</button>
+                        <button type="submit" onclick="submitCredentials();" class="btn btn-success">Login</button>
                         
                           <div class="form-check">
                           <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -635,8 +635,9 @@
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script type="text/javascript" src="js/jscode.js">
+  
   <!-- owl carousel script 
     -->
   <script type="text/javascript">

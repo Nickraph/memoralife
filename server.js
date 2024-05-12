@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const { Client } = require('pg');
 const dotenv = require('dotenv');
 dotenv.config();
+const itemsPool = require('dbConfig');
 
 /*process.on('uncaughtException', function (err) {
 	console.error(err);
@@ -17,9 +18,40 @@ const client = new Client({
   }
 });*/
 
+app.get('/api/items', async(req, res) => {
+    try {
+        const allItems = await itemsPool.query(
+            'SELECT * FROM items'
+        );
+        res.json({ allItems });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message)
+    }
+})
+app.post('/api/items', async (req, res) => {
+    const { description } = req.body;
+    try {
+        const newItem = await itemsPool.query(
+            'INSERT INTO items (description) VALUES ($1) RETURNING *',
+            [description]
+        );
+        res.json({ 
+            message: "New item added!",
+            item: newItem.rows
+         });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message)
+    }
+})
+
+
+
 
 //SETUP++++++
 var app = express();
+app.use(express.json());//added from https://sodiqfarhan.hashnode.dev/building-a-nodejs-app-with-postgres-database-on-render-a-step-by-step-guide-beginner-friendly#heading-connecting-the-nodejs-api-with-the-database
 var server = require('http').Server(app);
 
 app.get('/', function(req, res) {
