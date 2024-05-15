@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const { Client } = require('pg');
 const dotenv = require('dotenv');
 dotenv.config();
-//const itemsPool = require('dbConfig');
+const itemsPool = require('DBConfig');
 
 /*process.on('uncaughtException', function (err) {
 	console.error(err);
