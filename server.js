@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const { Client } = require('pg');
 const dotenv = require('dotenv');
 dotenv.config();
-const itemsPool = require('DBConfig');
 
 /*process.on('uncaughtException', function (err) {
 	console.error(err);
@@ -18,10 +17,21 @@ const client = new Client({
   }
 });*/
 
+const poolConfig = {
+	max: 5,
+	min: 2,
+	idleTimeoutMillis: 600000,
+};
 
+const db_database = process.env.PG_DATABASE;
+const db_username = process.env.PG_USER;
+const db_password = process.env.PG_PASSWORD;
+const db_host = process.env.PG_HOST;
+const db_port = process.env.PG_PORT;
 
+poolConfig.connectionString = `postgress://${db_username}:${db_password}@${db_host}:${db_port}/${db_database}`;
 
-
+const client = new Pool(poolConfig);
 
 //SETUP++++++
 var app = express();
@@ -46,48 +56,15 @@ var io = require('socket.io') (server, {});
 
 var SOCKET_LIST = {};
 
-
-/*/ DB CODE +++
-
-app.get('/api/items', async(req, res) => {
-    try {
-        const allItems = await itemsPool.query(
-            'SELECT * FROM items'
-        );
-        res.json({ allItems });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(error.message)
-    }
-})
-app.post('/api/items', async (req, res) => {
-    const { description } = req.body;
-    try {
-        const newItem = await itemsPool.query(
-            'INSERT INTO items (description) VALUES ($1) RETURNING *',
-            [description]
-        );
-        res.json({ 
-            message: "New item added!",
-            item: newItem.rows
-         });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(error.message)
-    }
-})
-
-// DB CODE ---*/
-
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
 	var newID;
-	//newId();
+	newId();
 
 	socket.on("client", function(){
 		console.log("client loaded.")
 	});
-/*
+
 	//check credentials for user login + send user information to client
 	socket.on('attemptLogin', function(data){
 		var email = data.email.trim();
@@ -163,5 +140,5 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		const match = bcrypt.compareSync(pass, hashed);
 
 		return match;
-	}*/
+	}
 });
