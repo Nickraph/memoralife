@@ -67,20 +67,20 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 	//check credentials for user login + send user information to client
 	socket.on('attemptLogin', function(data){
-		var email = data.email.trim();
+		var email = data.email;
 		var password = data.pass;
 		var stayLoggedIn = false; //replace with data.stayLoggedIn
 
-		client.query('SELECT password FROM users WHERE email = $1;', [email])
+		client.query('SELECT password FROM Credentials WHERE email = $1;', [email])
 			.then(results => {
 				if(results.rows[0] != null && validateHash(password, results.rows[0].password)){
-					return client.query('SELECT * FROM users WHERE email = $1', [email])
+					return client.query('SELECT * FROM Credentials WHERE email = $1', [email])
 					.then((results) =>{
-						var dbInfo = JSON.stringify(results.rows[0]);
-						var user = JSON.parse(dbInfo);
+						var dbInfo = JSON.stringify(results.rows[0]);//data string format
+						var user = JSON.parse(dbInfo);//data JSON format
 						var userInfo;
 
-						var uname = user.username;
+						var uname = user.name;
 						var information = user.information;
 
 						userInfo = [uname, stayLoggedIn, information];//replace * FROM users w only necessary information
@@ -96,7 +96,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	});
 
 	//check credentials for SIGN UP
-	function checkCredentials(data){
+	function attemptSignup(data){
 		var username = data.username.trim();
 		var email = data.email.trim();
 		var pass = data.pass;

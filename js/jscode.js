@@ -7,21 +7,15 @@ window.onload() = function(){
 }
 
 function submitCredentials(){
-    var username = document.getElementById("username_field");
-    var password = document.getElementById("password_field");
+    var email = document.getElementById("username_field").value.trim();
+    var password = document.getElementById("password_field").value;
+    //var stayLoggedCheck = document.getElementById("stayLogged_checkbox").value;
 
-    if(username.value != "" && password.value != ""){
-        //socket.emit();
+    if(email != "" && password != ""){
+        socket.emit("attemptLogin", {email, password});
     }
     else{
         alert("Τα πεδία username και password δεν μπορούν να είναι κενά.")
-
-        if(username == ""){
-            username.style.borderColor = "#FF0000";
-        }
-        else{
-            password.style.borderColor = "#FF0000";
-        }
     }
 }
 
