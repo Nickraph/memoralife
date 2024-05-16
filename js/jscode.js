@@ -1,6 +1,6 @@
 var socket = io.connect('https://memoralife.onrender.com/');
 
-window.onload() = function(){
+window.onload = function(){
     if(localStorage.getItem("rememberUsername")){
         document.getElementById("username_field").value = localStorage.getItem("SavedUsername");
     }
