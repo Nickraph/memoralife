@@ -35,7 +35,7 @@ const client = new Pool(poolConfig);
 
 //SETUP++++++
 var app = express();
-app.use(express.json());//added from https://sodiqfarhan.hashnode.dev/building-a-nodejs-app-with-postgres-database-on-render-a-step-by-step-guide-beginner-friendly#heading-connecting-the-nodejs-api-with-the-database
+//app.use(express.json());//added from https://sodiqfarhan.hashnode.dev/building-a-nodejs-app-with-postgres-database-on-render-a-step-by-step-guide-beginner-friendly#heading-connecting-the-nodejs-api-with-the-database
 var server = require('http').Server(app);
 
 app.get('/', function(req, res) {
