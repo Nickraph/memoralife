@@ -29,7 +29,8 @@ const db_password = process.env.PG_PASSWORD;
 const db_host = process.env.PG_HOST;
 const db_port = process.env.PG_PORT;
 
-poolConfig.connectionString = `postgress://${db_username}:${db_password}@${db_host}:${db_port}/${db_database}`;
+//poolConfig.connectionString = `postgress://${db_username}:${db_password}@${db_host}:${db_port}/${db_database}`;
+poolConfig.connectionString = `postgres://dbuser:sDZxRE4o4UynIoEcRXPkFgndPQUiizK0@dpg-cnr39ta1hbls73dtr580-a.frankfurt-postgres.render.com/mldb_ef58`;
 
 const client = new Pool(poolConfig);
 
