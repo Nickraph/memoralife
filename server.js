@@ -27,9 +27,10 @@ const db_database = process.env.PG_DATABASE;
 const db_username = process.env.PG_USER;
 const db_password = process.env.PG_PASSWORD;
 const db_host = process.env.PG_HOST;
+const db_path = process.env.PG_PATH;
 const db_port = process.env.PG_PORT;
 
-poolConfig.connectionString = `postgress://${db_username}:${db_password}@${db_host}:${db_port}/${db_database}`;
+poolConfig.connectionString = `postgress://${db_username}:${db_password}@${db_path+"."+db_host}:${db_port}/${db_database}`;
 
 const client = new Pool(poolConfig);
 
