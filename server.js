@@ -59,8 +59,9 @@ var SOCKET_LIST = {};
 
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
-	var newID;
+	//var newID;
 	newId();
+	var informationColumns = [];
 
 	socket.on("client", function(){
 		console.log("client loaded.")
@@ -71,22 +72,27 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		var email = data.email;
 		var password = data.pass;
 		var stayLoggedIn = false; //replace with data.stayLoggedIn
+		var response = "-";
 
 		client.query('SELECT password FROM Credentials WHERE email = $1;', [email])
 			.then(results => {
 				if(results.rows[0] != null && validateHash(password, results.rows[0].password)){
-					return client.query('SELECT * FROM Credentials WHERE email = $1', [email])
+					return client.query('SELECT c.accstatus, i.* FROM Credentials c RIGHT JOIN Information i ON c.id = i.id WHERE c.email = $1', [email])
 					.then((results) =>{
-						var dbInfo = JSON.stringify(results.rows[0]);//data string format
-						var user = JSON.parse(dbInfo);//data JSON format
-						var userInfo;
+						var dbResults = JSON.stringify(results.rows[0]);//data string format
+						var dbData = JSON.parse(dbResults);//data JSON format
+						var userInfo; //array of data that will be sent to client in addition to dbData
 
-						var uname = user.name;
-						var information = user.information;
-
-						userInfo = [uname, stayLoggedIn, information];//replace * FROM users w only necessary information
+						if(dbData.accstatus == "active"){//if user's account is active prepare to send all info
+							response = "logged";
+							userInfo = [stayLoggedIn, response, dbData];
+						}
+						else if(dbData.accstatus == "inactive"){//if user's account is inactive change data to message
+							response = "not logged";
+							userInfo = [stayLoggedIn, response];
+						}
 						
-						socket.emit('userInfo', userInfo);
+						socket.emit('userInfo', userInfo);//send the information package to client
 					})
 				}
 				else{
@@ -97,35 +103,42 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	});
 
 	//check credentials for SIGN UP
-	function attemptSignup(data){
-		var username = data.username.trim();
+	socket.on('attemptSignup', function(data){
 		var email = data.email.trim();
 		var pass = data.pass;
 		
 		//hash password given by user
 		password = hashPass(pass);
 		
-		client.query('SELECT email FROM users WHERE email = $1', [email])
-			.then(results => { //check if email already exists
+		client.query('SELECT email FROM Credentials WHERE email = $1', [email])//check if email already exists
+			.then(results => { 
 				if(results.rows[0] != null && results.rows[0].email == email){
-					var data = "Υπάρχει ήδη λογαριασμός με το συγκεκριμένο email.";
-					socket.emit('show_error', data);
+					var response = "Υπάρχει ήδη λογαριασμός με το συγκεκριμένο email.";
+					socket.emit('show_error', response);
 					return false;
 				}
 			})
 			.then( () => { //if email doesnt already exist continue with account creation
-				client.query('INSERT INTO users(id, email, password, username, accStatus, subscriptionDate) VALUES($1, $2, $3, $4, $5, $6)', [newID, email, password, username, 'free', '31.12.2023'])
+				client.query('INSERT INTO Information(email, password, accStatus) VALUES($1, $2, $3)', [email, password, 'active']);
 			})
-	}
+	});
 
-	//create new account ID
+	socket.on('updateUserInformation', function(data){//called when user updates/edits profile info (later add email+pass editing)
+		for(i in informationColumns){
+			if(data.informationColumns[i] != ""){//maybe make it into a string then send query
+				client.query('INSERT INTO Information('+informationColumns[i]+') VALUES($1)', [data.informationColumns[i]]);
+			}
+		}
+	});
+
+	/*/create new account ID
 	function newId(){
 		client.query('SELECT id FROM users ORDER BY id DESC LIMIT 1')
 			  .then(results => {
 					newID = results.rows[0].id +1;
 			  })
 			  
-	}
+	}*/
 
 	//hash password given by user
 	function hashPass(originalPass){
