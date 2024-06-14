@@ -60,7 +60,7 @@ var SOCKET_LIST = {};
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
 	//var newID;
-	newId();
+	//newId();
 	var informationColumns = [];
 
 	socket.on("client", function(){
@@ -70,7 +70,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	//check credentials for user login + send user information to client
 	socket.on('attemptLogin', function(data){
 		var email = data.email;
-		var password = data.pass;
+		var password = data.password;
 		var stayLoggedIn = false; //replace with data.stayLoggedIn
 		var response = "-";
 
@@ -103,12 +103,12 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	});
 
 	//check credentials for SIGN UP
-	socket.on('attemptSignup', function(data){
+	socket.on('attemptSignup', function(){
 		var email = data.email.trim();
-		var pass = data.pass;
+		var pass = data.password;
 		
 		//hash password given by user
-		password = hashPass(pass);
+		var password = hashPass(pass);
 		
 		client.query('SELECT email FROM Credentials WHERE email = $1', [email])//check if email already exists
 			.then(results => { 
@@ -119,7 +119,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				}
 			})
 			.then( () => { //if email doesnt already exist continue with account creation
-				client.query('INSERT INTO Information(email, password, accStatus) VALUES($1, $2, $3)', [email, password, 'active']);
+				client.query('INSERT INTO Credentials(email, password, accStatus) VALUES($1, $2, $3),' [email, password, 'active']);
 			})
 	});
 

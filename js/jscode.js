@@ -6,6 +6,8 @@ window.onload = function(){
     }
 }
 
+var modalState = "login";
+
 function submitCredentials(){
     var email = document.getElementById("email_field").value.trim();
     var password = document.getElementById("password_field").value;
@@ -19,6 +21,10 @@ function submitCredentials(){
     }
 }
 
+function testFunction(){
+    alert("kk");
+}
+
 function submitSignupInfo(){
     var email = document.getElementById("su_email_field").value.trim();
     var password = document.getElementById("su_password_field").value;
@@ -28,6 +34,19 @@ function submitSignupInfo(){
     }
     else{
         alert("Τα πεδία username και password δεν μπορούν να είναι κενά.")
+    }
+}
+
+function switchModal(){
+    if(modalState=="login"){
+        document.getElementById("login_modal").style.display = "none";
+        document.getElementById("signup_modal").style.display = "block";
+        modalState = "signup";
+    }
+    else{
+        document.getElementById("signup_modal").style.display = "none";
+        document.getElementById("login_modal").style.display = "block";
+        modalState = "login";
     }
 }
 
