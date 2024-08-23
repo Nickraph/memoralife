@@ -30,7 +30,8 @@ const db_host = process.env.PG_HOST;
 const db_port = process.env.PG_PORT;
 
 //poolConfig.connectionString = `postgress://${db_username}:${db_password}@${db_host}:${db_port}/${db_database}`;
-poolConfig.connectionString = `postgres://dbuser:sDZxRE4o4UynIoEcRXPkFgndPQUiizK0@dpg-cnr39ta1hbls73dtr580-a.frankfurt-postgres.render.com/mldb_ef58`;
+//old: poolConfig.connectionString = `postgres://dbuser:sDZxRE4o4UynIoEcRXPkFgndPQUiizK0@dpg-cnr39ta1hbls73dtr580-a.frankfurt-postgres.render.com/mldb_ef58`;
+poolConfig.connectionString = `postgresql://mluser:rncy2mDN8PuPxfYGKrWoRA55NzIH4D8B@dpg-cr0hqoi3esus73ainrl0-a.frankfurt-postgres.render.com/mldb_l4pp`;
 
 const client = new Pool(poolConfig);
 
@@ -41,6 +42,9 @@ var server = require('http').Server(app);
 
 app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html')
+} );
+app.get('/profile', function(req, res) {
+	res.sendFile(__dirname + '/profile.html')
 } );
 
 app.use('/login.css', express.static(__dirname + '/login.css'));

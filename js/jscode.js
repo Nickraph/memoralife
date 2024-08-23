@@ -64,6 +64,10 @@ socket.on("userInfo", function(data){//change username to email in css & index*
         alert("Welcome "+data.dbData.name);
         //save credentials in localStorage or enter them in profile fields directly
 
+        //test (setting information in fields of profile.html):
+        window.onload("memoralife.onrender.com/profile")
+        document.getElementById("userdiv").innerHTML = "Welcome, " + data.dbData.name;
+
     }//"logged"--
     else{//if credentials were incorrect or user's account is inactive:
         alert("Not logged. Server response: "+data.response)
