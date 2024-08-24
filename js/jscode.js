@@ -39,13 +39,13 @@ function submitSignupInfo(){
 
 function switchModal(){
     if(modalState=="login"){
-        document.getElementById("login_modal").style.display = "none";
-        document.getElementById("signup_modal").style.display = "block";
+        document.getElementById("loginModal").style.display = "none";
+        document.getElementById("signupModal").style.display = "block";
         modalState = "signup";
     }
     else{
-        document.getElementById("signup_modal").style.display = "none";
-        document.getElementById("login_modal").style.display = "block";
+        document.getElementById("signupModal").style.display = "none";
+        document.getElementById("loginModal").style.display = "block";
         modalState = "login";
     }
 }

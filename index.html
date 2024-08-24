@@ -132,7 +132,7 @@
                       <p>
                         Giving life to memories
                       </p>                     
-                      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#loginModal">ΞΕΚΙΝΗΣΤΕ ΕΔΩ</button>
+                      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signupModal">ΞΕΚΙΝΗΣΤΕ ΕΔΩ</button>
                        
                      <!-- Modal -->
                      <div class="modal fade" id="loginModal" role="dialog" tabindex="-1">
@@ -181,6 +181,47 @@
     </section>
     <!-- end slider section -->
   </div>
+
+    <!--test sign up modal-->
+
+                         <!-- Modal -->
+                         <div class="modal fade" id="signupModal" role="dialog" tabindex="-1">
+                          <div class="modal-dialog modal-lg">
+                           <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                             <h4 class="modal-title">Εγγραφή</h4>
+                               </div>
+                            <div class="modal-body">                      
+                                           
+                            <!--USERNAME-->
+                            <div class="username">
+                            <label for="uname"><b>Email</b></label>
+                            <input type="text" placeholder="Enter Email" id="email_field" name="uname" required>
+                            </div>
+                            <!-- Password -->
+                            <div class="password">
+                            <label for="psw"><b>Password</b></label>
+                            <input type="password" placeholder="Enter Password" id="password_field" name="psw" required>
+                            </div>
+                            <!-- Submit Button -->
+                            <div class="login-remember-create">
+                            <button type="submit" onclick="submitCredentials();" class="btn btn-success">Login</button>
+                            
+                            <h6>Έχετε λογαριασμό; <a onclick="switchModal();">Συνδεθείτε εδώ.</a></h6>
+                            </div>
+    
+    
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+    <!--end test sign up modal-->
+
 
   <!-- do section -->
 
