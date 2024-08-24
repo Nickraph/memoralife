@@ -61,7 +61,8 @@ socket.on("userInfo", function(data){//change username to email in css & index*
             localStorage.setItem("SavedEmail", "");    
         }
 
-        alert("Welcome "+data.dbData.name);
+        window.open("https://memoralife.onrender.com/profile", "_self");
+        //alert("Welcome "+data.dbData.name);
         //save credentials in localStorage or enter them in profile fields directly
 
         //test (setting information in fields of profile.html):
