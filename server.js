@@ -104,6 +104,10 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					socket.emit('showMessage', msg);
 				}
 			})
+			.catch(err => {
+				console.error('Database query error:', err);
+				socket.emit('showMessage', 'An error occurred');
+			})
 	});
 
 	//check credentials for SIGN UP
@@ -123,7 +127,11 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				}
 			})
 			.then( () => { //if email doesnt already exist continue with account creation
-				client.query('INSERT INTO credentials(email, password, accstatus) VALUES($1, $2, $3),' [email, password, 'active']);
+				client.query('INSERT INTO credentials(email, password, accstatus) VALUES($1, $2, $3)', [email, password, 'active']);
+			})
+			.catch(err => {
+				console.error('Database query error:', err);
+				socket.emit('showMessage', 'An error occurred');
 			})
 	});
 
