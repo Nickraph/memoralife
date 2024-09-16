@@ -17,7 +17,8 @@ const client = new Client({
   }
 });*/
 
-/*const poolConfig = {
+/* old code:
+const poolConfig = {
 	max: 5,
 	min: 2,
 	idleTimeoutMillis: 600000,
