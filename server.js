@@ -78,10 +78,10 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		var stayLoggedIn = false; //replace with data.stayLoggedIn
 		var response = "-";
 
-		client.query('SELECT password FROM Credentials WHERE email = $1;', [email])
+		client.query('SELECT password FROM credentials WHERE email = $1;', [email])
 			.then(results => {
 				if(results.rows[0] != null && validateHash(password, results.rows[0].password)){
-					return client.query('SELECT c.accstatus, i.* FROM Credentials c RIGHT JOIN Information i ON c.id = i.id WHERE c.email = $1', [email])
+					return client.query('SELECT c.accstatus, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
 					.then((results) =>{
 						var dbResults = JSON.stringify(results.rows[0]);//data string format
 						var dbData = JSON.parse(dbResults);//data JSON format
@@ -114,7 +114,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		//hash password given by user
 		var password = hashPass(pass);
 		
-		client.query('SELECT email FROM Credentials WHERE email = $1', [email])//check if email already exists
+		client.query('SELECT email FROM credentials WHERE email = $1', [email])//check if email already exists
 			.then(results => { 
 				if(results.rows[0] != null && results.rows[0].email == email){
 					var response = "Υπάρχει ήδη λογαριασμός με το συγκεκριμένο email.";
@@ -123,14 +123,14 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				}
 			})
 			.then( () => { //if email doesnt already exist continue with account creation
-				client.query('INSERT INTO Credentials(email, password, accStatus) VALUES($1, $2, $3),' [email, password, 'active']);
+				client.query('INSERT INTO credentials(email, password, accstatus) VALUES($1, $2, $3),' [email, password, 'active']);
 			})
 	});
 
 	socket.on('updateUserInformation', function(data){//called when user updates/edits profile info (later add email+pass editing)
 		for(i in informationColumns){
 			if(data.informationColumns[i] != ""){//maybe make it into a string then send query
-				client.query('INSERT INTO Information('+informationColumns[i]+') VALUES($1)', [data.informationColumns[i]]);
+				client.query('INSERT INTO information('+informationColumns[i]+') VALUES($1)', [data.informationColumns[i]]);
 			}
 		}
 	});
