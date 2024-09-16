@@ -111,7 +111,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	});
 
 	//check credentials for SIGN UP
-	socket.on('attemptSignup', function(){
+	socket.on('attemptSignup', function(data){
 		var email = data.email.trim();
 		var pass = data.password;
 		
