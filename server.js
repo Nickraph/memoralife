@@ -17,10 +17,19 @@ const client = new Client({
   }
 });*/
 
-const poolConfig = {
+/*const poolConfig = {
 	max: 5,
 	min: 2,
 	idleTimeoutMillis: 600000,
+};*/
+const poolConfig = {
+    max: 5,
+    min: 2,
+    idleTimeoutMillis: 60000,
+    connectionString: `postgresql://mluser:rncy2mDN8PuPxfYGKrWoRA55NzIH4D8B@dpg-cr0hqoi3esus73ainrl0-a.frankfurt-postgres.render.com/mldb_l4pp`,
+    ssl: {
+        rejectUnauthorized: false
+    }
 };
 
 const db_database = process.env.PG_DATABASE;
@@ -31,7 +40,7 @@ const db_port = process.env.PG_PORT;
 
 //poolConfig.connectionString = `postgress://${db_username}:${db_password}@${db_host}:${db_port}/${db_database}`;
 //old: poolConfig.connectionString = `postgres://dbuser:sDZxRE4o4UynIoEcRXPkFgndPQUiizK0@dpg-cnr39ta1hbls73dtr580-a.frankfurt-postgres.render.com/mldb_ef58`;
-poolConfig.connectionString = `postgresql://mluser:rncy2mDN8PuPxfYGKrWoRA55NzIH4D8B@dpg-cr0hqoi3esus73ainrl0-a.frankfurt-postgres.render.com/mldb_l4pp`;
+//from before adding same info in poolConfig: poolConfig.connectionString = `postgresql://mluser:rncy2mDN8PuPxfYGKrWoRA55NzIH4D8B@dpg-cr0hqoi3esus73ainrl0-a.frankfurt-postgres.render.com/mldb_l4pp`;
 
 const client = new Pool(poolConfig);
 
