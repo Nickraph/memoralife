@@ -72,6 +72,7 @@ socket.on("userInfo", function(data){//change username to email in css & index*
     }//"logged"--
     else{//if credentials were incorrect or user's account is inactive:
         alert("Not logged. Server response: "+data.response)
+        window.open("https://memoralife.onrender.com/profile", "_self");
     }
 })//userinfo--
 

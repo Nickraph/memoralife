@@ -103,15 +103,15 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
                             if (dbData.accstatus == "active") {
                                 response = "logged";
-                                userInfo = [stayLoggedIn, response, dbData];
+                                userInfo = {stayLoggedIn, response, dbData};
                             } else if (dbData.accstatus == "inactive") {
                                 response = "not logged";
-                                userInfo = [stayLoggedIn, response];
+                                userInfo = {stayLoggedIn, response};
                             }
                         } else {
                             // Handle null result here
                             response = "no user data found";
-                            userInfo = [stayLoggedIn, response];
+                            userInfo = {stayLoggedIn, response};
                         }
 						console.log(response)
 						socket.emit('userInfo', userInfo);//send the information package to client
