@@ -94,17 +94,25 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					return client.query('SELECT c.accstatus, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
 					.then((results) =>{
 						var dbResults = JSON.stringify(results.rows[0]);//data string format
-						var dbData = JSON.parse(dbResults);//data JSON format
 						var userInfo; //array of data that will be sent to client in addition to dbData
 
-						if(dbData.accstatus == "active"){//if user's account is active prepare to send all info
-							response = "logged";
-							userInfo = [stayLoggedIn, response, dbData];
-						}
-						else if(dbData.accstatus == "inactive"){//if user's account is inactive change data to message
-							response = "not logged";
-							userInfo = [stayLoggedIn, response];
-						}
+						// Check if dbResults is null or undefined
+                        if (dbResults != null) {
+                            // Parse only if dbResults is not null
+                            var dbData = JSON.parse(JSON.stringify(dbResults)); // data JSON format
+
+                            if (dbData.accstatus == "active") {
+                                response = "logged";
+                                userInfo = [stayLoggedIn, response, dbData];
+                            } else if (dbData.accstatus == "inactive") {
+                                response = "not logged";
+                                userInfo = [stayLoggedIn, response];
+                            }
+                        } else {
+                            // Handle null result here
+                            response = "no data found";
+                            userInfo = [stayLoggedIn, response];
+                        }
 						
 						socket.emit('userInfo', userInfo);//send the information package to client
 					})
