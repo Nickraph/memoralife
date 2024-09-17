@@ -100,7 +100,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
                         if (dbResults != null) {
                             // Parse only if dbResults is not null
                             var dbData = JSON.parse(JSON.stringify(dbResults)); // data JSON format
-
+							console.log("here1")
                             if (dbData.accstatus == "active") {
                                 response = "logged";
                                 userInfo = [stayLoggedIn, response, dbData];
@@ -110,6 +110,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
                             }
                         } else {
                             // Handle null result here
+							console.log("here2")
                             response = "no data found";
                             userInfo = [stayLoggedIn, response];
                         }
