@@ -113,7 +113,6 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
                             response = "no user data found";
                             userInfo = {stayLoggedIn, response};
                         }
-						console.log(response)
 						socket.emit('userInfo', userInfo);//send the information package to client
 					})
 				}
