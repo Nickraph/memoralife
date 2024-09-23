@@ -145,6 +145,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			})
 			.then( () => { //if email doesnt already exist continue with account creation
 				client.query('INSERT INTO credentials(email, password, accstatus, visibility, accountid, infocompletion) VALUES($1, $2, $3, $4, $5, $6)', [email, password, 'active', 'private', '@admin', 0]);
+				client.query('INSERT INTO information(name, surname) VALUES($1, $2)', ['ADMIN', 'SURNAME_ADMIN']);
 			})
 			.catch(err => {
 				console.error('Database query error:', err);
