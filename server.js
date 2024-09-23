@@ -91,9 +91,9 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		client.query('SELECT password FROM credentials WHERE email = $1;', [email])
 			.then(results => {
 				if(results.rows[0] != null && validateHash(password, results.rows[0].password)){
-					return client.query('SELECT c.accstatus, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
+					return client.query('SELECT c.accstatus, c.infocompletion, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
 					.then((results) =>{
-						var dbResults = JSON.stringify(results.rows[0]);//data string format
+						var dbResults = results.rows[0];//data string format
 						var userInfo; //array of data that will be sent to client in addition to dbData
 
 						// Check if dbResults is null or undefined
@@ -144,7 +144,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				}
 			})
 			.then( () => { //if email doesnt already exist continue with account creation
-				client.query('INSERT INTO credentials(email, password, accstatus) VALUES($1, $2, $3)', [email, password, 'active']);
+				client.query('INSERT INTO credentials(email, password, accstatus, visibility, accountid, infocompletion) VALUES($1, $2, $3, $4, $5, $6)', [email, password, 'active', 'private', '@admin', 0]);
 			})
 			.catch(err => {
 				console.error('Database query error:', err);

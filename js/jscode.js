@@ -63,7 +63,8 @@ socket.on("userInfo", function(data){//change username to email in css & index*
 
         window.open("https://memoralife.onrender.com/profile", "_self");
         //alert("Welcome "+data.dbData.name);
-        //save credentials in localStorage or enter them in profile fields directly
+        //save credentials in localStorage or enter them in profile fields directly:
+        document.getElementById("divinfo1").innerHTML = "onoma: "+data.dbData.name;
 
         //test (setting information in fields of profile.html):
         window.onload("memoralife.onrender.com/profile")
@@ -73,6 +74,8 @@ socket.on("userInfo", function(data){//change username to email in css & index*
     else{//if credentials were incorrect or user's account is inactive:
         alert("Not logged. Server response: "+data.response)
         window.open("https://memoralife.onrender.com/profile", "_self");
+        if(data.dbData.infocompletion == 0){alert("No information found. This is your first login.")}
+        console.log(data.dbData.infocompletion);
     }
 })//userinfo--
 
