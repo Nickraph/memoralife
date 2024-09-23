@@ -75,7 +75,7 @@ socket.on("userInfo", function(data){//change username to email in css & index*
         alert("Not logged. Server response: "+data.response)
         window.open("https://memoralife.onrender.com/profile", "_self");
         if(data.dbData.infocompletion == 0){alert("No information found. This is your first login.")}
-        console.log(data.dbData.infocompletion);
+        alert("infocompletion: "+data.dbData.infocompletion);
     }
 })//userinfo--
 
