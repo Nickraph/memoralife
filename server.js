@@ -95,7 +95,11 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					.then((results) =>{
 						var dbResults = results.rows[0];//data string format
 						var userInfo; //array of data that will be sent to client in addition to dbData
-
+						
+						console.log("results:"+dbResults);//debugging
+						console.log("results2:"+JSON.stringify(dbResults));//debugging
+						console.log("results3:"+JSON.parse(JSON.stringify(dbResults)));//debugging
+						
 						// Check if dbResults is null or undefined
                         if (dbResults != null) {
                             // Parse only if dbResults is not null
