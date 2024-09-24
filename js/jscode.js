@@ -62,6 +62,7 @@ socket.on("confirmLogin", function(data){//change username to email in css & ind
         }
 
         //save user information in local storage to load them in profile.html
+        //if infoCompletion is not complete then
         localStorage.setItem("userInfo", JSON.stringify(data.dbData));
         //load profile.html
         window.open("https://memoralife.onrender.com/profile", "_self");
