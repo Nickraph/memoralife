@@ -6,7 +6,20 @@
 </head>
 
 <body>
+  <!--MODAL-->
+  <button id="openModalBtn">Start Questions</button>
+  
+  <div id="questionModal" class="modal">
+      <div class="modal-content">
+          <span class="close" id="closeModal">&times;</span>
+          <h2 id="questionTitle"></h2>
+          <textarea id="answerField" rows="5" placeholder="Type your answer here..."></textarea>
+          <br>
+          <button id="nextBtn">Next</button>
+      </div>
+  </div>
 
+  <!--INFORMATION DIVS-->
   <div id="divinfo1" style="border: 1px solid black; height: 200px; width: 200px;">pic</div><br>
   Name:
   <div id="divinfo2" style="border: 1px solid black; height: 50px; width: 1000px;">info</div><br>
