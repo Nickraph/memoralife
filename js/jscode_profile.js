@@ -5,7 +5,7 @@ var info;
 window.onload = function(){
     info = JSON.parse(localStorage.getItem("userInfo"));
 
-    if(info.infoCompletion == 0){
+    if(info.infocompletion == 0){
         alert("Seems like you are logging in for the first time. Would you like to complete a questionaire?")
     }
 
