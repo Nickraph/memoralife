@@ -1,8 +1,9 @@
 var socket = io.connect('https://memoralife.onrender.com/');
 
+var info;
 
 window.onload = function(){
-    var info = JSON.parse(localStorage.getItem("userInfo"));
+    info = JSON.parse(localStorage.getItem("userInfo"));
 
     if(info.infoCompletion == 0){
         alert("Seems like you are logging in for the first time. Would you like to complete a questionaire?")
