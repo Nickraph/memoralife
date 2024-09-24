@@ -5,8 +5,9 @@ window.onload = function(){
     var info = localStorage.getItem("userInfo");
 
     //Enter information in their fields
-    document.getElementById("divinfo2").innerHTML = "onoma: "+info.name;
-    document.getElementById("divinfo3").innerHTML = "onoma: "+info.surname;
+    document.getElementById("divinfo2").innerHTML = info.name;
+    document.getElementById("divinfo3").innerHTML = info.surname;
+    
 }
 
 socket.on("showMessage", function(msg){
