@@ -33,7 +33,7 @@ function createDivs(start, end) {
 
         // Optionally add a "Category Name" label for each div
         const categoryLabel = document.createElement('p');
-        categoryLabel.innerText = "Category Name [EDIT ✎]";
+        categoryLabel.innerText = "Category Name";
         infodiv.appendChild(categoryLabel);
     }
 }
