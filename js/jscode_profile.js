@@ -128,7 +128,8 @@ function finishQuestions() {
     
     //loop through every answers[] item and set the answer to the respective div
     for(i in answers){
-        document.getElementById(`divinfo${i+1}`).innerHTML = answers[i];
+        const index = parseInt(i, 10);
+        document.getElementById(`divinfo${index+1}`).innerHTML = answers[index];
     }
 
     console.log("Finished Questions:", answers);
