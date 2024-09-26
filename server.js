@@ -131,6 +131,8 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	socket.on('attemptSignup', function(data){
 		var email = data.email.trim();
 		var pass = data.password;
+		var firstname = data.firstname;
+		var lastname = data.lastname;
 		
 		//hash password given by user
 		var password = hashPass(pass);
@@ -145,7 +147,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			})
 			.then( () => { //if email doesnt already exist continue with account creation
 				client.query('INSERT INTO credentials(email, password, accstatus, visibility, accountid, infocompletion) VALUES($1, $2, $3, $4, $5, $6)', [email, password, 'active', 'private', '@admin', 0]);
-				client.query('INSERT INTO information(name, surname) VALUES($1, $2)', ['ADMIN', 'SURNAME_ADMIN']);
+				client.query('INSERT INTO information(name, surname) VALUES($1, $2)', [firstname, lastname]);
 				//Database entry created. Inform client:
 				socket.emit("showMessage", "Account Created!")
 			})

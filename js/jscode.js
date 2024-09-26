@@ -28,9 +28,11 @@ function testFunction(){
 function submitSignupInfo(){
     var email = document.getElementById("su_email_field").value.trim();
     var password = document.getElementById("su_password_field").value;
+    var firstname = document.getElementById("su_firstname_field").value.trim();
+    var lastname = document.getElementById("su_lastname_field").value.trim();
 
     if(email != "" && password != ""){
-        socket.emit("attemptSignup", {email, password});
+        socket.emit("attemptSignup", {email, password, firstname, lastname});
     }
     else{
         alert("Τα πεδία username και password δεν μπορούν να είναι κενά.")

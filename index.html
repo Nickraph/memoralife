@@ -197,17 +197,27 @@
                              <h4 class="modal-title">Εγγραφή</h4>
                                </div>
                             <div class="modal-body">                      
-                                           
+                            
+                            <!--NAME-->
+                            <div class="username">
+                              <label for="firstname"><b>Name</b></label><br>
+                              <input type="text" placeholder="Enter your first name" id="su_name_field" name="uname" required>
+                              </div><br>
+                            <!--SURNAME-->
+                            <div class="username">
+                              <label for="lastname"><b>Surname</b></label><br>
+                              <input type="text" placeholder="Enter your last name" id="su_surname_field" name="uname" required>
+                              </div><br>
                             <!--USERNAME-->
                             <div class="username">
-                            <label for="uname"><b>Email</b></label>
+                            <label for="uname"><b>Email</b></label><br>
                             <input type="text" placeholder="Enter Email" id="su_email_field" name="uname" required>
-                            </div>
+                            </div><br>
                             <!-- Password -->
                             <div class="password">
-                            <label for="psw"><b>Password</b></label>
+                            <label for="psw"><b>Password</b></label><br>
                             <input type="password" placeholder="Enter Password" id="su_password_field" name="psw" required>
-                            </div>
+                            </div><br>
                             <!-- Submit Button -->
                             <div class="login-remember-create">
                             <button type="submit" onclick="submitSignupInfo();" class="btn btn-success">Sign Up</button>
