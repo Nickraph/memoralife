@@ -3,10 +3,13 @@ var socket = io.connect('https://memoralife.onrender.com/');
 var info;
 
 window.onload = function(){
-    info = JSON.parse(localStorage.getItem("userInfo"));
-
     //create all information divs
     createDivs(1, 33);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    info = JSON.parse(localStorage.getItem("userInfo"));
 
     if(info.infocompletion == 0){
         var openQ = prompt("Seems like you are logging in for the first time. Would you like to complete a questionaire? Y/N")
@@ -19,7 +22,8 @@ window.onload = function(){
     document.getElementById("divinfo1").innerHTML = info.name;
     document.getElementById("divinfo2").innerHTML = info.surname;
 
-}
+
+});
 
 
 function createDivs(start, end) {

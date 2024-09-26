@@ -1,3 +1,7 @@
+html{
+    overflow-y: scroll;
+}
+
 body{
     background-image: url("../assets/logo_transparent.png");
     background-size: cover;
