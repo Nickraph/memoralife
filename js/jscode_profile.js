@@ -126,7 +126,7 @@ function finishQuestions() {
     
     //loop through every answers[] item and set the answer to the respective div
     for(i in answers){
-        document.getElementById(`divInfo${i+1}`).innerHTML = answers[i];
+        document.getElementById(`divinfo${i+1}`).innerHTML = answers[i];
     }
 
     console.log("Finished Questions:", answers);
