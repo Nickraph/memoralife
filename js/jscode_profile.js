@@ -4,12 +4,12 @@ var info;
 
 document.addEventListener('DOMContentLoaded', () => { 
     //create all information divs
-    createDivs(1, 33);
+    createDivs(1, 31);
 
     info = JSON.parse(localStorage.getItem("userInfo"));
 
     if(info.infocompletion == 0){
-        var openQ = prompt("Seems like you are logging in for the first time. Would you like to complete a questionaire? Y/N")
+        var openQ = prompt("Welcome, "+info.name+". Seems like you are logging in for the first time. Would you like to complete a questionaire? Y/N")
         if(openQ == "y" || openQ == "Y"){
             openQuestionaire();
         }
@@ -48,8 +48,6 @@ const answerField = document.getElementById("answerField");
 const nextBtn = document.getElementById("nextBtn");
 
 const questions = [
-    "Ποιό είναι το όνομά σας;",
-    "Και το επώνυμο;",
     "Ποιά ειναι η ημερομηνια γεννησης σας;",
     "Και που γεννηθήκατε;",
     "Είχατε κατα τη διαρκεια της ζωης σας καποιο ψευδώνυμο;",
