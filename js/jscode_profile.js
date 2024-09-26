@@ -92,6 +92,8 @@ function openQuestionaire() {
 }
 
 span.onclick = function() {
+    // Save the answer to the current question
+    answers[currentQuestionIndex] = answerField.value;
     modal.style.display = "none";
     finishQuestions();
 }
