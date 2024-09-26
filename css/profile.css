@@ -1,5 +1,6 @@
 body{
-    background-color: rgb(156, 194, 194);
+    background-image: url("../assets/logo_transparent.png");
+    background-size: cover;
 }
 
 .modal {
