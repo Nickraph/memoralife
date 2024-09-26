@@ -2,8 +2,7 @@ var socket = io.connect('https://memoralife.onrender.com/');
 
 var info;
 
-document.addEventListener('DOMContentLoaded', () => {
-    
+document.addEventListener('DOMContentLoaded', () => { 
     //create all information divs
     createDivs(1, 33);
 
@@ -19,8 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     //Enter information in their fields
     document.getElementById("divinfo1").innerHTML = info.name;
     document.getElementById("divinfo2").innerHTML = info.surname;
-
-
 });
 
 
@@ -36,7 +33,7 @@ function createDivs(start, end) {
 
         // Optionally add a "Category Name" label for each div
         const categoryLabel = document.createElement('p');
-        categoryLabel.innerText = `Category Name:`;
+        categoryLabel.innerText = "Category Name [EDIT ✎]";
         infodiv.appendChild(categoryLabel);
     }
 }
