@@ -7,6 +7,14 @@ body{
     background-size: cover;
 }
 
+.dynamic-div {
+    border: 1px solid black;
+    height: 50px;
+    width: 1000px;
+    background-color: rgba(127, 255, 249, 0.192);
+    margin-bottom: 10px;
+}
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */

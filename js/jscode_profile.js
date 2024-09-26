@@ -2,12 +2,10 @@ var socket = io.connect('https://memoralife.onrender.com/');
 
 var info;
 
-window.onload = function(){
+document.addEventListener('DOMContentLoaded', () => {
+    
     //create all information divs
     createDivs(1, 33);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
 
     info = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -27,19 +25,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function createDivs(start, end) {
-    const container = document.getElementById('divContainer');
+    const infodiv = document.getElementById('divContainer');
     
     for (let i = start; i <= end; i++) {
         const div = document.createElement('div');
         div.id = `divinfo${i}`;
         div.className = 'dynamic-div';
         div.innerText = `info ${i}`;
-        container.appendChild(div);
+        infodiv.appendChild(div);
 
         // Optionally add a "Category Name" label for each div
         const categoryLabel = document.createElement('p');
         categoryLabel.innerText = `Category Name:`;
-        container.appendChild(categoryLabel);
+        infodiv.appendChild(categoryLabel);
     }
 }
 
