@@ -6,14 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
     //Retrieve user information from localStorage
     info = JSON.parse(localStorage.getItem("userInfo"));
 
-    // Generate all memory (text & media) storing divs dynamically.
+    // Generate all memory (text & media) storing divs & category dividers dynamically.
     const memoryContainer = document.getElementById("memory-container");
 	const memoryFieldNames = [
         "First name:","Last name:","Date of birth:","Place of birth:","Nickname:","Current address:","Family","Family's occupations:","Pets:","Childhood:","Childhood address:","School:","Love:","Additional notes:","Studies:","Career:","Marriage:","Partner:","Children:","Additional notes:","Grandchildren:","Values:","Achievements:","Foods & Recipes:","Scents:","Entertainment:","Season:","Media:","Music:","Hobbies:","Additional:","Dislikes:","Routine:"
     ];
+    const categoryNames = ["—General Information—", "—Childhood—", "—Adulthood—", "—Seniority—", "—Preferences—", "—Routine—"];
+    var categoryIndex = 0;
     const divNumber = memoryFieldNames.length;
 
     for (let i = 1; i <= divNumber; i++) {
+        //Create memory divs
         const memoryBox = document.createElement("div");
         memoryBox.classList.add("memory-box");
 
@@ -30,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         readMoreBtn.classList.add("read-more-btn");
         readMoreBtn.textContent = "Read more";
 
-        // Handle expand/collapse logic
+        //Handle expand/collapse logic
         readMoreBtn.addEventListener("click", function () {
             memoryBox.classList.toggle("expanded");
             readMoreBtn.textContent =
@@ -39,26 +42,36 @@ document.addEventListener('DOMContentLoaded', () => {
                     : "Read more";
         });
 
-        // Append elements to memoryBox
+        //Append elements to memoryBox
         memoryBox.appendChild(heading);
         memoryBox.appendChild(paragraph);
         memoryBox.appendChild(readMoreBtn);
 
-        // Add media divs after 10th and 20th memory box
-        if (i === 10 || i === 20) {
+        //Create and append category dividers
+        if(i === 1 || i === 10 || i === 15 || i === 21 || i === 22 || i === 33){
+            const categoryLine = document.createElement("div");
+            categoryLine.classList.add("category-headers");
+            categoryLine.innerText = categoryNames[categoryIndex];
+            categoryIndex++;
+            memoryContainer.appendChild(categoryLine);
+        }
+
+        //Append memory div to memory container
+        memoryContainer.appendChild(memoryBox);
+
+        //Create and append media divs at the bottom of each category
+        if (i === 14 || i === 20 || i === 21 || i === 33) {
             const mediaBox = document.createElement("div");
             mediaBox.classList.add("media-box");
 
-            for (let j = 0; j < 3; j++) {
+            /*for (let j = 0; j < 3; j++) {
                 const mediaPlaceholder = document.createElement("div");
                 mediaPlaceholder.classList.add("media-placeholder");
                 mediaBox.appendChild(mediaPlaceholder);
-            }
+            }*/
 
             memoryContainer.appendChild(mediaBox);
         }
-
-        memoryContainer.appendChild(memoryBox);
     }
 
     //Set user's full name in the menu bar

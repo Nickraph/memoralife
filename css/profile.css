@@ -138,6 +138,11 @@ main {
     margin-bottom: 0.5rem;
 }
 
+.category-headers {
+    text-align: center;
+    font-weight: bold;
+}
+
 /* Memory Text */
 .memory-box p {
     margin: 0;
