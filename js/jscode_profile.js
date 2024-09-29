@@ -27,14 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const paragraph = document.createElement("p");
         paragraph.id = `divinfo${i}`;
         paragraph.textContent =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+            "Information Placeholder";
 
         const readMoreBtn = document.createElement("span");
         readMoreBtn.classList.add("read-more-btn");
         readMoreBtn.textContent = "Read more";
 
         //Handle expand/collapse logic
-        readMoreBtn.addEventListener("click", function () {
+        readMoreBtn.addEventListener("click", function (){
             memoryBox.classList.toggle("expanded");
             readMoreBtn.textContent =
                 memoryBox.classList.contains("expanded")
