@@ -22,7 +22,7 @@
             <span id="usernameHeader"></span> <!-- Placeholder for the user's first and last name -->
         </div>
         <!-- Log Out Button -->
-        <div class="logout-button">
+        <div class="logout-button" onclick="logout();">
             <a href="#">Log out</a>
         </div>
     </nav>
@@ -39,11 +39,11 @@
           <div class="button-container">
               <!-- "Take Questionnaire" Button -->
               <div class="take-questionnaire">
-                  <button>Take Questionnaire</button>
+                  <button id="openQuestionnaireBtn">Take Questionnaire</button>
               </div>
               <!-- "Edit Information" Button -->
               <div class="edit-information">
-                  <button>Edit Information</button>
+                  <button id="editInformationBtn">Edit Information</button>
               </div>
           </div>
       </section>

@@ -77,27 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function createDivs(start, end) {
-    const infodiv = document.getElementById('divContainer');
-    
-    for (let i = start; i <= end; i++) {
-        const div = document.createElement('div');
-        div.id = `divinfo${i}`;
-        div.className = 'dynamic-div';
-        div.innerText = `info ${i}`;
-        infodiv.appendChild(div);
 
-        // Optionally add a "Category Name" label for each div
-        const categoryLabel = document.createElement('p');
-        categoryLabel.innerText = "Category Name";
-        infodiv.appendChild(categoryLabel);
-    }
-}
 
 //questionaire (modal) related code++
 
 const modal = document.getElementById("questionModal");
-const btn = document.getElementById("openModalBtn");
+const QuestionnaireBtn = document.getElementById("openQuestionnaireBtn");
 const span = document.getElementById("closeModal");
 const questionTitle = document.getElementById("questionTitle");
 const answerField = document.getElementById("answerField");
@@ -140,7 +125,7 @@ const questions = [
 let currentQuestionIndex = 0;
 const answers = [];
 
-btn.onclick = openQuestionaire;
+QuestionnaireBtn.onclick = openQuestionaire;
 
 function openQuestionaire() {
     modal.style.display = "block";
