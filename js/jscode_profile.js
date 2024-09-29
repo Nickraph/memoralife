@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 1; i <= divNumber; i++) {
         const memoryBox = document.createElement("div");
+        memoryBox.id = `divinfo${i}`;
         memoryBox.classList.add("memory-box");
 
         const heading = document.createElement("div");
@@ -155,6 +156,7 @@ nextBtn.onclick = function() {
         loadQuestion();
     } else {
         finishQuestions();
+        currentQuestionIndex = 0;
     }
 }
 
