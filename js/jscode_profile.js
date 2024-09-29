@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 1; i <= divNumber; i++) {
         const memoryBox = document.createElement("div");
-        memoryBox.id = `divinfo${i}`;
         memoryBox.classList.add("memory-box");
 
         const heading = document.createElement("div");
@@ -23,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         heading.textContent = memoryFieldNames[i-1];
 
         const paragraph = document.createElement("p");
+        paragraph.id = `divinfo${i}`;
         paragraph.textContent =
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
@@ -172,7 +172,7 @@ function finishQuestions() {
     //loop through every answers[] item and set the answer to the respective div
     for(i in answers){
         const index = parseInt(i, 10);
-        document.getElementById(`divinfo${index+1}`).innerHTML = answers[index];
+        document.getElementById(`divinfo${index+3}`).innerHTML = answers[index];
     }
 
     console.log("Finished Questions:", answers);
