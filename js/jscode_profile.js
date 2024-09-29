@@ -3,11 +3,67 @@ var socket = io.connect('https://memoralife.onrender.com/');
 var info;
 
 document.addEventListener('DOMContentLoaded', () => { 
-    //create all information divs
-    createDivs(1, 31);
-
+    //Retrieve user information from localStorage
     info = JSON.parse(localStorage.getItem("userInfo"));
 
+    // Generate all memory (text & media) storing divs dynamically.
+    const memoryContainer = document.getElementById("memory-container");
+	const memoryFieldNames = [
+        "First name:","Last name:","Date of birth:","Place of birth:","Nickname:","Current address:","Family","Family's occupations:","Pets:","Childhood:","Childhood address:","School:","Love:","Additional notes:","Studies:","Career:","Marriage:","Partner:","Children:","Additional notes:","Grandchildren:","Values:","Achievements:","Foods & Recipes:","Scents:","Entertainment:","Season:","Media:","Music:","Hobbies:","Additional:","Dislikes:","Routine:"
+    ];
+    const divNumber = memoryFieldNames.length;
+
+    for (let i = 1; i <= divNumber; i++) {
+        const memoryBox = document.createElement("div");
+        memoryBox.classList.add("memory-box");
+
+        const heading = document.createElement("div");
+        heading.classList.add("memory-heading");
+        heading.textContent = memoryFieldNames[i-1];
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent =
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
+        const readMoreBtn = document.createElement("span");
+        readMoreBtn.classList.add("read-more-btn");
+        readMoreBtn.textContent = "Read more";
+
+        // Handle expand/collapse logic
+        readMoreBtn.addEventListener("click", function () {
+            memoryBox.classList.toggle("expanded");
+            readMoreBtn.textContent =
+                memoryBox.classList.contains("expanded")
+                    ? "Read less"
+                    : "Read more";
+        });
+
+        // Append elements to memoryBox
+        memoryBox.appendChild(heading);
+        memoryBox.appendChild(paragraph);
+        memoryBox.appendChild(readMoreBtn);
+
+        // Add media divs after 10th and 20th memory box
+        if (i === 10 || i === 20) {
+            const mediaBox = document.createElement("div");
+            mediaBox.classList.add("media-box");
+
+            for (let j = 0; j < 3; j++) {
+                const mediaPlaceholder = document.createElement("div");
+                mediaPlaceholder.classList.add("media-placeholder");
+                mediaBox.appendChild(mediaPlaceholder);
+            }
+
+            memoryContainer.appendChild(mediaBox);
+        }
+
+        memoryContainer.appendChild(memoryBox);
+    }
+
+    //Set user's full name in the menu bar
+    document.getElementById("usernameHeader").innerText = info.name +" "+ info.surname;
+
+    //Prompt to open questionnaire if its first time loging in
     if(info.infocompletion == 0){
         var openQ = prompt("Welcome, "+info.name+". Seems like you are logging in for the first time. Would you like to complete a questionaire? Y/N")
         if(openQ == "y" || openQ == "Y"){

@@ -1,19 +1,183 @@
-html{
-    overflow-y: scroll;
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-body{
-    background-image: url("../assets/logo_transparent.png");
-    background-size: cover;
+/* Top Navigation Bar */
+header nav {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    align-items: center;
 }
 
-.dynamic-div {
-    border: 1px solid black;
-    height: 50px;
-    width: 1000px;
-    background-color: rgba(127, 255, 249, 0.192);
-    margin-bottom: 10px;
+/* Menu Items */
+.menu {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
 }
+
+.menu li {
+    display: inline;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.menu a:hover {
+    color: #00ffcc; /* Cyan hover color */
+}
+
+/* User Name in the Center */
+.user-name {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Log Out Button */
+.logout-button a {
+    color: red;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.logout-button a:hover {
+    color: #ff3333; /* Lighter red on hover */
+}
+
+/* Main Section Styling */
+main {
+    padding: 2rem;
+}
+
+/* Profile Section */
+.profile-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Profile Picture - Now Square with Rounded Corners */
+.profile-picture img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px; /* Slightly rounded corners */
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 1rem; /* Space between buttons */
+    width: auto; /* Set to auto to allow buttons to control their width */
+}
+
+/* Button Styles */
+.take-questionnaire button,
+.edit-information button {
+    background-color: #00bfa5; /* Green button */
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 30%; /* Set both buttons to 20% width */
+    min-width: 200px; /* Optional: set a minimum width */
+    align-self: center; /* Center buttons in the container */
+}
+
+.take-questionnaire button:hover,
+.edit-information button:hover {
+    background-color: #00796b; /* Darker green on hover */
+}
+
+/* User Info Grid */
+.user-info {
+    margin-top: 2rem;
+}
+
+/* Memory Container */
+.memory-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 75%;
+    margin: 0 auto;
+}
+
+/* Memory Box Styling */
+.memory-box {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    max-height: 150px; /* Default height */
+    transition: max-height 0.3s ease;
+}
+
+/* Placeholder Heading for Memory Div */
+.memory-heading {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* Memory Text */
+.memory-box p {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Media Box (Larger Divs) */
+.media-box {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Memory Box Expanded */
+.memory-box.expanded {
+    max-height: 1000px; /* Expandable height */
+    transition: max-height 0.5s ease;
+}
+
+/* Read More Button */
+.read-more-btn {
+    font-size: 0.8rem;
+    color: #00bfa5; /* Green color */
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.read-more-btn:hover {
+    color: #00796b; /* Darker green on hover */
+}
+
 
 .modal {
     display: none; /* Hidden by default */
