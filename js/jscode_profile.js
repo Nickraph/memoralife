@@ -1,6 +1,9 @@
 var socket = io.connect('https://memoralife.onrender.com/');
 
 var info;
+const memoryFieldNames_global = [
+    "First name:","Last name:","Date of birth:","Place of birth:","Nickname:","Current address:","Family","Family's occupations:","Pets:","Childhood:","Childhood address:","School:","Love:","Additional notes:","Studies:","Career:","Marriage:","Partner:","Children:","Additional notes:","Grandchildren:","Values:","Achievements:","Foods & Recipes:","Scents:","Entertainment:","Season:","Media:","Music:","Hobbies:","Additional:","Dislikes:","Routine:"
+];
 
 document.addEventListener('DOMContentLoaded', () => { 
     //Retrieve user information from localStorage
@@ -20,15 +23,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const memoryBox = document.createElement("div");
         memoryBox.classList.add("memory-box");
 
+        //Heading
         const heading = document.createElement("div");
         heading.classList.add("memory-heading");
         heading.textContent = memoryFieldNames[i-1];
 
+        //Information inside
         const paragraph = document.createElement("p");
         paragraph.id = `divinfo${i}`;
-        paragraph.textContent =
-            "Information Placeholder";
+        paragraph.textContent = "Information Placeholder";
 
+        //Hidden edit buttons
+        const editBtn = document.createElement("button");
+        editBtn.classList.add("edit-btn");
+        editBtn.textContent = "Edit";
+
+        //Handle edit buttons logic
+        editBtn.addEventListener("click", function (){
+            openEditingModal(i);
+        });
+
+        //Read more buttons
         const readMoreBtn = document.createElement("span");
         readMoreBtn.classList.add("read-more-btn");
         readMoreBtn.textContent = "Read more";
@@ -45,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Append elements to memoryBox
         memoryBox.appendChild(heading);
         memoryBox.appendChild(paragraph);
+        memoryBox.appendChild(editBtn)
         memoryBox.appendChild(readMoreBtn);
 
         //Create and append category dividers
@@ -193,15 +209,76 @@ function finishQuestions() {
 
 //questionaire (modal) related code--
 
+//"Edit Information Mode" related code++
 
+const editInfoBtn = document.getElementById("editInformationBtn");
 
-function logout(){
+var editMode = false;
+var defaultBodyColor = window.getComputedStyle(document.body).backgroundColor;//get default <body> color
+
+editInfoBtn.onclick = function() {
+
+    if(editMode){ //if currently in edit mode - back to default mode.
+        editMode = false;
+        document.body.style.backgroundColor = defaultBodyColor;
+        editInfoBtn.style.backgroundColor = "#00bfa5";
+        editInfoBtn.innerText = "Open Edit Mode";
+
+        //hide edit buttons
+        const editButtons = document.querySelectorAll(".edit-btn");
+        editButtons.forEach(button => {button.style.display = "none"});
+        document.getElementById("pfp-edit-btn").style.display = "none";
+    }
+    else{
+        editMode = true;
+        document.body.style.backgroundColor = "#ede6e6";
+        editInfoBtn.style.backgroundColor = "#eb3626";
+        editInfoBtn.innerText = "Close Edit Mode";
+
+        //show edit buttons
+        const editButtons = document.querySelectorAll(".edit-btn");
+        editButtons.forEach(button => {button.style.display = "block"});
+        document.getElementById("pfp-edit-btn").style.display = "inline-block";
+    }
+}
+
+//Specific memory box editing:
+const editingModal = document.getElementById("editingModal");
+const editingModal_closeBtn = document.getElementById("editingModal-closeBtn");
+const editingModal_saveButton = document.getElementById("editingModal-saveBtn");
+const editingModal_input = document.getElementById("editingModal-input");
+const editingModal_header = document.getElementById("editingModal-header");
+var editedMemory;
+
+function openEditingModal(buttonNumber){
+    editedMemory = buttonNumber;
+    editingModal_input.value = document.getElementById(`divinfo${buttonNumber}`).innerText; // Set the input field to the current content
+    editingModal_header.innerText = memoryFieldNames_global[buttonNumber-1];
+    editingModal.style.display = "block";
+}
+
+editingModal_closeBtn.onclick = function() {
+    editingModal.style.display = "none"; // Close editing modal
+    editingModal_input.value = ""; // Empty input field
+    editingModal_header.innerText = ""; // Empty header
+    
+}
+
+editingModal_saveButton.onclick = function() {
+    editingModal.style.display = "none"; // Close editing modal
+    document.getElementById("divinfo"+editedMemory).innerText = editingModal_input.value;
+    editedMemory = undefined; //reset which memory is being edited
+}
+
+//"Edit Information Mode" related code--
+
+function logout() {
     //remove saved information from the client
     localStorage.removeItem("userInfo");
     //load homepage
     window.open("https://memoralife.onrender.com/", "_self");
 }
 
-socket.on("showMessage", function(msg){
+socket.on("showMessage", function(msg) {
     alert(msg);
   });
