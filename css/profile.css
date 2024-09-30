@@ -203,6 +203,23 @@ main {
     border-radius: 5px;
 }
 
+.upload-buttons{
+    position: relative;
+    top: 10px;
+    right: 10px;
+    min-width: 65px;
+    min-height: 35px;
+    z-index: 1;
+    display: none; /* Hidden initially */
+    background-color: #008cff;
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
 /* Read More Button */
 .read-more-btn {
     font-size: 0.9rem;

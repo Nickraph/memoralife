@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Append memory div to memory container
         memoryContainer.appendChild(memoryBox);
 
-        //Create and append media divs at the bottom of each category
+        //Create and append media divs + upload buttons at the bottom of each category
         if (i === 14 || i === 20 || i === 21 || i === 33) {
             const mediaBox = document.createElement("div");
             mediaBox.classList.add("media-box");
@@ -86,6 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 mediaBox.appendChild(mediaPlaceholder);
             }*/
 
+            const uploadBtn = document.createElement("button");
+            uploadBtn.classList.add("upload-buttons");
+            uploadBtn.innerText = "Upload Media";
+            
+            mediaBox.appendChild(uploadBtn);
             memoryContainer.appendChild(mediaBox);
         }
     }
@@ -227,6 +232,8 @@ editInfoBtn.onclick = function() {
         //hide edit buttons
         const editButtons = document.querySelectorAll(".edit-btn");
         editButtons.forEach(button => {button.style.display = "none"});
+        const uploadButtons = document.querySelectorAll(".upload-buttons");
+        uploadButtons.forEach(button => {button.style.display = "none"});
         document.getElementById("pfp-edit-btn").style.display = "none";
     }
     else{
@@ -238,6 +245,8 @@ editInfoBtn.onclick = function() {
         //show edit buttons
         const editButtons = document.querySelectorAll(".edit-btn");
         editButtons.forEach(button => {button.style.display = "block"});
+        const uploadButtons = document.querySelectorAll(".upload-buttons");
+        uploadButtons.forEach(button => {button.style.display = "block"});
         document.getElementById("pfp-edit-btn").style.display = "inline-block";
     }
 }
