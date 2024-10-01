@@ -75,7 +75,9 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
 	//var newID;
 	//newId();
-	var informationColumns = [];
+	var informationColumns = [
+		"name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
+	];
 
 	socket.on("client", function(){
 		console.log("client loaded.")
@@ -147,7 +149,8 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			})
 			.then( () => { //if email doesnt already exist continue with account creation
 				client.query('INSERT INTO credentials(email, password, accstatus, visibility, accountid, infocompletion) VALUES($1, $2, $3, $4, $5, $6)', [email, password, 'active', 'private', '@admin', 0]);
-				client.query('INSERT INTO information(name, surname) VALUES($1, $2)', [firstname, lastname]);
+				client.query(`INSERT INTO information(name, surname, dob, pob, nickname, generalinfo, address, familynames, familyoccupations, pets, childhoodinfo, address_childhood, school_childhood, lovememories, memories_childhood_misc, media_childhood, studies, occupations, marriage, partnerinfo, kids, memories_adulthood_misc, grandchildren, media_seniority, values, achievements, fav_foods, fav_scents, fav_fun, fav_seasons, fav_media, fav_memories, fav_music, fav_hobbies, fav_misc, leastfav, routine) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35)
+`, [firstname, lastname, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]);
 				//Database entry created. Inform client:
 				socket.emit("showMessage", "Account Created!")
 			})
@@ -157,7 +160,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			})
 	});
 
-	socket.on('updateUserInformation', function(data){//called when user updates/edits profile info (later add email+pass editing)
+	socket.on("updateUserInfo", function(data){//called when user updates/edits profile info (later add email+pass editing)
 		for(i in informationColumns){
 			if(data.informationColumns[i] != ""){//maybe make it into a string then send query
 				client.query('INSERT INTO information('+informationColumns[i]+') VALUES($1)', [data.informationColumns[i]]);

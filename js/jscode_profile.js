@@ -4,6 +4,9 @@ var info;
 const memoryFieldNames_global = [
     "First name:","Last name:","Date of birth:","Place of birth:","Nickname:","Current address:","Family","Family's occupations:","Pets:","Childhood:","Childhood address:","School:","Love:","Additional notes:","Studies:","Career:","Marriage:","Partner:","Children:","Additional notes:","Grandchildren:","Values:","Achievements:","Foods & Recipes:","Scents:","Entertainment:","Season:","Media:","Music:","Hobbies:","Additional:","Dislikes:","Routine:"
 ];
+var informationColumns = [
+    "name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
+];
 
 document.addEventListener('DOMContentLoaded', () => { 
     //Retrieve user information from localStorage
@@ -207,7 +210,12 @@ function finishQuestions() {
     for(i in answers){
         const index = parseInt(i, 10);
         document.getElementById(`divinfo${index+3}`).innerHTML = answers[index];
+        //change info (localStorage)
+        info[informationColumns[index]] = answers[index];
     }
+
+    //update database
+    updateInfo(info);
 
     console.log("Finished Questions:", answers);
 }
@@ -277,9 +285,18 @@ editingModal_saveButton.onclick = function() {
     editingModal.style.display = "none"; // Close editing modal
     document.getElementById("divinfo"+editedMemory).innerText = editingModal_input.value;
     editedMemory = undefined; //reset which memory is being edited
+
+    //change info (localStorage)
+    info[informationColumns[editedMemory-1]] = editingModal_input.value;
+    //update database
+    updateInfo(info);
 }
 
 //"Edit Information Mode" related code--
+
+function updateInfo(updated_data) {
+    socket.emit("updateUserInfo", updated_data);
+}
 
 function logout() {
     //remove saved information from the client
