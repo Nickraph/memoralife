@@ -162,8 +162,8 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 	socket.on("updateUserInfo", function(data){//called when user updates/edits profile info (later add email+pass editing)
 		for(i in informationColumns){
-			if(data.informationColumns[i] != ""){//maybe make it into a string then send query
-				client.query('INSERT INTO information('+informationColumns[i]+') VALUES($1)', [data.informationColumns[i]]);
+			if(data[informationColumns[i]] != ""){//maybe make it into a string then send query
+				client.query('INSERT INTO information('+informationColumns[i]+') VALUES($1)', [data[informationColumns[i]]]);
 			}
 		}
 	});
