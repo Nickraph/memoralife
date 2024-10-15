@@ -47,7 +47,7 @@ header nav {
 
 /* Log Out Button */
 .logout-button a {
-    color: red;
+    color: #fd4d4d;
     font-size: 1rem;
     font-weight: bold;
     text-decoration: none;
@@ -55,7 +55,7 @@ header nav {
 }
 
 .logout-button a:hover {
-    color: #ff3333; /* Lighter red on hover */
+    color: #f17878; /* Lighter red on hover */
 }
 
 /* Main Section Styling */
