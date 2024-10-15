@@ -180,7 +180,8 @@ function openQuestionaire() {
         const textArea = document.createElement("textarea");
         textArea.classList.add("questionnaireTextarea");
         textArea.id = `questionnaireAnswer_${i}`;
-        textArea.innerText = document.getElementById(`divinfo${i+1}`).innerText;
+        let index = parseInt(i, 10);
+        textArea.innerText = document.getElementById(`divinfo${index+1}`).innerText;
       
         labelContainer.appendChild(questionLabel);
         questionDiv.appendChild(labelContainer);
