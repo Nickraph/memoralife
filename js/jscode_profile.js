@@ -119,12 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //questionaire (modal) related code++
 
-const modal = document.getElementById("questionModal");
+const modal = document.getElementById("questionnaireModal");
 const QuestionnaireBtn = document.getElementById("openQuestionnaireBtn");
-const span = document.getElementById("closeModal");
-const questionTitle = document.getElementById("questionTitle");
-const answerField = document.getElementById("answerField");
-const nextBtn = document.getElementById("nextBtn");
+const span = document.getElementById("closeQModal");
+
 
 const questions = [
     "Ποιά ειναι η ημερομηνια γεννησης σας;",
@@ -159,22 +157,38 @@ const questions = [
     "Υπαρχει κατι που ΔΕΝ σας αρεσει; Σημειωστε οσα θελετε εδω.",
     "Θα θελατε να περιγραψετε τη ρουτινα σας;"
   ];
-
-let currentQuestionIndex = 0;
 const answers = [];
 
 QuestionnaireBtn.onclick = openQuestionaire;
 
 function openQuestionaire() {
-    modal.style.display = "block";
-    loadQuestion();
+
+    for (let i in questions) {
+        const questionDiv = document.createElement("div");
+        questionDiv.classList.add("question");
+        
+        const labelContainer = document.createElement("div");
+        labelContainer.classList.add("labelContainer");
+
+        const questionLabel = document.createElement("label");
+        questionLabel.textContent = questions[i];
+        
+        const textArea = document.createElement("textarea");
+        textArea.classList.add("questionnaireTextarea");
+        textArea.id = `questionnaireAnswer_${i}`;
+      
+        labelContainer.appendChild(questionLabel);
+        questionDiv.appendChild(labelContainer);
+        questionDiv.appendChild(textArea);
+        questionsContainer.appendChild(questionDiv);
+    }
+
+    modal.style.display = "flex";
 }
 
 span.onclick = function() {
     // Save the answer to the current question
-    answers[currentQuestionIndex] = answerField.value;
     modal.style.display = "none";
-    finishQuestions();
 }
 
 window.onclick = function(event) {
@@ -197,10 +211,14 @@ nextBtn.onclick = function() {
     }
 }
 
-function loadQuestion() {
+function loadQuestions() {
     answerField.value = ""; // Clear the previous answer
     questionTitle.innerText = questions[currentQuestionIndex];
     nextBtn.innerText = currentQuestionIndex === questions.length - 1 ? "Finish" : "Next"; // Change button text
+
+    for(i in questions){
+
+    }
 }
 
 function finishQuestions() {
