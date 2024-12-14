@@ -327,7 +327,8 @@ function updateInfo(data_name, data_update) {
 }
 
 function logout() {
-    socket.emit
+    let sessionToken = localStorage.getItem("sessionToken");
+    socket.emit("logout", sessionToken)
     //remove saved information from the client
     localStorage.removeItem("userInfo");
     //load homepage

@@ -183,6 +183,15 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		}*/
 	});
 
+	socket.on("logout", function(sessionToken){
+		for(i in accountSessions){
+			if(sessionToken == accountSessions[i].accountSessionToken){
+				accountSessions.splice(i,1); //remove accountSessions entry when user logs out
+			}
+		}
+	});
+
+
 	/*/create new account ID
 	function newId(){
 		client.query('SELECT id FROM users ORDER BY id DESC LIMIT 1')
