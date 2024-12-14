@@ -203,7 +203,7 @@ window.onclick = function(event) {
     }
 }
 
-nextBtn.onclick = function() {
+/*nextBtn.onclick = function() {
     // Save the answer to the current question
     answers[currentQuestionIndex] = answerField.value;
 
@@ -215,7 +215,7 @@ nextBtn.onclick = function() {
         finishQuestions();
         currentQuestionIndex = 0;
     }
-}
+}*/
 
 function loadQuestions() {
     answerField.value = ""; // Clear the previous answer
@@ -253,7 +253,7 @@ const editInfoBtn = document.getElementById("editInformationBtn");
 var editMode = false;
 var defaultBodyColor = window.getComputedStyle(document.body).backgroundColor;//get default <body> color
 
-editInfoBtn.onclick = function() {
+editInfoBtn.onclick = function() { console.log("edit pressed, editMode bool="+editMode)
 
     if(editMode){ //if currently in edit mode - back to default mode.
         editMode = false;
