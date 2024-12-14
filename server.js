@@ -3,6 +3,7 @@ const socketio = require('socket.io'); //declared again below as io
 const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
+const crypto = require('crypto');
 dotenv.config();
 
 /*process.on('uncaughtException', function (err) {
@@ -71,6 +72,8 @@ var io = require('socket.io') (server, {});
 
 var SOCKET_LIST = {};
 
+var accountSessions = {};
+
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
 	//var newID;
@@ -115,7 +118,11 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
                             response = "no user data found";
                             userInfo = {stayLoggedIn, response};
                         }
+						let accountID = dbData["id"];
+						let accountSessionToken = crypto.randomBytes(32).toString('hex');
+						accountSessions.push({"accountID": accountID, "accountSessionToken": accountSessionToken});
 						socket.emit('confirmLogin', userInfo);//send the information package to client
+						socket.emit('saveSessionToken', accountSessionToken);
 					})
 				}
 				else{
@@ -160,8 +167,16 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			})
 	});
 
-	socket.on("updateUserInfo", function(data){//called when user updates/edits profile info (later add email+pass editing)
-		/*for(i in informationColumns){
+	socket.on("updateUserInfo", function(updatePacket){//called when user updates/edits profile info (later add email+pass editing)
+		for(i in accountSessions){
+			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
+				client.query('SELECT id FROM credentials WHERE id = $1', [accountSessions[i].accountID])
+				.then( () => {
+					client.query('INSERT INTO information('+updatePacket.data_name+') VALUES($1)', [updatePacket.data_update]);
+				});
+			}
+		}
+/*for(i in informationColumns){
 			if(data[informationColumns[i]] != ""){//maybe make it into a string then send query
 				client.query('INSERT INTO information('+informationColumns[i]+') VALUES($1)', [data[informationColumns[i]]]);
 			}

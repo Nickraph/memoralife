@@ -253,7 +253,7 @@ const editInfoBtn = document.getElementById("editInformationBtn");
 var editMode = false;
 var defaultBodyColor = window.getComputedStyle(document.body).backgroundColor;//get default <body> color
 
-editInfoBtn.onclick = function() { console.log("edit pressed, editMode bool="+editMode)
+editInfoBtn.onclick = function() {
 
     if(editMode){ //if currently in edit mode - back to default mode.
         editMode = false;
@@ -313,16 +313,21 @@ editingModal_saveButton.onclick = function() {
     //change info (localStorage)
     info[informationColumns[editedMemory-1]] = editingModal_input.value;
     //update database
-    updateInfo(info);
+    let data_name = informationColumns[editedMemory-1]; //name of variable changed
+    let data_update = editingModal_input.value; //data of variable changed
+    updateInfo(data_name, data_update);
 }
 
 //"Edit Information Mode" related code--
 
-function updateInfo(updated_data) {
-    socket.emit("updateUserInfo", updated_data);
+function updateInfo(data_name, data_update) {
+    let sessionToken = localStorage.getItem("sessionToken");
+    let updatePacket = {data_name, data_update, sessionToken};
+    socket.emit("updateUserInfo", updatePacket);
 }
 
 function logout() {
+    socket.emit
     //remove saved information from the client
     localStorage.removeItem("userInfo");
     //load homepage
@@ -332,3 +337,7 @@ function logout() {
 socket.on("showMessage", function(msg) {
     alert(msg);
   });
+
+socket.on("saveSessionToken", function(data){
+    localStorage.setItem("sessionToken", data);
+});
