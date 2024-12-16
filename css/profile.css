@@ -156,7 +156,7 @@ main {
 /* Media Box (Larger Divs) */
 .media-box {
     background-color: white;
-    border-color: #04579b;
+    border: 2px solid rgb(57, 100, 194)
     border-radius: 8px;
     padding: 2rem;
     display: flex;
