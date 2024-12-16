@@ -88,10 +88,11 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 	//check credentials for user login + send user information to client
 	socket.on('attemptLogin', function(data){
-		var email = data.email;
-		var password = data.password;
-		var stayLoggedIn = false; //replace with data.stayLoggedIn
-		var response = "-";
+		let email = data.email;
+		let password = data.password;
+		let stayLoggedIn = false; //replace with data.stayLoggedIn
+		let response = "-";
+
 
 		client.query('SELECT password FROM credentials WHERE email = $1;', [email])
 			.then(results => {
@@ -106,11 +107,20 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
                             // Parse only if dbResults is not null
                             var dbData = JSON.parse(JSON.stringify(dbResults)); // data JSON format
 
-                            if (dbData.accstatus == "active") {
+							//check if user is logged in elsewhere -> delete session and log them out
+							for(i in accountSessions){
+								if(dbData.id == accountSessions[i].accountID){
+									let idToLogout = accountSessions[i].accountID;
+									io.emit("forceLogout", idToLogout)
+								}
+							}
+
+                            if (dbData.accstatus == "active" && alreadyLogged == false) {
                                 response = "logged";
                                 userInfo = {stayLoggedIn, response, dbData};
-                            } else if (dbData.accstatus == "inactive") {
-                                response = "not logged";
+                            }
+							else if (dbData.accstatus == "inactive") {
+                                response = "Your account is inactive.";
                                 userInfo = {stayLoggedIn, response};
                             }
                         } else {
@@ -118,7 +128,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
                             response = "no user data found";
                             userInfo = {stayLoggedIn, response};
                         }
-						let accountID = dbData["id"];
+						let accountID = dbData.id;
 						let accountSessionToken = crypto.randomBytes(32).toString('hex');
 						accountSessions.push({"accountID": accountID, "accountSessionToken": accountSessionToken});
 						socket.emit('confirmLogin', userInfo);//send the information package to client

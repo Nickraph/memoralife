@@ -344,6 +344,7 @@ function logout() {
     socket.emit("logout", sessionToken)
     //remove saved information from the client
     localStorage.removeItem("userInfo");
+    localStorage.removeItem("sessionToken");
     //load homepage
     window.open("https://memoralife.onrender.com/", "_self");
 }
@@ -354,4 +355,13 @@ socket.on("showMessage", function(msg) {
 
 socket.on("saveSessionToken", function(data){
     localStorage.setItem("sessionToken", data);
+});
+
+socket.on("forceLogout", function(idToLogout){
+    let accountID = localStorage.getItem("userInfo").id;
+
+    if(accountID == idToLogout){
+        alert("Login detected from another browser or device. Logging you out.")
+        logout();
+    }
 });
