@@ -72,7 +72,7 @@ var io = require('socket.io') (server, {});
 
 var SOCKET_LIST = {};
 
-var accountSessions = {};
+var accountSessions = [];
 
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
