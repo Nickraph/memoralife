@@ -320,6 +320,19 @@ editingModal_saveButton.onclick = function() {
 
 //"Edit Information Mode" related code--
 
+// Settings modal
+const settingsModal = document.getElementById("settingsModal");
+const settingsClose = document.getElementById("settingsModal-closeBtn");
+
+function openSettingsModal() {
+    settingsModal.style.display = "block";
+}
+
+settingsClose.onclick = function() {
+    settingsModal.style.display = "none";
+}
+
+//update user information in the database
 function updateInfo(data_name, data_update) {
     let sessionToken = localStorage.getItem("sessionToken");
     let updatePacket = {data_name, data_update, sessionToken};

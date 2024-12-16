@@ -357,3 +357,63 @@ main {
     text-decoration: none;
     cursor: pointer;
 }
+
+/*settings modal*/
+
+.settingsModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+}
+
+.settingsModal-content{
+    background-color: #fefefe;
+    margin: 15% auto; /* Centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%; /* Adjust as needed */
+    text-align: center;
+}
+
+.settingsModal-label {
+    display: block;
+    margin-bottom: -5px;
+}
+
+.settingsModal-input{
+    display: inline-block;
+    border: 2px solid #333;
+    border-radius: 5px;
+    min-width: 250px;
+    min-height: 20px;
+    margin-bottom: 10px;
+}
+
+#settingsModal-saveBtn {
+    border-radius: 5px;
+    background-color: #ace4ac;
+    border: 1px solid black;
+    font-weight: bolder;
+    width: 100%;
+    min-height: 40px;
+}
+
+.settingsModal-closeBtn{
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.settingsModal-closeBtn:hover,
+.settingsModal-closeBtn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
