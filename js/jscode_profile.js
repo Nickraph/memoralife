@@ -323,6 +323,7 @@ editingModal_saveButton.onclick = function() {
 // Settings modal
 const settingsModal = document.getElementById("settingsModal");
 const settingsClose = document.getElementById("settingsModal-closeBtn");
+const settingsSave = document.getElementById("settingsModal-saveBtn");
 
 function openSettingsModal() {
     settingsModal.style.display = "block";
@@ -330,6 +331,13 @@ function openSettingsModal() {
 
 settingsClose.onclick = function() {
     settingsModal.style.display = "none";
+}
+
+settingsSave.onclick = function() {
+    alert("Settings updated!")
+    settingsModal.style.display = "none";
+
+    //updateInfo(data_name, data_update, table);
 }
 
 //update user information in the database

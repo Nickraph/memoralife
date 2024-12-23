@@ -115,7 +115,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 								}
 							}
 
-                            if (dbData.accstatus == "active" && alreadyLogged == false) {
+                            if (dbData.accstatus == "active") {
                                 response = "logged";
                                 userInfo = {stayLoggedIn, response, dbData};
                             }
@@ -186,11 +186,6 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				});
 			}
 		}
-/*for(i in informationColumns){
-			if(data[informationColumns[i]] != ""){//maybe make it into a string then send query
-				client.query('INSERT INTO information('+informationColumns[i]+') VALUES($1)', [data[informationColumns[i]]]);
-			}
-		}*/
 	});
 
 	socket.on("logout", function(sessionToken){
