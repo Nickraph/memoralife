@@ -57,6 +57,9 @@ app.get('/', function(req, res) {
 app.get('/profile', function(req, res) {
 	res.sendFile(__dirname + '/profile.html')
 } );
+app.get('/profileview', function(req, res) {
+	res.sendFile(__dirname + '/profileview.html')
+} );
 
 app.use('/login.css', express.static(__dirname + '/login.css'));
 app.use('/css', express.static(__dirname + '/css'));
