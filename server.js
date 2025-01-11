@@ -200,8 +200,8 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 
 	socket.on("searchUser", function(handle){
-		let userInfo; //array of data that will be sent to client in addition to dbData
-		let found = false; //boolean on whether user was found
+		var userInfo; //array of data that will be sent to client in addition to dbData
+		var found = false; //boolean on whether user was found
 
 		userInfo = {found};
 
@@ -211,7 +211,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				if(results.rows[0] != null && results.rows[0].visibility === "public"){
 					return client.query('SELECT i.* FROM information i')
 						.then((results) =>{
-							let dbResults = results.rows[0];//data string format
+							var dbResults = results.rows[0];//data string format
 
 							dbResults.id = 0; //hide primary key
 
