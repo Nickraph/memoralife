@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Append elements to memoryBox
         memoryBox.appendChild(heading);
         memoryBox.appendChild(paragraph);
-        memoryBox.appendChild(editBtn)
+        memoryBox.appendChild(editBtn);
         memoryBox.appendChild(readMoreBtn);
 
         //Create and append category dividers

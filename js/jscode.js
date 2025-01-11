@@ -52,6 +52,11 @@ function switchModal(){
     }
 }
 
+function searchUser(){
+    let handle = document.getElementById("searchUser_field").value;
+    socket.emit("searchUser", handle);
+}
+
 socket.on("confirmLogin", function(data){//change username to email in css & index*
     
     if(data.response == "logged"){//if server verified user credentials:
@@ -72,7 +77,19 @@ socket.on("confirmLogin", function(data){//change username to email in css & ind
     else{//if credentials were incorrect or user's account is inactive:
         alert("Not logged. Server response: "+data.response)
     }
-})
+});
+
+socket.on("searchResults", function(data){
+    if (data.found){
+        //save searched user's data locally
+        localStorage.setItem("searchInfo", JSON.stringify(data.DBinformation));
+        //load profileview.html
+        window.open("https://memoralife.onrender.com/profileview", "_self");
+    }
+    else{
+        alert("User doesn't exist or has their profile visibility set to private.")
+    }
+});
 
 socket.on("showMessage", function(msg){
     alert(msg);

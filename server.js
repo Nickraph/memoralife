@@ -148,13 +148,15 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 	//check credentials for SIGN UP
 	socket.on('attemptSignup', function(data){
-		var email = data.email.trim();
-		var pass = data.password;
-		var firstname = data.firstname;
-		var lastname = data.lastname;
+		let email = data.email.trim();
+		let pass = data.password;
+		let firstname = data.firstname;
+		let lastname = data.lastname;
+
+		let handle = email.substring(0, 4);
 		
 		//hash password given by user
-		var password = hashPass(pass);
+		let password = hashPass(pass);
 		
 		client.query('SELECT email FROM credentials WHERE email = $1', [email])//check if email already exists
 			.then(results => { 
@@ -165,11 +167,11 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				}
 			})
 			.then( () => { //if email doesnt already exist continue with account creation
-				client.query('INSERT INTO credentials(email, password, accstatus, visibility, accountid, infocompletion) VALUES($1, $2, $3, $4, $5, $6)', [email, password, 'active', 'private', '@admin', 0]);
+				client.query('INSERT INTO credentials(email, password, accstatus, visibility, handle) VALUES($1, $2, $3, $4, $5)', [email, password, 'active', 'public', handle]);
 				client.query(`INSERT INTO information(name, surname, dob, pob, nickname, generalinfo, address, familynames, familyoccupations, pets, childhoodinfo, address_childhood, school_childhood, lovememories, memories_childhood_misc, media_childhood, studies, occupations, marriage, partnerinfo, kids, memories_adulthood_misc, grandchildren, media_seniority, values, achievements, fav_foods, fav_scents, fav_fun, fav_seasons, fav_media, fav_memories, fav_music, fav_hobbies, fav_misc, leastfav, routine, media_misc) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38)
 `, [firstname, lastname, "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]);
 				//Database entry created. Inform client:
-				socket.emit("showMessage", "Account Created!")
+				socket.emit("showMessage", "Account Created!");
 			})
 			.catch(err => {
 				console.error('Database query error:', err);
@@ -197,14 +199,31 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	});
 
 
-	/*/create new account ID
-	function newId(){
-		client.query('SELECT id FROM users ORDER BY id DESC LIMIT 1')
-			  .then(results => {
-					newID = results.rows[0].id +1;
-			  })
-			  
-	}*/
+	socket.on("searchUser", function(handle){
+		let userInfo; //array of data that will be sent to client in addition to dbData
+		let found = false; //boolean on whether user was found
+
+		userInfo = {found};
+
+		client.query('SELECT visibility, handle FROM credentials WHERE handle = $1;', [handle])
+			.then(results => {
+				//check if account visibility is set to public
+				if(results.rows[0] != null && results.rows[0].visibility === "public"){
+					return client.query('SELECT i.* FROM information i')
+						.then((results) =>{
+							let dbResults = results.rows[0];//data string format
+
+							const {id, ...DBinformation} = dbResults; //exclude primary key
+
+							found = true;
+							userInfo = {found, DBinformation};
+						});
+				} 
+			});
+		
+		socket.emit("searchResults", userInfo);
+
+	});
 
 	//hash password given by user
 	function hashPass(originalPass){
