@@ -82,7 +82,7 @@ socket.on("confirmLogin", function(data){//change username to email in css & ind
 socket.on("searchResults", function(data){
     if (data.found){
         //save searched user's data locally
-        localStorage.setItem("searchInfo", JSON.stringify(data.DBinformation));
+        localStorage.setItem("searchInfo", JSON.stringify(data.dbResults));
         //load profileview.html
         window.open("https://memoralife.onrender.com/profileview", "_self");
     }

@@ -213,10 +213,10 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 						.then((results) =>{
 							let dbResults = results.rows[0];//data string format
 
-							const {id, ...DBinformation} = dbResults; //exclude primary key
+							dbResults.id = 0; //hide primary key
 
 							found = true;
-							userInfo = {found, DBinformation};
+							userInfo = {found, dbResults};
 						});
 				} 
 			});
