@@ -201,9 +201,6 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 	socket.on("searchUser", function(handle){
 		var userInfo; //array of data that will be sent to client in addition to dbData
-		var found = false; //boolean on whether user was found
-
-		userInfo = {found};
 
 		client.query('SELECT visibility, handle FROM credentials WHERE handle = $1;', [handle])
 			.then(results => {
@@ -215,14 +212,19 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 							dbResults.id = 0; //hide primary key
 
-							found = true;
+							let found = true;
 							userInfo = {found, dbResults};
+							
+							socket.emit("searchResults", userInfo);
 						});
-				} 
-			});
-		
-		socket.emit("searchResults", userInfo);
+				}
+				else{
+					let found = false;
+					userInfo = {found};
 
+					socket.emit("searchResults", userInfo);
+				}
+			});
 	});
 
 	//hash password given by user
