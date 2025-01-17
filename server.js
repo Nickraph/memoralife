@@ -134,8 +134,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 						let accountID = dbData.id;
 						let accountSessionToken = crypto.randomBytes(32).toString('hex');
 						accountSessions.push({"accountID": accountID, "accountSessionToken": accountSessionToken});
-						socket.emit('confirmLogin', userInfo);//send the information package to client
-						socket.emit('saveSessionToken', accountSessionToken);
+						socket.emit('confirmLogin', {userInfo, accountSessionToken});//send the information package to client
 					})
 				}
 				else{

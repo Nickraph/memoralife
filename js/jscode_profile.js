@@ -11,6 +11,9 @@ var informationColumns = [
 document.addEventListener('DOMContentLoaded', () => { 
     //Retrieve user information from localStorage
     info = JSON.parse(localStorage.getItem("userInfo"));
+    let token = localStorage.getItem("sessionToken");
+    localStorage.removeItem("sessionToken");
+    sessionStorage.setItem("sessionToken", token);
 
     var informationColumns = [
         "name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
@@ -339,17 +342,16 @@ settingsSave.onclick = function() {
 
 //update user information in the database
 function updateInfo(data_name, data_update) {
-    let sessionToken = localStorage.getItem("sessionToken");
+    let sessionToken = sessionStorage.getItem("sessionToken");
     let updatePacket = {data_name, data_update, sessionToken};
     socket.emit("updateUserInfo", updatePacket);
 }
 
 function logout() {
-    let sessionToken = localStorage.getItem("sessionToken");
+    let sessionToken = sessionStorage.getItem("sessionToken");
     socket.emit("logout", sessionToken)
     //remove saved information from the client
     localStorage.removeItem("userInfo");
-    localStorage.removeItem("sessionToken");
     //load homepage
     window.open("https://memoralife.onrender.com/", "_self");
 }
@@ -358,9 +360,6 @@ socket.on("showMessage", function(msg) {
     alert(msg);
   });
 
-socket.on("saveSessionToken", function(data){
-    localStorage.setItem("sessionToken", data);
-});
 
 socket.on("forceLogout", function(idToLogout){
     let accountID = localStorage.getItem("userInfo").id;

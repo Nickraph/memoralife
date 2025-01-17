@@ -58,11 +58,12 @@ function searchUser(){
 }
 
 socket.on("confirmLogin", function(data){//change username to email in css & index*
+    var infodata = data.userInfo;
     
     if(data.response == "logged"){//if server verified user credentials:
 
-        if(data.stayLoggedIn){
-            localStorage.setItem("SavedEmail", data.dbData.email);
+        if(infodata.stayLoggedIn){
+            localStorage.setItem("SavedEmail", infodata.dbData.email);
         }
         else{
             localStorage.setItem("SavedEmail", "");    
@@ -70,12 +71,13 @@ socket.on("confirmLogin", function(data){//change username to email in css & ind
 
         //save user information in local storage to load them in profile.html
         //if infoCompletion is not complete then
-        localStorage.setItem("userInfo", JSON.stringify(data.dbData));
+        localStorage.setItem("userInfo", JSON.stringify(infodata.dbData));
+        localStorage.setItem("sessionToken", data.accountSessionToken);
         //load profile.html
         window.open("https://memoralife.onrender.com/profile", "_self");
     }
     else{//if credentials were incorrect or user's account is inactive:
-        alert("Not logged. Server response: "+data.response)
+        alert("Not logged. Server response: "+infodata.response)
     }
 });
 
@@ -89,6 +91,10 @@ socket.on("searchResults", function(data){
     else{
         alert("User doesn't exist or has their profile visibility set to private.")
     }
+});
+
+socket.on("saveSessionToken", function(data){
+    localStorage.setItem("sessionToken", data);
 });
 
 socket.on("showMessage", function(msg){
