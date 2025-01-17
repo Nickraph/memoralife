@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //Retrieve user information from localStorage
     info = JSON.parse(localStorage.getItem("userInfo"));
     let token = localStorage.getItem("sessionToken");
+    console.log(token)
     localStorage.removeItem("sessionToken");
     sessionStorage.setItem("sessionToken", token);
 
@@ -343,6 +344,7 @@ settingsSave.onclick = function() {
 //update user information in the database
 function updateInfo(data_name, data_update) {
     let sessionToken = sessionStorage.getItem("sessionToken");
+    console.log(sessionToken)
     let updatePacket = {data_name, data_update, sessionToken};
     socket.emit("updateUserInfo", updatePacket);
 }
