@@ -311,9 +311,8 @@ editingModal_saveButton.onclick = function() {
     info[informationColumns[editedMemory-1]] = editingModal_input.value;
     //update database
     let data_name = informationColumns[editedMemory-1]; //name of variable changed
-    let data_update = editingModal_input.value; //data of variable changed
-    console.log(data_name, data_update); // delete later
-    updateInfo(data_name, data_update);
+    let data_value = editingModal_input.value; //data of variable changed
+    updateInfo(data_name, data_value);
 
     
     editingModal.style.display = "none"; // Close editing modal
@@ -340,13 +339,13 @@ settingsSave.onclick = function() {
     alert("Settings updated!")
     settingsModal.style.display = "none";
 
-    //updateInfo(data_name, data_update, table);
+    //updateInfo(data_name, data_value, table);
 }
 
 //update user information in the database
-function updateInfo(data_name, data_update) {
+function updateInfo(data_name, data_value) {
     let sessionToken = sessionStorage.getItem("sessionToken");
-    let updatePacket = {data_name, data_update, sessionToken};
+    let updatePacket = {data_name, data_value, sessionToken};
     socket.emit("updateUserInfo", updatePacket);
 }
 
