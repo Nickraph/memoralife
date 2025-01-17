@@ -186,7 +186,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		for(i in accountSessions){
 			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
 				client.query('SELECT id FROM credentials WHERE id = $1', [accountSessions[i].accountID])
-				.then( results => { 
+				.then( results => { console.log(updatePacket.data_name); console.log(informationColumns.includes(updatePacket.data_name)); // delete later
 					if(results.rows[0] != null && (informationColumns.includes(updatePacket.data_name) || credentialsColumns.includes(updatePacket.data_name))){
 						client.query('UPDATE information SET ' + updatePacket.data_name + ' = $1 WHERE id = $2', [updatePacket.data_value, accountSessions[i].accountID])
 						.then(()=>{

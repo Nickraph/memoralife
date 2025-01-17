@@ -316,6 +316,7 @@ editingModal_saveButton.onclick = function() {
     //update database
     let data_name = informationColumns[editedMemory-1]; //name of variable changed
     let data_update = editingModal_input.value; //data of variable changed
+    console.log(data_name, data_update); // delete later
     updateInfo(data_name, data_update);
 }
 
