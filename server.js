@@ -184,11 +184,30 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 	socket.on("updateUserInfo", function(updatePacket){//called when user updates/edits profile info (later add email+pass editing)
 		for(i in accountSessions){
-			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
+			if(updatePacket.sessionToken === accountSessions[i].accountSessionToken){
 				client.query('SELECT id FROM credentials WHERE id = $1', [accountSessions[i].accountID])
-				.then( () => {
-					client.query('INSERT INTO information('+updatePacket.data_name+') VALUES($1)', [updatePacket.data_update]);
+				.then( results => {
+					if(results.rows.length > 0 && informationColumns.includes(updatePacket.data_name)){
+						client.query('UPDATE information SET ' + updatePacket.data_name + ' = $1 WHERE id = $2', [updatePacket.data_value, accountSessions[i].accountID])
+						.then(()=>{
+							socket.emit("showMessage", "Profile updated!");
+						})
+						.catch(err => {
+							console.error('Database query error:', err);
+							socket.emit('showMessage', 'An error occurred');
+						})
+					}
+					else{
+						socket.emit("showMessage", "Invalid update request.");
+					}
+				})
+				.catch(err => {	
+					console.error('Database query error:', err);
+					socket.emit('showMessage', 'An error occurred');
 				});
+			}
+			else{
+				socket.emit("showMessage", "Invalid session or user not found.");
 			}
 		}
 	});

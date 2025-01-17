@@ -105,13 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //Set user's full name in the menu bar
     document.getElementById("usernameHeader").innerText = info.name +" "+ info.surname;
 
-    //Prompt to open questionnaire if its first time loging in
-    if(info.infocompletion == 0){
-        var openQ = prompt("Welcome, "+info.name+". Seems like you are logging in for the first time. Would you like to complete a questionaire? Y/N")
-        if(openQ == "y" || openQ == "Y"){
-            openQuestionaire();
-        }
-    }
+    //add prompt to guide and/or questionnaire
 
     //Enter information in their fields
     document.getElementById("divinfo1").innerHTML = info.name;
@@ -372,4 +366,8 @@ socket.on("forceLogout", function(idToLogout){
         alert("Login detected from another browser or device. Logging you out.")
         logout();
     }
+});
+
+window.addEventListener("beforeunload", function () {
+    logout();
 });
