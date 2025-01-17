@@ -344,7 +344,6 @@ settingsSave.onclick = function() {
 //update user information in the database
 function updateInfo(data_name, data_update) {
     let sessionToken = sessionStorage.getItem("sessionToken");
-    console.log(sessionToken)
     let updatePacket = {data_name, data_update, sessionToken};
     socket.emit("updateUserInfo", updatePacket);
 }
