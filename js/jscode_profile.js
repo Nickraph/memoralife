@@ -106,6 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("usernameHeader").innerText = info.name +" "+ info.surname;
 
     //add prompt to guide and/or questionnaire
+    if(info.init === "not_init"){
+        alert("Take questionaire to complete your profile!");
+    }
 
     //Enter information in their fields
     document.getElementById("divinfo1").innerHTML = info.name;
