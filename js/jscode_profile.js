@@ -307,10 +307,6 @@ editingModal_closeBtn.onclick = function() {
 }
 
 editingModal_saveButton.onclick = function() {
-    editingModal.style.display = "none"; // Close editing modal
-    document.getElementById("divinfo"+editedMemory).innerText = editingModal_input.value;
-    editedMemory = undefined; //reset which memory is being edited
-
     //change info (localStorage)
     info[informationColumns[editedMemory-1]] = editingModal_input.value;
     //update database
@@ -318,6 +314,11 @@ editingModal_saveButton.onclick = function() {
     let data_update = editingModal_input.value; //data of variable changed
     console.log(data_name, data_update); // delete later
     updateInfo(data_name, data_update);
+
+    
+    editingModal.style.display = "none"; // Close editing modal
+    document.getElementById("divinfo"+editedMemory).innerText = editingModal_input.value;
+    editedMemory = undefined; //reset which memory is being edited
 }
 
 //"Edit Information Mode" related code--
