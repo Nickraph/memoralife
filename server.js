@@ -145,7 +145,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			})
 			.catch(err => {
 				console.error('Database query error:', err);
-				socket.emit('showMessage', 'An error occurred');
+				socket.emit('showMessage', 'An error occurred: ' + err.message);
 			})
 	});
 
