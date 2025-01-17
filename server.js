@@ -184,7 +184,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	socket.on("updateUserInfo", function(updatePacket){//called when user updates/edits profile info (later add email+pass editing)
 		for(i in accountSessions){
 			console.log(accountSessions[i].accountSessionToken);
-			if(updatePacket.sessionToken === accountSessions[i].accountSessionToken){
+			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
 				client.query('SELECT id FROM credentials WHERE id = $1', [accountSessions[i].accountID])
 				.then( results => {
 					if(results.rows.length > 0 && informationColumns.includes(updatePacket.data_name)){
