@@ -60,7 +60,7 @@ function searchUser(){
 socket.on("confirmLogin", function(data){//change username to email in css & index*
     var infodata = data.userInfo;
     
-    if(data.response == "logged"){//if server verified user credentials:
+    if(infodata.response == "logged"){//if server verified user credentials:
 
         if(infodata.stayLoggedIn){
             localStorage.setItem("SavedEmail", infodata.dbData.email);
