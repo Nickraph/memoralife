@@ -84,6 +84,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	var informationColumns = [
 		"name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
 	];
+	var credentialsColumns = ["email", "password", "accstatus", "visibility", "handle", "init"];
 
 	socket.on("client", function(){
 		console.log("client loaded.")
@@ -185,8 +186,8 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		for(i in accountSessions){
 			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
 				client.query('SELECT id FROM credentials WHERE id = $1', [accountSessions[i].accountID])
-				.then( results => { console.log(results.rows[0]+' ||| '+informationColumns.includes(updatePacket.data_name));
-					if(results.rows[0] != null && informationColumns.includes(updatePacket.data_name)){
+				.then( results => { 
+					if(results.rows[0] != null && (informationColumns.includes(updatePacket.data_name) || credentialsColumns.includes(updatePacket.data_name))){
 						client.query('UPDATE information SET ' + updatePacket.data_name + ' = $1 WHERE id = $2', [updatePacket.data_value, accountSessions[i].accountID])
 						.then(()=>{
 							socket.emit("showMessage", "Profile updated!");
