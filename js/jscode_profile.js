@@ -114,9 +114,18 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Take questionaire to complete your profile!");
     }
 
-    //Enter information in their fields
+    /*/Enter information in their fields
     document.getElementById("divinfo1").innerHTML = info.name;
-    document.getElementById("divinfo2").innerHTML = info.surname;
+    document.getElementById("divinfo2").innerHTML = info.surname;*/
+
+    // Enter information in their fields
+    informationColumns.forEach((data_name, index) => {
+        const divInfoElement = document.getElementById(`divinfo${index + 1}`);
+        if (divInfoElement) {
+            divInfoElement.innerHTML = info[data_name];
+        }
+    });
+
 });
 
 
