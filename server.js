@@ -190,7 +190,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					if(results.rows[0] != null && (informationColumns.includes(updatePacket.data_name) || credentialsColumns.includes(updatePacket.data_name))){
 						client.query('UPDATE information SET ' + updatePacket.data_name + ' = $1 WHERE id = $2', [updatePacket.data_value, accountSessions[i].accountID])
 						.then(()=>{
-							socket.emit("showMessage", "Profile updated!");
+							// database updated
 						})
 						.catch(err => {
 							console.error('Database query error:', err);
