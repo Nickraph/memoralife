@@ -31,11 +31,11 @@ function submitSignupInfo(){
     var firstname = document.getElementById("su_firstname_field").value.trim();
     var lastname = document.getElementById("su_lastname_field").value.trim();
 
-    if(email != "" && password != ""){
+    if(email != "" && password.length >= 8 && password.length <= 20){
         socket.emit("attemptSignup", {email, password, firstname, lastname});
     }
     else{
-        alert("Τα πεδία username και password δεν μπορούν να είναι κενά.")
+        alert("Το πεδίο email δεν μπορεί να είναι κενό και το πεδίο password πρέπει να είναι μεταξύ 8 και 20 χαρακτήρων.");
     }
 }
 

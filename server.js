@@ -101,7 +101,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		client.query('SELECT password FROM credentials WHERE email = $1;', [email])
 			.then(results => {
 				if(results.rows[0] != null && validateHash(password, results.rows[0].password)){
-					return client.query('SELECT c.accstatus, c.init, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
+					return client.query('SELECT c.accstatus, c.handle, c.init, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
 					.then((results) =>{
 						var dbResults = results.rows[0];//data string format
 						var userInfo; //array of data that will be sent to client in addition to dbData
@@ -156,7 +156,8 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		let firstname = data.firstname;
 		let lastname = data.lastname;
 
-		let handle = email.substring(0, 4);
+		let randomNumber = Math.random().toString().slice(2, 6);
+		let handle = email.substring(0, 4) + randomNumber;
 		
 		//hash password given by user
 		let password = hashPass(pass);
