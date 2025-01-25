@@ -35,7 +35,7 @@ function submitSignupInfo(){
         socket.emit("attemptSignup", {email, password, firstname, lastname});
     }
     else{
-        alert("Το πεδίο email δεν μπορεί να είναι κενό και το πεδίο password πρέπει να είναι μεταξύ 8 και 20 χαρακτήρων.");
+        alert("Προσθέστε ένα έγκυρο email και έναν κωδικό μεταξύ 8 και 20 χαρακτήρων.");
     }
 }
 
