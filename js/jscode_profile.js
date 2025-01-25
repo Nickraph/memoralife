@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
         "name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
     ];
 
+    //add user handle to settings handleSpan
+    document.getElementById("handleSpan").innerHTML = "Your handle: "+info.handle;
+
     // Generate all memory (text & media) storing divs & category dividers dynamically.
     const memoryContainer = document.getElementById("memory-container");
 	const memoryFieldNames = [
