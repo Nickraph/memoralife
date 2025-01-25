@@ -6,7 +6,7 @@ window.onload = function(){
     }
 }
 
-var modalState = "login";
+//var modalState = "login";
 
 function submitCredentials(){
     var email = document.getElementById("email_field").value.trim();
@@ -39,6 +39,7 @@ function submitSignupInfo(){
     }
 }
 
+/*
 function switchModal(){
     if(modalState=="login"){
         document.getElementById("loginModal").style.display = "none";
@@ -50,7 +51,7 @@ function switchModal(){
         document.getElementById("loginModal").style.display = "block";
         modalState = "login";
     }
-}
+}*/
 
 function searchUser(){
     let handle = document.getElementById("searchUser_field").value;

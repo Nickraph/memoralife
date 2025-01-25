@@ -140,7 +140,7 @@
                        
                      <!-- Modal -->
                      <div class="modal fade" id="loginModal" role="dialog" tabindex="-1">
-                      <div class="modal-dialog modal-lg">
+                      <div class="modal-dialog modal-lg" style="width: 30%;">
                        <div class="modal-content">
                         <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -168,12 +168,7 @@
                             Remember me
                         </label>
                         </div>
-                        <h6>Δεν έχετε λογαριασμό; <a onclick="switchModal();">Δημιουργήστε έναν.</a></h6>
-                        </div>
-
-
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <h5>Δεν έχετε λογαριασμό;<a data-toggle="modal" data-target="#signupModal" data-dismiss="modal" data-target="#loginModal" href="">Δημιουργήστε έναν.</a></h5>
                         </div>
                       </div>
                     </div>
@@ -190,13 +185,13 @@
 
                          <!-- Modal -->
                          <div class="modal fade" id="signupModal" role="dialog" tabindex="-1">
-                          <div class="modal-dialog modal-lg">
+                          <div class="modal-dialog modal-lg" style="width: 30%;">
                            <div class="modal-content">
                             <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <button type="button" class="close ml-auto" data-dismiss="modal">&times;</button>
                              <h4 class="modal-title">Εγγραφή</h4>
                                </div>
-                            <div class="modal-body">                      
+                            <div class="modal-body" style="text-align: center;">                      
                             
                             <!--NAME-->
                             <div class="username">
@@ -217,17 +212,12 @@
                             <div class="password">
                             <label for="psw"><b>Password</b></label><br>
                             <input type="password" placeholder="Enter Password" id="su_password_field" name="psw" required>
-                            </div><br>
+                            </div><br>  <br>
                             <!-- Submit Button -->
                             <div class="login-remember-create">
-                            <button type="submit" onclick="submitSignupInfo();" class="btn btn-success">Sign Up</button>
+                            <button type="submit" style="width: 50%; height: auto; border: 1px solid black;" onclick="submitSignupInfo();" class="btn btn-success">Sign Up</button><br><br>
                             
-                            <h6>Έχετε λογαριασμό; <a onclick="switchModal();">Συνδεθείτε εδώ.</a></h6>
-                            </div>
-    
-    
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <h5>Έχετε ήδη λογαριασμό; <a data-toggle="modal" data-target="#loginModal" data-dismiss="modal" data-target="#signupModal" href="">Συνδεθείτε εδώ.</a></h5><br>
                             </div>
                           </div>
                         </div>
