@@ -358,6 +358,37 @@ function updateInfo(data_name, data_value) {
     socket.emit("updateUserInfo", updatePacket);
 }
 
+//update user credentials in the database
+function updateCredentials(data_name, data_value) {
+    let sessionToken = sessionStorage.getItem("sessionToken");
+    let updatePacket = {data_name, data_value, sessionToken};
+    socket.emit("updateUserInfo", updatePacket);
+}
+
+function saveSettings() {
+    let new_email = document.getElementById("settingsModal-email").value;
+    let old_password = document.getElementById("settingsModal-oldPassword").value;
+    let new_password = document.getElementById("settingsModal-newPassword").value;
+
+    if(new_email != ""){
+        let sessionToken = sessionStorage.getItem("sessionToken");
+        let data_name = "email";
+        let data_value = new_email;
+        let updatePacket = {data_name, data_value, sessionToken};
+
+        updateCredentials("updateCredentials", updatePacket);
+    }
+
+    if(old_password != "" && new_password != ""){
+        let sessionToken = sessionStorage.getItem("sessionToken");
+        let data_name = "password";
+        let data_value = new_password;
+        let updatePacket = {data_name, data_value, old_password, sessionToken};
+
+        updateCredentials("updateCredentials", updatePacket);
+    }
+}
+
 function logout() {
     let sessionToken = sessionStorage.getItem("sessionToken");
     socket.emit("logout", sessionToken)

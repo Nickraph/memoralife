@@ -182,13 +182,47 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			})
 	});
 
-	socket.on("updateUserInfo", function(updatePacket){//called when user updates/edits profile info (later add email+pass editing)
+	socket.on("updateUserInfo", function(updatePacket){//called when user updates/edits profile info
 		for(i in accountSessions){
 			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
 				client.query('SELECT id FROM credentials WHERE id = $1', [accountSessions[i].accountID])
 				.then( results => {
 					if(results.rows[0] != null && (informationColumns.includes(updatePacket.data_name) || credentialsColumns.includes(updatePacket.data_name))){
 						client.query('UPDATE information SET ' + updatePacket.data_name + ' = $1 WHERE id = $2', [updatePacket.data_value, accountSessions[i].accountID])
+						.then(()=>{							
+									// database updated
+						})
+						.catch(err => {
+							console.error('Database query error:', err);
+							socket.emit('showMessage', 'An error occurred');
+						})
+					}
+					else{
+						socket.emit("showMessage", "Invalid update request.");
+					}
+				})
+				.catch(err => {	
+					console.error('Database query error:', err);
+					socket.emit('showMessage', 'An error occurred');
+				});
+			}
+			else{
+				socket.emit("showMessage", "Invalid session or user not found.");
+			}
+		}
+	});
+
+	socket.on("updateCredentials", function(updatePacket){//called when user updates login credentials
+		for(i in accountSessions){
+			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
+				client.query('SELECT id FROM credentials WHERE id = $1', [accountSessions[i].accountID])
+				.then( results => {
+					if(results.rows[0] != null && (credentialsColumns.includes(updatePacket.data_name) || credentialsColumns.includes(updatePacket.data_name))){
+						if(updatePacket.data_name == "password"){
+							
+						}
+						
+						client.query('UPDATE credentials SET ' + updatePacket.data_name + ' = $1 WHERE id = $2', [updatePacket.data_value, accountSessions[i].accountID])
 						.then(()=>{							
 									// database updated
 						})
