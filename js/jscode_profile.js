@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     //Retrieve user information from localStorage
     info = JSON.parse(localStorage.getItem("userInfo"));
     let token = localStorage.getItem("sessionToken");
-    console.log(token)
     localStorage.removeItem("sessionToken");
     sessionStorage.setItem("sessionToken", token);
 
