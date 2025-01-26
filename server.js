@@ -101,7 +101,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		client.query('SELECT password FROM credentials WHERE email = $1;', [email])
 			.then(results => {
 				if(results.rows[0] != null && validateHash(password, results.rows[0].password)){
-					return client.query('SELECT c.accstatus, c.handle, c.init, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
+					return client.query('SELECT c.accstatus, c.email, c.handle, c.init, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
 					.then((results) =>{
 						var dbResults = results.rows[0];//data string format
 						var userInfo; //array of data that will be sent to client in addition to dbData
@@ -186,10 +186,10 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	socket.on("updateUserInfo", function(updatePacket){//called when user updates/edits profile info
 		for(i in accountSessions){
 			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
-				client.query('SELECT id FROM credentials WHERE id = $1', [accountSessions[i].accountID])
-				.then( results => {
-					if(results.rows[0] != null && (informationColumns.includes(updatePacket.data_name) || credentialsColumns.includes(updatePacket.data_name))){
-						client.query('UPDATE information SET ' + updatePacket.data_name + ' = $1 WHERE id = $2', [updatePacket.data_value, accountSessions[i].accountID])
+				let userID = accountSessions[i].accountID;
+
+					if(informationColumns.includes(updatePacket.data_name)){
+						client.query('UPDATE information SET ' + updatePacket.data_name + ' = $1 WHERE id = $2', [updatePacket.data_value, userID])
 						.then(()=>{							
 									// database updated
 						})
@@ -201,11 +201,6 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					else{
 						socket.emit("showMessage", "Invalid update request.");
 					}
-				})
-				.catch(err => {	
-					console.error('Database query error:', err);
-					socket.emit('showMessage', 'An error occurred');
-				});
 			}
 			else{
 				socket.emit("showMessage", "Invalid session or user not found.");
@@ -216,30 +211,43 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	socket.on("updateCredentials", function(updatePacket){//called when user updates login credentials
 		for(i in accountSessions){
 			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
-				client.query('SELECT id FROM credentials WHERE id = $1', [accountSessions[i].accountID])
-				.then( results => {
-					if(results.rows[0] != null && (credentialsColumns.includes(updatePacket.data_name) || credentialsColumns.includes(updatePacket.data_name))){
-						if(updatePacket.data_name == "password"){
-							
+				let userID = accountSessions[i].accountID;
+
+				if(updatePacket.data_name == "password"){
+					client.query('SELECT password FROM credentials WHERE id = $1', [userID]) // check if current password is correct
+					.then(results => {
+						if(results.rows[0] != null && validateHash(updatePacket.old_password, results.rows[0].password)){ //if current password was found and is correct
+							client.query('UPDATE credentials SET password = $1 WHERE id = $2', [updatePacket.data_value, userID]) //update password
+							.then(()=>{							
+								// database updated
+							})
+							.catch(err => {
+								console.error('Database query error:', err);
+								socket.emit('showMessage', 'An error occurred');
+							})
 						}
-						
-						client.query('UPDATE credentials SET ' + updatePacket.data_name + ' = $1 WHERE id = $2', [updatePacket.data_value, accountSessions[i].accountID])
-						.then(()=>{							
-									// database updated
-						})
-						.catch(err => {
-							console.error('Database query error:', err);
-							socket.emit('showMessage', 'An error occurred');
-						})
-					}
-					else{
-						socket.emit("showMessage", "Invalid update request.");
-					}
-				})
-				.catch(err => {	
-					console.error('Database query error:', err);
-					socket.emit('showMessage', 'An error occurred');
-				});
+						else{
+							socket.emit("showMessage", "Invalid update request.");
+						}
+					})
+					.catch(err => {	
+						console.error('Database query error:', err);
+						socket.emit('showMessage', 'An error occurred');
+					});
+				}
+				else if(updatePacket.data_name == "email"){
+					client.query('UPDATE credentials SET email = $1 WHERE id = $2', [updatePacket.data_value, userID]) //update email
+					.then(()=>{							
+						// database updated
+					})
+					.catch(err => {
+						console.error('Database query error:', err);
+						socket.emit('showMessage', 'An error occurred');
+					})
+				}
+				else{
+					socket.emit("showMessage", "Invalid update request.");
+				}
 			}
 			else{
 				socket.emit("showMessage", "Invalid session or user not found.");
