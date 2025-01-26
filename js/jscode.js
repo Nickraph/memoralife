@@ -1,8 +1,9 @@
 var socket = io.connect('https://memoralife.onrender.com/');
 
 window.onload = function(){
-    if(localStorage.getItem("rememberEmail")){
+    if(localStorage.getItem("rememberMe")){
         document.getElementById("email_field").value = localStorage.getItem("SavedEmail");
+        document.getElementById("rememberMe-checkbox").checked = true;
     }
 }
 
@@ -63,11 +64,15 @@ socket.on("confirmLogin", function(data){//change username to email in css & ind
     
     if(infodata.response == "logged"){//if server verified user credentials:
 
-        if(infodata.stayLoggedIn){
+        let rememberMe = document.getElementById("rememberMe-checkbox").checked;
+        // save user's email for next visit
+        if(rememberMe){
+            localStorage.setItem("rememberEmail", true);
             localStorage.setItem("SavedEmail", infodata.dbData.email);
         }
         else{
-            localStorage.setItem("SavedEmail", "");    
+            localStorage.setItem("rememberEmail", false);
+            localStorage.setItem("SavedEmail", "");
         }
 
         //save user information in local storage to load them in profile.html
