@@ -246,6 +246,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					})
 				}
 				else if(updatePacket.data_name == "visibility"){ //update account visibility
+					console.log("userID:"+userID+" visibility update request received, update to: " + updatePacket.data_value);
 					client.query('UPDATE credentials SET visibility = $1 WHERE id = $2', [updatePacket.data_value, userID]) //update email
 					.then(()=>{							
 						// database updated
