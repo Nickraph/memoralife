@@ -217,7 +217,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					client.query('SELECT password FROM credentials WHERE id = $1', [userID]) // check if current password is correct
 					.then(results => {
 						if(results.rows[0] != null && validateHash(updatePacket.old_password, results.rows[0].password)){ //if current password was found and is correct
-							client.query('UPDATE credentials SET password = $1 WHERE id = $2', [updatePacket.data_value, userID]) //update password
+							client.query('UPDATE credentials SET password = $1 WHERE id = $2', [hashPass(updatePacket.data_value), userID]) //update password
 							.then(()=>{							
 								// database updated
 							})

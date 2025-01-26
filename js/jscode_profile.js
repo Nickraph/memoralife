@@ -373,7 +373,6 @@ function saveSettings() {
         let updatePacket = {data_name, data_value, sessionToken};
 
         socket.emit("updateCredentials", updatePacket);
-        logout();
     }
 
     if(old_password != "" && new_password != ""){
@@ -383,7 +382,6 @@ function saveSettings() {
         let updatePacket = {data_name, data_value, old_password, sessionToken};
 
         socket.emit("updateCredentials", updatePacket);
-        logout();
     }
 
     const radio_private = document.getElementById('radio_private').checked;
@@ -405,6 +403,8 @@ function saveSettings() {
 
         socket.emit("updateCredentials", updatePacket);
     }
+
+    logout();
 }
 
 function logout() {
