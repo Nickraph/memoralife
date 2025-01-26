@@ -80,15 +80,20 @@
     <span id="settingsModal-closeBtn" class="settingsModal-closeBtn">&times;</span>
     <h2 id="settingsModal-header"></h2>
     <label style="font-weight: bolder;" class="settingsModal-label" for="settingsModal-email">Change email:</label><br>
-    <input type="email" placeholder="Your new email" class="settingsModal-input" id="settingsModal-email"><br><br>
-    <span id="currentEmail"></span><br>
+    <input type="email" placeholder="Your new email" class="settingsModal-input" id="settingsModal-email"><br>
+    <span style="font-size: small;" id="currentEmail"></span><br><br>
     <label style="font-weight: bolder;" class="settingsModal-label" for="settingsModal-password">Change password:</label><br>
     <input type="password" placeholder="Your old password" class="settingsModal-input" id="settingsModal-passwordOld"><br>
     <input type="password" placeholder="Your new password" class="settingsModal-input" id="settingsModal-passwordNew"><br><br>
     
-    <br><span style="font-size: small;" id="handleSpan"></span><br><br>
+    <br><span style="font-size: small;" id="handleSpan"></span><br>
+    <form>
+        <input type="radio" id="radio_private" value="private"> Private
+        <input type="radio" id="radio_visible" value="visible"> Visible
+    </form>
     
     <button onclick="saveSettings()" id="settingsModal-saveBtn">Save</button>
+    <span style="font-size: smaller;">Changing your settings will log you out</span>
   </div>
 </div>
 

@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
     //add settings details
     document.getElementById("handleSpan").innerHTML = "Your handle: "+info.handle;
     document.getElementById("currentEmail").innerHTML = "Current email: "+info.email;
+    if(info.visibility == "private"){
+        document.getElementById('private').checked = true;
+    }
+    else{
+        document.getElementById('visible').checked = true;
+    }
 
     // Generate all memory (text & media) storing divs & category dividers dynamically.
     const memoryContainer = document.getElementById("memory-container");
@@ -348,13 +354,6 @@ settingsClose.onclick = function() {
     settingsModal.style.display = "none";
 }
 
-settingsSave.onclick = function() {
-    alert("Settings updated!")
-    settingsModal.style.display = "none";
-
-    //updateInfo(data_name, data_value, table);
-}
-
 //update user information in the database
 function updateInfo(data_name, data_value) {
     let sessionToken = sessionStorage.getItem("sessionToken");
@@ -363,12 +362,6 @@ function updateInfo(data_name, data_value) {
 }
 
 //update user credentials in the database
-function updateCredentials(data_name, data_value) {
-    let sessionToken = sessionStorage.getItem("sessionToken");
-    let updatePacket = {data_name, data_value, sessionToken};
-    socket.emit("updateUserInfo", updatePacket);
-}
-
 function saveSettings() {
     let new_email = document.getElementById("settingsModal-email").value;
     let old_password = document.getElementById("settingsModal-oldPassword").value;
@@ -380,7 +373,8 @@ function saveSettings() {
         let data_value = new_email;
         let updatePacket = {data_name, data_value, sessionToken};
 
-        updateCredentials("updateCredentials", updatePacket);
+        socket.emit("updateCredentials", updatePacket);
+        logout();
     }
 
     if(old_password != "" && new_password != ""){
@@ -389,7 +383,27 @@ function saveSettings() {
         let data_value = new_password;
         let updatePacket = {data_name, data_value, old_password, sessionToken};
 
-        updateCredentials("updateCredentials", updatePacket);
+        socket.emit("updateCredentials", updatePacket);
+        logout();
+    }
+
+    const radio_private = document.getElementById('radio_private').checked;
+    const radio_visible = document.getElementById('radio_visible').checked;
+
+    if(info.visibility == "private" && radio_visible){
+        let sessionToken = sessionStorage.getItem("sessionToken");
+        let data_name = "visibility";
+        let data_value = "visible";
+        let updatePacket = {data_name, data_value, sessionToken};
+
+        socket.emit("updateCredentials", updatePacket);
+    }
+    else if(info.visibility == "visible" && radio_private){
+        let sessionToken = sessionStorage.getItem("sessionToken");
+        let data_name = "visibility";
+        let data_value = "private";
+
+        socket.emit("updateCredentials", updatePacket);
     }
 }
 

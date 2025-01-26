@@ -101,7 +101,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		client.query('SELECT password FROM credentials WHERE email = $1;', [email])
 			.then(results => {
 				if(results.rows[0] != null && validateHash(password, results.rows[0].password)){
-					return client.query('SELECT c.accstatus, c.email, c.handle, c.init, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
+					return client.query('SELECT c.accstatus, c.email, c.visibility, c.handle, c.init, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
 					.then((results) =>{
 						var dbResults = results.rows[0];//data string format
 						var userInfo; //array of data that will be sent to client in addition to dbData
@@ -237,6 +237,16 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				}
 				else if(updatePacket.data_name == "email"){
 					client.query('UPDATE credentials SET email = $1 WHERE id = $2', [updatePacket.data_value, userID]) //update email
+					.then(()=>{							
+						// database updated
+					})
+					.catch(err => {
+						console.error('Database query error:', err);
+						socket.emit('showMessage', 'An error occurred');
+					})
+				}
+				else if(updatePacket.data_name == "visibility"){ //update account visibility
+					client.query('UPDATE credentials SET visibility = $1 WHERE id = $2', [updatePacket.data_value, userID]) //update email
 					.then(()=>{							
 						// database updated
 					})
