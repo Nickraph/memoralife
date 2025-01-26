@@ -105,9 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
     //Set user's full name in the menu bar
     document.getElementById("usernameHeader").innerText = info.name +" "+ info.surname;
 
-    //Enter information in their fields
-    document.getElementById("divinfo1").innerHTML = info.name;
-    document.getElementById("divinfo2").innerHTML = info.surname;
+    // Enter information in their fields
+    informationColumns.forEach((data_name, index) => {
+        const divInfoElement = document.getElementById(`divinfo${index + 1}`);
+        if (divInfoElement) {
+            divInfoElement.innerHTML = info[data_name];
+        }
+    });
 });
 
 // Clear the data when the window is about to close
