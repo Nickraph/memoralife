@@ -24,10 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("handleSpan").innerHTML = "Your handle: "+info.handle;
     document.getElementById("currentEmail").innerHTML = "Current email: "+info.email;
     if(info.visibility == "private"){
-        document.getElementById('private').checked = true;
+        document.getElementById('radio_private').checked = true;
     }
     else{
-        document.getElementById('visible').checked = true;
+        document.getElementById('radio_visible').checked = true;
     }
 
     // Generate all memory (text & media) storing divs & category dividers dynamically.
@@ -402,6 +402,7 @@ function saveSettings() {
         let sessionToken = sessionStorage.getItem("sessionToken");
         let data_name = "visibility";
         let data_value = "private";
+        let updatePacket = {data_name, data_value, sessionToken};
 
         socket.emit("updateCredentials", updatePacket);
     }
