@@ -46,7 +46,7 @@ function searchUser(){
 }
 
 function openSignupModal(){
-    document.getElementById("signupModal").style.display = "block";
+    document.getElementById("signupSuccessModal").style.display = "flex";
 }
 
 socket.on("confirmLogin", function(data){//change username to email in css & index*
