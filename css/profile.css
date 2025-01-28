@@ -73,8 +73,8 @@ main {
 /* Profile Picture - Now Square with Rounded Corners */
 .profile-picture {
     position: relative;
-    width: 250px; /* Adjust the size as needed */
-    height: 250px; /* Make it square */
+    width: 225px; /* Adjust the size as needed */
+    height: 225px; /* Make it square */
     border-radius: 15px; /* Adjust the value to make it curved */
     overflow: hidden; /* Ensures the image stays inside the frame */
     display: flex; /* Centers the image within the frame */
