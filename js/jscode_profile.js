@@ -68,13 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
         readMoreBtn.classList.add("read-more-btn");
         readMoreBtn.textContent = "Read more";
 
-        //Handle expand/collapse logic
+        //Handle full text modal logic
         readMoreBtn.addEventListener("click", function (){
-            memoryBox.classList.toggle("expanded");
-            readMoreBtn.textContent =
-                memoryBox.classList.contains("expanded")
-                    ? "Read less"
-                    : "Read more";
+            let fullTextModal = document.getElementById("fullTextModal");
+            let fullTextModal_text = document.getElementById("fullTextModal-text");
+            fullTextModal_text.innerText = paragraph.innerText;
+            fullTextModal.style.display = "flex";
         });
 
         //Append elements to memoryBox
