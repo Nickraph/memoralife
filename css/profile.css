@@ -484,7 +484,7 @@ main {
     border: none;
     border-radius: 5px;
     opacity: 0; /* Start with opacity 0 (invisible) */
-    transition: opacity 3s ease-in; /* Smooth transition */
+    transition: opacity 6s ease-in; /* Smooth transition */
     cursor: pointer;
 }
 
