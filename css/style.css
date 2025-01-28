@@ -724,5 +724,37 @@ a:focus {
   color: #ffffff;
 }
 
+.signupSuccessModal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Make sure modal is above other content */
+}
+
+/* Modal content */
+.signupSuccessModal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%; /* Modal width */
+  max-width: 600px; /* Max width of modal */
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Modal header */
+#initModal-header {
+  color: #00852c;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */

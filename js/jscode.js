@@ -45,6 +45,10 @@ function searchUser(){
     socket.emit("searchUser", handle);
 }
 
+function openSignupModal(){
+    document.getElementById("signupModal").style.display = "block";
+}
+
 socket.on("confirmLogin", function(data){//change username to email in css & index*
     var infodata = data.userInfo;
     
@@ -91,7 +95,15 @@ socket.on("saveSessionToken", function(data){
 
 socket.on("showMessage", function(msg){
     if(msg == "Account Created!"){
-        document.getElementById("signupModal").innerHTML = "Account Created!";
+        //close signup modal and clear fields
+        document.getElementById("signupModal").style.display = "none";
+        document.getElementById("su_email_field").value = "";
+        document.getElementById("su_password_field").value = "";
+        document.getElementById("su_firstname_field").value = "";
+        document.getElementById("su_lastname_field").value = "";
+
+        //show success modal
+        openSignupSuccessModal();
     }
     else{
         alert(msg);
