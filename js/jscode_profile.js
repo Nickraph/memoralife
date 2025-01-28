@@ -145,7 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
 //init modal proceed btn
 const initBtn = document.getElementById("initModal-Btn");
 initBtn.onclick = function() {
-    openQuestionaire(); // Open the questionnaire
+    //close modal
+    document.getElementById("initModal").style.display = "none";
+    // Open the questionnaire
+    openQuestionaire();
 }
 
 
@@ -209,7 +212,7 @@ function openQuestionaire() {
         textArea.classList.add("questionnaireTextarea");
         textArea.id = `questionnaireAnswer_${i}`;
         let index = parseInt(i, 10);
-        textArea.innerText = document.getElementById(`divinfo${index+1}`).innerText;
+        textArea.innerText = document.getElementById(`divinfo${index+3}`).innerText;
       
         labelContainer.appendChild(questionLabel);
         questionDiv.appendChild(labelContainer);
