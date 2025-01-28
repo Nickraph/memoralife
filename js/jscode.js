@@ -40,20 +40,6 @@ function submitSignupInfo(){
     }
 }
 
-/*
-function switchModal(){
-    if(modalState=="login"){
-        document.getElementById("loginModal").style.display = "none";
-        document.getElementById("signupModal").style.display = "block";
-        modalState = "signup";
-    }
-    else{
-        document.getElementById("signupModal").style.display = "none";
-        document.getElementById("loginModal").style.display = "block";
-        modalState = "login";
-    }
-}*/
-
 function searchUser(){
     let handle = document.getElementById("searchUser_field").value;
     socket.emit("searchUser", handle);
@@ -104,5 +90,10 @@ socket.on("saveSessionToken", function(data){
 });
 
 socket.on("showMessage", function(msg){
-    alert(msg);
+    if(msg == "Account Created!"){
+        document.getElementById("signupModal").innerHTML = "Account Created!";
+    }
+    else{
+        alert(msg);
+    }
   });
