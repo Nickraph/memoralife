@@ -114,6 +114,11 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 							//check if user is logged in elsewhere -> delete session and log them out
 							for(i in accountSessions){
+
+								//console log both to check if they match
+								console.log("dbData.id: " + dbData.id);
+								console.log("accountSessionID: " + accountSessions[i].accountID);
+
 								if(dbData.id == accountSessions[i].accountID){
 									// delete session
 									accountSessions.splice(i,1); //remove session entry
