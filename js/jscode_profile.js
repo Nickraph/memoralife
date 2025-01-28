@@ -210,7 +210,7 @@ function openQuestionaire() {
 
     modal.style.display = "flex";
 }
-
+/*
 span.onclick = function() {
     // Save the answer to the current question
     modal.style.display = "none";
@@ -220,50 +220,7 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
-}
-
-/*nextBtn.onclick = function() {
-    // Save the answer to the current question
-    answers[currentQuestionIndex] = answerField.value;
-
-    // Move to the next question or finish
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-        loadQuestion();
-    } else {
-        finishQuestions();
-        currentQuestionIndex = 0;
-    }
 }*/
-
-function loadQuestions() {
-    answerField.value = ""; // Clear the previous answer
-    questionTitle.innerText = questions[currentQuestionIndex];
-    nextBtn.innerText = currentQuestionIndex === questions.length - 1 ? "Finish" : "Next"; // Change button text
-
-    for(i in questions){
-
-    }
-}
-
-function finishQuestions() {
-    modal.style.display = "none"; // Close modal
-    
-    //loop through every answers[] item and set the answer to the respective div
-    for(i in answers){
-        const index = parseInt(i, 10);
-        document.getElementById(`divinfo${index+3}`).innerHTML = answers[index];
-        //change info (localStorage)
-        info[informationColumns[index]] = answers[index];
-    }
-
-    //update database
-    updateInfo(info);
-
-    console.log("Finished Questions:", answers);
-}
-
-//questionaire (modal) related code--
 
 //"Edit Information Mode" related code++
 

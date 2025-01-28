@@ -255,6 +255,16 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 						socket.emit('showMessage', 'An error occurred');
 					})
 				}
+				else if(updatePacket.data_name == "init"){ //update account initialization status 
+					client.query('UPDATE credentials SET init = $1 WHERE id = $2', [updatePacket.data_value, userID]) //update email
+					.then(()=>{							
+						// database updated
+					})
+					.catch(err => {
+						console.error('Database query error:', err);
+						socket.emit('showMessage', 'An error occurred');
+					})
+				}
 				else{
 					socket.emit("showMessage", "Invalid update request.");
 				}
