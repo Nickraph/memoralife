@@ -71,11 +71,24 @@ main {
 }
 
 /* Profile Picture - Now Square with Rounded Corners */
-.profile-picture img {
-    width: 200px;
-    height: 200px;
-    border-radius: 10px; /* Slightly rounded corners */
+.profile-picture {
+    position: relative;
+    width: 250px; /* Adjust the size as needed */
+    height: 250px; /* Make it square */
+    border-radius: 15px; /* Adjust the value to make it curved */
+    overflow: hidden; /* Ensures the image stays inside the frame */
+    display: flex; /* Centers the image within the frame */
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #000000; /* Optional: Add a border for better visibility */
 }
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image fits inside the frame */
+    object-position: center; /* Keeps the image centered */
+  }
 
 /* Button Container */
 .button-container {
@@ -189,12 +202,12 @@ main {
 
 /*Profile Pic Edit Button*/
 #pfp-edit-btn {
-    position: relative;
-    top: 10px;
-    right: 50%;
+    position: absolute; /* Position relative to the parent container */
+    bottom: 10px; /* Adjust as needed to create space from the bottom edge */
+    left: 50%; /* Align the button horizontally to the center */
+    transform: translateX(-50%); /* Center the button by offsetting its width */
     min-width: 65px;
     z-index: 1;
-    display: none; /* Hidden initially */
     background-color: rgb(255, 102, 0);
     color: rgb(255, 255, 255);
     font-weight: bold;
@@ -202,6 +215,7 @@ main {
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 5px;
+    display: none; /* Hidden initially */
 }
 
 .upload-buttons{
