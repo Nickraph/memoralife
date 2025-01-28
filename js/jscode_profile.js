@@ -122,10 +122,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if(info.init === "not_init"){
         document.getElementById("initModal").style.display = "flex"; // Display modal
 
-        //add show class to initModal-Btn after 3 seconds
+        //add show class to initModal-Btn after 2 seconds
         setTimeout(function() {
             document.getElementById("initModal-Btn").classList.add("show");
-        }, 3000);
+        }, 2000);
 
         let sessionToken = sessionStorage.getItem("sessionToken");
         let data_name = "init";
