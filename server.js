@@ -292,7 +292,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			.then(results => {
 				//check if account visibility is set to public
 				if(results.rows[0] != null && results.rows[0].visibility === "visible"){
-					client.query('SELECT i.* FROM information WHERE id = $1', [results.rows[0].id])
+					client.query('SELECT i.* FROM information i WHERE id = $1', [results.rows[0].id])
 						.then((results) =>{
 							var dbResults = results.rows[0];//data string format
 
