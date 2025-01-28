@@ -288,11 +288,11 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	socket.on("searchUser", function(handle){
 		var userInfo; //array of data that will be sent to client in addition to dbData
 
-		client.query('SELECT visibility, handle FROM credentials WHERE handle = $1;', [handle])
+		client.query('SELECT id, visibility, handle FROM credentials WHERE handle = $1;', [handle])
 			.then(results => {
 				//check if account visibility is set to public
 				if(results.rows[0] != null && results.rows[0].visibility === "visible"){
-					return client.query('SELECT i.* FROM information i')
+					client.query('SELECT i.* FROM information WHERE id = $1', [results.rows[0].id])
 						.then((results) =>{
 							var dbResults = results.rows[0];//data string format
 
