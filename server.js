@@ -120,19 +120,19 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 								console.log("accountSessionID: " + accountSessions[i].accountID);
 
 								if(dbData.id == accountSessions[i].accountID){
-									// delete session
-									accountSessions.splice(i,1); //remove session entry
-
 									// force logout client-side
 									let sessionToLogout = accountSessions[i].accountSessionToken;
 									io.emit("forceLogout", sessionToLogout)
+									
+									// delete session
+									accountSessions.splice(i,1); //remove session entry
 								}
 							}
 
 							var accountSessionToken = crypto.randomBytes(32).toString('hex');
 
                             if (dbData.accstatus == "active") {
-								// final check, if user is active match sessionToken with accountID and push into active sessions
+								// final check, if user is active -> match sessionToken with accountID and push into active sessions
 								let accountID = dbData.id;
 								accountSessions.push({"accountID": accountID, "accountSessionToken": accountSessionToken});
                                 
