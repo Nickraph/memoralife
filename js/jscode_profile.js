@@ -411,6 +411,10 @@ socket.on("showMessage", function(msg) {
 
 socket.on("forceLogout", function(sessionToLogout){
     let sessionToken = sessionStorage.getItem("sessionToken");
+    
+    //console.log both session tokens
+    console.log("sessionToken: "+sessionToken);
+    console.log("sessionToLogout: "+sessionToLogout);
 
     if(sessionToken == sessionToLogout){
         alert("Login detected from another browser or device. Logging you out.")
