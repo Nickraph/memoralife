@@ -710,5 +710,19 @@ a:focus {
   color: #fbfcfd;
 }
 
+#loginBtn{
+  background-color: #0000007a;
+  color: #dfdfdf;
+  border: black 1px solid;
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin-top: 35px;
+}
+
+#loginBtn:hover{
+  background-color: #555555e7;
+  color: #ffffff;
+}
+
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */
