@@ -724,7 +724,7 @@ a:focus {
   color: #ffffff;
 }
 
-.signupSuccessModal {
+#signupSuccessModal {
   display: none; /* Hidden by default */
   position: fixed;
   top: 0;
@@ -738,7 +738,7 @@ a:focus {
 }
 
 /* Modal content */
-.signupSuccessModal-content {
+#signupSuccessModal-content {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -749,7 +749,7 @@ a:focus {
 }
 
 /* Modal header */
-#initModal-header {
+#signupSuccessModal-header {
   color: #00852c;
   font-size: 30px;
   font-weight: bold;
