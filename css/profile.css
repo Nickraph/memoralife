@@ -485,7 +485,6 @@ main {
     border-radius: 5px;
     opacity: 0; /* Start with opacity 0 (invisible) */
     transition: opacity 3s ease-in; /* Smooth transition */
-    pointer-events: none; /* Prevent clicking until the button is visible */
     cursor: pointer;
 }
 

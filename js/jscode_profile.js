@@ -1,6 +1,6 @@
 var socket = io.connect('https://memoralife.onrender.com/');
 
-var info;
+var info; // ! USE THIS VARIABLE INSTEAD OF LOCALSTORAGE. LOCALSTORAGE BECOMES OUTDATED WHEN USER EDITS INFO !
 const memoryFieldNames_global = [
     "First name:","Last name:","Date of birth:","Place of birth:","Nickname:","Current address:","Family","Family's occupations:","Pets:","Childhood:","Childhood address:","School:","Love:","Additional notes:","Studies:","Career:","Marriage:","Partner:","Children:","Additional notes:","Grandchildren:","Values:","Achievements:","Foods & Recipes:","Scents:","Entertainment:","Season:","Media:","Music:","Hobbies:","Additional:","Dislikes:","Routine:"
 ];
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //add prompt to guide and/or questionnaire
     if(info.init === "not_init"){
         document.getElementById("initModal").style.display = "flex"; // Display modal
-        
+
         //add show class to initModal-Btn after 100ms
         setTimeout(function() {
             document.getElementById("initModal-Btn").classList.add("show");
@@ -160,9 +160,10 @@ initBtn.onclick = function() {
 
 //questionaire (modal) related code++
 
-const modal = document.getElementById("questionnaireModal");
-const QuestionnaireBtn = document.getElementById("openQuestionnaireBtn");
-const span = document.getElementById("closeQModal");
+const questionnaireBtn = document.getElementById("openQuestionnaireBtn"); // open Q button
+const questionnaireModal = document.getElementById("questionnaireModal"); // modal
+const questionnaireClose= document.getElementById("closeQModal"); // X button modal
+const questionnaireSave = document.getElementById("questionnaireModal-saveButton"); // save button modal
 
 
 const questions = [
@@ -200,7 +201,7 @@ const questions = [
   ];
 const answers = [];
 
-QuestionnaireBtn.onclick = openQuestionaire;
+questionnaireBtn.onclick = openQuestionaire;
 
 function openQuestionaire() {
 
@@ -226,19 +227,26 @@ function openQuestionaire() {
         questionsContainer.appendChild(questionDiv);
     }
 
-    modal.style.display = "flex";
-}
-/*
-span.onclick = function() {
-    // Save the answer to the current question
-    modal.style.display = "none";
+    questionnaireModal.style.display = "flex";
 }
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+questionnaireClose.onclick = function() {
+    questionnaireModal.style.display = "none";
+}
+
+questionnaireSave.onclick = function() {
+    for (let i in questions) {
+        let index = parseInt(i, 10);
+        let answer = document.getElementById(`questionnaireAnswer_${i}`).value;
+        document.getElementById(`divinfo${index+3}`).innerText = answer;
+        info[informationColumns[index+2]] = answer;
+        updateInfo(informationColumns[index+2], answer); //update database
     }
-}*/
+
+    questionnaireModal.style.display = "none";
+}
+
+
 
 //"Edit Information Mode" related code++
 
@@ -303,9 +311,14 @@ editingModal_saveButton.onclick = function() {
     //change info (localStorage)
     info[informationColumns[editedMemory-1]] = editingModal_input.value;
     //update database
-    let data_name = informationColumns[editedMemory-1]; //name of variable changed
-    let data_value = editingModal_input.value; //data of variable changed
-    updateInfo(data_name, data_value);
+    let data_name = informationColumns[editedMemory-1]; //name of variable that changed
+    let data_value = editingModal_input.value; //data of variable that changed
+    updateInfo(data_name, data_value); // update database
+
+    //check if memory changed was the first 2 (name, surname) and update the header
+    if(editedMemory == 1 || editedMemory == 2){
+        document.getElementById("usernameHeader").innerText = info.name +" "+ info.surname;
+    }
 
     
     editingModal.style.display = "none"; // Close editing modal
