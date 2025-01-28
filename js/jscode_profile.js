@@ -70,10 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //Handle full text modal logic
         readMoreBtn.addEventListener("click", function (){
-            let fullTextModal = document.getElementById("fullTextModal");
-            let fullTextModal_text = document.getElementById("fullTextModal-text");
-            fullTextModal_text.innerText = paragraph.innerText;
-            fullTextModal.style.display = "flex";
+            openFullTextModal(i);
         });
 
         //Append elements to memoryBox
@@ -338,6 +335,20 @@ function openSettingsModal() {
 
 settingsClose.onclick = function() {
     settingsModal.style.display = "none";
+}
+
+// full text modal (the read more button)
+const fullTextModal = document.getElementById("fullTextModal");
+const fullTextModal_closeBtn = document.getElementById("fullTextModal-closeBtn");
+const fullTextModal_text = document.getElementById("fullTextModal-text");
+
+function openFullTextModal(memoryNumber) {
+    fullTextModal_text.innerText = document.getElementById(`divinfo${memoryNumber}`).innerText;
+    fullTextModal.style.display = "flex";
+}
+
+fullTextModal_closeBtn.onclick = function() {
+    fullTextModal.style.display = "none";
 }
 
 //update user information in the database
