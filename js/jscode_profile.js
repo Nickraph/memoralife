@@ -120,7 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //add prompt to guide and/or questionnaire
     if(info.init === "not_init"){
-        alert("Take questionaire to complete your profile!");
+        document.getElementById("initModal").style.display = "flex"; // Display modal
+        document.getElementById("initModal-Btn").classList.add("show");
+        let data_name = "init";
+        let data_value = "init";
+        let updatePacket = {data_name, data_value};
+        socket.emit("updateCredentials", updatePacket);
     }
 
     /*/Enter information in their fields
