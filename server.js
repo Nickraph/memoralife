@@ -129,8 +129,14 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 								}
 							}
 
+							var accountSessionToken = crypto.randomBytes(32).toString('hex');
+
                             if (dbData.accstatus == "active") {
-                                response = "logged";
+								// final check, if user is active match sessionToken with accountID and push into active sessions
+								let accountID = dbData.id;
+								accountSessions.push({"accountID": accountID, "accountSessionToken": accountSessionToken});
+                                
+								response = "logged";
 								dbData.id = 0; //hide primary key
                                 userInfo = {stayLoggedIn, response, dbData};
                             }
@@ -143,10 +149,9 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
                             response = "no user data found";
                             userInfo = {stayLoggedIn, response};
                         }
-						let accountID = dbData.id;
-						let accountSessionToken = crypto.randomBytes(32).toString('hex');
-						accountSessions.push({"accountID": accountID, "accountSessionToken": accountSessionToken});
-						socket.emit('confirmLogin', {userInfo, accountSessionToken});//send the information package to client
+						
+						//send the information package to client
+						socket.emit('confirmLogin', {userInfo, accountSessionToken});
 					})
 				}
 				else{
