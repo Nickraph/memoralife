@@ -102,7 +102,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		client.query('SELECT password FROM credentials WHERE email = $1;', [email])
 			.then(results => {
 				if(results.rows[0] != null && validateHash(password, results.rows[0].password)){
-					return client.query('SELECT c.accstatus, c.email, c.visibility, c.handle, c.init, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
+					return client.query('SELECT c.id, c.accstatus, c.email, c.visibility, c.handle, c.init, i.* FROM credentials c RIGHT JOIN information i ON c.id = i.id WHERE c.email = $1', [email])
 					.then((results) =>{
 						var dbResults = results.rows[0];//data string format
 						var userInfo; //array of data that will be sent to client in addition to dbData
@@ -115,13 +115,18 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 							//check if user is logged in elsewhere -> delete session and log them out
 							for(i in accountSessions){
 								if(dbData.id == accountSessions[i].accountID){
-									let idToLogout = accountSessions[i].accountID;
-									io.emit("forceLogout", idToLogout)
+									// delete session
+									accountSessions.splice(i,1); //remove session entry
+
+									// force logout client-side
+									let sessionToLogout = accountSessions[i].accountSessionToken;
+									io.emit("forceLogout", sessionToLogout)
 								}
 							}
 
                             if (dbData.accstatus == "active") {
                                 response = "logged";
+								dbData.id = 0; //hide primary key
                                 userInfo = {stayLoggedIn, response, dbData};
                             }
 							else if (dbData.accstatus == "inactive") {

@@ -409,10 +409,10 @@ socket.on("showMessage", function(msg) {
 });
 
 
-socket.on("forceLogout", function(idToLogout){
-    let accountID = localStorage.getItem("userInfo").id;
+socket.on("forceLogout", function(sessionToLogout){
+    let sessionToken = sessionStorage.getItem("sessionToken");
 
-    if(accountID == idToLogout){
+    if(sessionToken == sessionToLogout){
         alert("Login detected from another browser or device. Logging you out.")
         logout();
     }
