@@ -121,7 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
     //add prompt to guide and/or questionnaire
     if(info.init === "not_init"){
         document.getElementById("initModal").style.display = "flex"; // Display modal
-        document.getElementById("initModal-Btn").classList.add("show");
+        
+        //add show class to initModal-Btn after 100ms
+        setTimeout(function() {
+            document.getElementById("initModal-Btn").classList.add("show");
+        }, 100);
+
         let sessionToken = sessionStorage.getItem("sessionToken");
         let data_name = "init";
         let data_value = "init";
