@@ -142,7 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-
+//init modal proceed btn
+const initBtn = document.getElementById("initModal-Btn");
+initBtn.onclick = function() {
+    openQuestionaire(); // Open the questionnaire
+}
 
 
 //questionaire (modal) related code++
