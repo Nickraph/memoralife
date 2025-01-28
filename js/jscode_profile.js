@@ -122,9 +122,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if(info.init === "not_init"){
         document.getElementById("initModal").style.display = "flex"; // Display modal
         document.getElementById("initModal-Btn").classList.add("show");
+        let sessionToken = sessionStorage.getItem("sessionToken");
         let data_name = "init";
         let data_value = "init";
-        let updatePacket = {data_name, data_value};
+        let updatePacket = {data_name, data_value, sessionToken};
         socket.emit("updateCredentials", updatePacket);
     }
 
