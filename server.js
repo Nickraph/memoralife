@@ -79,6 +79,7 @@ var accountSessions = [];
 
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
+	console.log("socket connection");
 	//var newID;
 	//newId();
 	var informationColumns = [
