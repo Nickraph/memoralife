@@ -15,7 +15,7 @@
         <ul class="menu">
             <li><a href="#" onclick="openSettingsModal();">Settings</a></li>
             <!--<li><a href="#">Export</a></li>-->
-            <li><a href="#">User Guide</a></li>
+            <li><a onclick="openUserGuideModal();" href="#">User Guide</a></li>
         </ul>
         <!-- Placeholder for User's Name in the Center -->
         <div class="user-name">
@@ -111,6 +111,16 @@
   <div class="fullTextModal-content">
     <p id="fullTextModal-text"></p>
     <span id="fullTextModal-closeBtn">&times;</span>
+  </div>
+</div>
+
+<!-- Video guide modal -->
+<div id="videoGuideModal" class="videoGuideModal">
+  <div class="videoGuideModal-content">
+    <video id="videoGuide" width="1000" height="700" controls>
+      <source src="./assets/memoralife_videoGuide.mp4" type="video/mp4">
+    </video>
+    <span id="videoGuideModal-closeBtn">&times;</span>
   </div>
 </div>
 

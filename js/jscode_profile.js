@@ -351,6 +351,20 @@ fullTextModal_closeBtn.onclick = function() {
     fullTextModal.style.display = "none";
 }
 
+// open user guide modal
+const videoGuideModal = document.getElementById("videoGuideModal");
+const videoGuideModalClose = document.getElementById("videoGuideModal-closeBtn");
+const video = document.getElementById("videoGuide");
+
+function openUserGuideModal() {
+    videoGuideModal.style.display = "flex";
+}
+
+videoGuideModalClose.onclick = function() {
+    video.pause();
+    videoGuideModal.style.display = "none";
+}
+
 //update user information in the database
 function updateInfo(data_name, data_value) {
     let sessionToken = sessionStorage.getItem("sessionToken");
