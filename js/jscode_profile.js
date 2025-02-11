@@ -449,3 +449,51 @@ socket.on("forceLogout", function(sessionToLogout){
 window.addEventListener("beforeunload", function () {
     logout();
 });
+
+//firebase+++
+
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyAEhAbZ_nCVFXgsivbiTZBqrWPjMnQj274",
+    authDomain: "memoralife-58976.firebaseapp.com",
+    projectId: "memoralife-58976",
+    storageBucket: "memoralife-58976.firebasestorage.app",
+    messagingSenderId: "500325739438",
+    appId: "1:500325739438:web:0839afd9558960b856b63f",
+    measurementId: "G-1N1WP7HH6B"
+  };
+  firebase.initializeApp(firebaseConfig);
+  
+  // Reference to Firebase Storage
+  const storage = firebase.storage();
+  const storageRef = storage.ref();
+  
+  // Handling file upload
+  const uploadFile = async (file) => {
+    const fileRef = storageRef.child('user-images/' + file.name); // Specify the path where the file will be stored in Firebase
+    try {
+      // Upload the file
+      await fileRef.put(file);
+  
+      // Get the download URL
+      const url = await fileRef.getDownloadURL();
+      console.log('File uploaded successfully! File URL:', url);
+  
+      // Show the file URL in the UI (or handle it as needed)
+      return url;
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+  
+  // Example of how to call the function (use this after selecting the file in the input)
+  const fileInput = document.getElementById('file-input');
+  fileInput.addEventListener('change', async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const fileUrl = await uploadFile(file);
+      console.log('Uploaded file URL:', fileUrl);
+    }
+  });
+
+//firebase---

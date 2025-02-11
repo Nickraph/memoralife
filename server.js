@@ -1,29 +1,15 @@
 const express = require ('express');
-const socketio = require('socket.io'); //declared again below as io
+//socket.io declared below as io
+const multer = require('multer');
+const admin = require('firebase-admin');
+const cors = require('cors');
+const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
 dotenv.config();
 
-/*process.on('uncaughtException', function (err) {
-	console.error(err);
-	console.log("Node NOT Exiting...");
-  });
-
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});*/
-
-/* old code:
-const poolConfig = {
-	max: 5,
-	min: 2,
-	idleTimeoutMillis: 600000,
-};*/
 const poolConfig = {
     max: 5,
     min: 2,
@@ -34,21 +20,10 @@ const poolConfig = {
     }
 };
 
-const db_database = process.env.PG_DATABASE;
-const db_username = process.env.PG_USER;
-const db_password = process.env.PG_PASSWORD;
-const db_host = process.env.PG_HOST;
-const db_port = process.env.PG_PORT;
-
-//poolConfig.connectionString = `postgress://${db_username}:${db_password}@${db_host}:${db_port}/${db_database}`;
-//old: poolConfig.connectionString = `postgres://dbuser:sDZxRE4o4UynIoEcRXPkFgndPQUiizK0@dpg-cnr39ta1hbls73dtr580-a.frankfurt-postgres.render.com/mldb_ef58`;
-//from before adding same info in poolConfig: poolConfig.connectionString = `postgresql://mluser:rncy2mDN8PuPxfYGKrWoRA55NzIH4D8B@dpg-cr0hqoi3esus73ainrl0-a.frankfurt-postgres.render.com/mldb_l4pp`;
-
 const client = new Pool(poolConfig);
 
 //SETUP++++++
 var app = express();
-//app.use(express.json());//added from https://sodiqfarhan.hashnode.dev/building-a-nodejs-app-with-postgres-database-on-render-a-step-by-step-guide-beginner-friendly#heading-connecting-the-nodejs-api-with-the-database
 var server = require('http').Server(app);
 
 app.get('/', function(req, res) {
@@ -61,13 +36,80 @@ app.get('/profileview', function(req, res) {
 	res.sendFile(__dirname + '/profileview.html')
 } );
 
+
 app.use('/login.css', express.static(__dirname + '/login.css'));
 app.use('/css', express.static(__dirname + '/css'));
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/images', express.static(__dirname + '/images'));
 app.use('/assets', express.static(__dirname + '/assets'));
 
-var port = process.env.PORT || 5000;
+//FIREBASE STORAGE++++++
+
+// Allow cross-origin requests
+app.use(cors());
+
+// Helper function to delete files
+const unlinkFile = util.promisify(fs.unlink);
+
+// Firebase Admin SDK (Backend Authentication)
+const admin = require("firebase-admin");
+
+const serviceAccount = {
+    type: "service_account",
+    project_id: process.env.FIREBASE_PROJECT_ID,
+    private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
+    private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    client_email: process.env.FIREBASE_CLIENT_EMAIL,
+    client_id: process.env.FIREBASE_CLIENT_ID,
+    auth_uri: process.env.FIREBASE_AUTH_URI,
+    token_uri: process.env.FIREBASE_TOKEN_URI,
+    auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_CERT_URL,
+    client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT_URL,
+    universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN,
+};
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: `${process.env.FIREBASE_PROJECT_ID}.appspot.com`,
+});
+
+const bucket = admin.storage().bucket();
+
+// Multer storage setup (store files temporarily before uploading to Firebase)
+const upload = multer({ dest: 'uploads/' });
+
+// Upload endpoint (User uploads file → Sent to Firebase)
+app.post('/upload', upload.single('file'), async (req, res) => {
+	if (!req.file) {
+	  return res.status(400).send('No file uploaded.');
+	}
+
+	try {
+		// Upload file to Firebase Storage
+		const filePath = req.file.path;
+		const destination = `user-images/${req.file.originalname}`;
+		await bucket.upload(filePath, { destination });
+
+		// Get public download URL
+		const fileRef = bucket.file(destination);
+		const [url] = await fileRef.getSignedUrl({
+			action: 'read',
+			expires: '01-01-2030'
+		});
+
+		// ✅ Delete the temporary file after uploading
+		await unlinkFile(filePath);
+
+		res.json({ url });
+	} catch (error) {
+		console.error("Upload error:", error);
+		res.status(500).send("Error uploading file.");
+	}
+});
+
+//FIREBASE STORAGE------
+
+const port = process.env.PORT || 5000;
 
 server.listen(port);
 console.log("Server Running!");
@@ -80,8 +122,6 @@ var accountSessions = [];
 io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
 	console.log("socket connection");
-	//var newID;
-	//newId();
 	var informationColumns = [
 		"name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
 	];
