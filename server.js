@@ -4,6 +4,7 @@ const multer = require('multer');
 const admin = require('firebase-admin'); // Firebase Admin SDK (Backend Authentication)
 const cors = require('cors');
 const fs = require('fs');
+const util = require('util');
 const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
