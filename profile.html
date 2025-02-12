@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile</title>
+  <title>Προφίλ Χρήστη</title>
   <link rel="stylesheet" type="text/css" href="css/profile.css" />
 </head>
 
@@ -13,9 +13,9 @@
   <header>
     <nav>
         <ul class="menu">
-            <li><a href="#" onclick="openSettingsModal();">Settings</a></li>
+            <li><a href="#" onclick="openSettingsModal();">Ρυθμίσεις</a></li>
             <!--<li><a href="#">Export</a></li>-->
-            <li><a onclick="openUserGuideModal();" href="#">User Guide</a></li>
+            <li><a onclick="openUserGuideModal();" href="#">Προφίλ Χρήστη</a></li>
         </ul>
         <!-- Placeholder for User's Name in the Center -->
         <div class="user-name">
@@ -23,7 +23,7 @@
         </div>
         <!-- Log Out Button -->
         <div class="logout-button" onclick="logout();">
-            <a href="#">Log out</a>
+            <a href="#">Αποσύνδεση/a>
         </div>
     </nav>
   </header>
@@ -34,17 +34,17 @@
           <!-- Profile Picture -->
           <div class="profile-picture">
               <img src="./images/profile_default.png" alt="User Profile Picture">
-              <button id="pfp-edit-btn" onclick="openPfpModal()">Edit</button>
+              <button id="pfp-edit-btn" onclick="openPfpModal()">Αλλαγή</button>
           </div>
           <!-- Button Container -->
           <div class="button-container">
               <!-- "Take Questionnaire" Button -->
               <div class="take-questionnaire">
-                  <button id="openQuestionnaireBtn">Take Questionnaire</button>
+                  <button id="openQuestionnaireBtn">Ερωτηματολόγιο</button>
               </div>
               <!-- "Edit Information" Button -->
               <div class="edit-information">
-                  <button id="editInformationBtn">Open Edit Mode</button>
+                  <button id="editInformationBtn">Τροποποίηση</button>
               </div>
           </div>
       </section>
@@ -62,7 +62,7 @@
     <div class="questionnaireModal-content">
       <span id="closeQModal" class="closeQuestionnaire">&times;</span> <!-- X close button -->
       <div id="questionsContainer"></div> <!-- Dynamic Questions -->
-      <button id="questionnaireModal-saveButton">Save</button> <!-- Full-width Save Button -->
+      <button id="questionnaireModal-saveButton">Αποθήκευση</button> <!-- Full-width Save Button -->
     </div>
   </div>
 
@@ -71,7 +71,7 @@
         <span id="editingModal-closeBtn" class="editingModal-closeBtn">&times;</span>
         <h2 id="editingModal-header"></h2>
         <textarea type="text" id="editingModal-input"></textarea><br>
-        <button id="editingModal-saveBtn">Save</button>
+        <button id="editingModal-saveBtn">Αποθήκευση</button>
     </div>
 </div>
 
@@ -79,30 +79,30 @@
   <div class="settingsModal-content">
     <span id="settingsModal-closeBtn" class="settingsModal-closeBtn">&times;</span>
     <h2 id="settingsModal-header"></h2>
-    <label style="font-weight: bolder;" class="settingsModal-label" for="settingsModal-email">Change email:</label><br>
+    <label style="font-weight: bolder;" class="settingsModal-label" for="settingsModal-email">Αλλαγή email:</label><br>
     <input type="email" placeholder="Your new email" class="settingsModal-input" id="settingsModal-email"><br>
     <span style="font-size: small;" id="currentEmail"></span><br><br>
-    <label style="font-weight: bolder;" class="settingsModal-label" for="settingsModal-password">Change password:</label><br>
+    <label style="font-weight: bolder;" class="settingsModal-label" for="settingsModal-password">Αλλαγή password:</label><br>
     <input type="password" placeholder="Your old password" class="settingsModal-input" id="settingsModal-oldPassword"><br>
     <input type="password" placeholder="Your new password" class="settingsModal-input" id="settingsModal-newPassword"><br><br>
     
     <br><span style="font-size: small;" id="handleSpan"></span><br>
     <form>
-        <input type="radio" id="radio_private" name="visibility" value="private"> Private
-        <input type="radio" id="radio_visible" name="visibility" value="visible"> Visible
+        <input type="radio" id="radio_private" name="visibility" value="private"> Ιδιωτικό
+        <input type="radio" id="radio_visible" name="visibility" value="visible"> Ορατό
     </form><br>
     
-    <button onclick="saveSettings()" id="settingsModal-saveBtn">Save & Logout</button>
+    <button onclick="saveSettings()" id="settingsModal-saveBtn">Αποθήκευση & Αποσύνδεση</button>
   </div>
 </div>
 
 <div id="initModal" class="initModal">
   <div class="initModal-content">
     
-    <h2 id="initModal-header">Welcome to Memoralife</h2><br>
-    <h3 id="initModal-subheader">Since it's your first time logging in you will need to answer a few questions. You can close the questionnaire and open it again later by clicking the "Take Questionnaire" button. A more comprehensive guide is available at the top left of this page, open it by clicking "User Guide".</h3><br>
+    <h2 id="initModal-header">Καλωσόρισατε στο Memoralife</h2><br>
+    <h3 id="initModal-subheader">Δεδομένου ότι είναι η πρώτη φορά που συνδέεστε, θα χρειαστεί να απαντήσετε σε μερικές ερωτήσεις. Μπορείτε να κλείσετε το ερωτηματολόγιο και να το ανοίξετε ξανά αργότερα κάνοντας κλικ στο κουμπί "Ερωτηματολόγιο". Ένας πιο περιεκτικός οδηγός είναι διαθέσιμος στο επάνω αριστερό μέρος αυτής της σελίδας, ανοίξτε τον κάνοντας κλικ στο "User Guide".</h3><br>
 
-    <button onclick="initBtn()" id="initModal-Btn">Take Questionnaire</button>
+    <button onclick="initBtn()" id="initModal-Btn">Ερωτηματολόγιο</button>
   </div>
 </div>
 
