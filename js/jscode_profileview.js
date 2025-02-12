@@ -2,8 +2,7 @@ var socket = io.connect('https://memoralife.onrender.com/');
 
 var info;
 const memoryFieldNames_global = [
-    "First name:","Last name:","Date of birth:","Place of birth:","Nickname:","Current address:","Family","Family's occupations:","Pets:","Childhood:","Childhood address:","School:","Love:","Additional notes:","Studies:","Career:","Marriage:","Partner:","Children:","Additional notes:","Grandchildren:","Values:","Achievements:","Foods & Recipes:","Scents:","Entertainment:","Season:","Media:","Music:","Hobbies:","Additional:","Dislikes:","Routine:"
-];
+"Όνομα:","Επώνυμο:","Ημερομηνία Γέννησης:","Τόπος Γέννησης:","Ψευδώνυμο:","Τρέχουσα Διεύθυνση:","Οικογένεια","Επαγγέλματα Μελών Οικογένειας:","Κατοικίδια:","Παιδική Ηλικία:","Διεύθυνση των Παιδικών σας Χρόνων:","Σχολείο:","Έρωτες:","Πρόσθετες Πληροφορίες:","Σπουδές:","Καριέρα:","Έγγαμος Βίος:","Σύντροφος:","Τέκνα:","Πρόσθετες Πληροφορίες:","Εγγόνια/Δισέγγονα:","Αξίες και Ιδανικά:","Κατορθώματα για τα οποία είστε υπερήφανος/-η:","Φαγητά & Αγαπημένες Συνταγές:","Μυρωδιές & Ήχοι:","Ψυχαγωγία:","Εποχές:","Πολυμέσα:","Μουσική:","Χόμπι και Δραστηριότητες:","Πρόσθετα:","Τι Δεν Σας Αρέσει:","Η ρουτίνα σας:"];
 var informationColumns = [
     "name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
 ];
@@ -19,9 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Generate all memory (text & media) storing divs & category dividers dynamically.
     const memoryContainer = document.getElementById("memory-container");
 	const memoryFieldNames = [
-        "First name:","Last name:","Date of birth:","Place of birth:","Nickname:","Current address:","Family","Family's occupations:","Pets:","Childhood:","Childhood address:","School:","Love:","Additional notes:","Studies:","Career:","Marriage:","Partner:","Children:","Additional notes:","Grandchildren:","Values:","Achievements:","Foods & Recipes:","Scents:","Entertainment:","Season:","Media:","Music:","Hobbies:","Additional:","Dislikes:","Routine:"
+        "Όνομα:","Επώνυμο:","Ημερομηνία Γέννησης:","Τόπος Γέννησης:","Ψευδώνυμο:","Τρέχουσα Διεύθυνση:","Οικογένεια","Επαγγέλματα Μελών Οικογένειας:","Κατοικίδια:","Παιδική Ηλικία:","Διεύθυνση των Παιδικών σας Χρόνων:","Σχολείο:","Έρωτες:","Πρόσθετες Πληροφορίες:","Σπουδές:","Καριέρα:","Έγγαμος Βίος:","Σύντροφος:","Τέκνα:","Πρόσθετες Πληροφορίες:","Εγγόνια/Δισέγγονα:","Αξίες και Ιδανικά:","Κατορθώματα για τα οποία είστε υπερήφανος/-η:","Φαγητά & Αγαπημένες Συνταγές:","Μυρωδιές & Ήχοι:","Ψυχαγωγία:","Εποχές:","Πολυμέσα:","Μουσική:","Χόμπι και Δραστηριότητες:","Πρόσθετα:","Τι Δεν Σας Αρέσει:","Η ρουτίνα σας:"
     ];
-    const categoryNames = ["—General Information—", "—Childhood—", "—Adulthood—", "—Seniority—", "—Preferences—", "—Routine—"];
+    const categoryNames = ["—Γενικές Πληροφορίες—", "—Πρώιμα Παιδικά Χρόνια—", "—Ενήλικη Ζωή—", "—Μεταγενέστερα Χρόνια—", "—Προσωπικές Προτιμήσεις—", "—Ρουτίνα—"];
     var categoryIndex = 0;
     const divNumber = memoryFieldNames.length;
 
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Hidden edit buttons
         const editBtn = document.createElement("button");
         editBtn.classList.add("edit-btn");
-        editBtn.textContent = "Edit";
+        editBtn.textContent = "Επεξεργασία";
 
         //Handle edit buttons logic
         editBtn.addEventListener("click", function (){
@@ -53,15 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
         //Read more buttons
         const readMoreBtn = document.createElement("span");
         readMoreBtn.classList.add("read-more-btn");
-        readMoreBtn.textContent = "Read more";
+        readMoreBtn.textContent = "Επέκταση";
 
         //Handle expand/collapse logic
         readMoreBtn.addEventListener("click", function (){
             memoryBox.classList.toggle("expanded");
             readMoreBtn.textContent =
                 memoryBox.classList.contains("expanded")
-                    ? "Read less"
-                    : "Read more";
+                    ? "Διαβάσε περισσότερα"
+                    : "Διάβασε λιγότερα";
         });
 
         //Append elements to memoryBox
@@ -95,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const uploadBtn = document.createElement("button");
             uploadBtn.classList.add("upload-buttons");
-            uploadBtn.innerText = "Upload Media";
+            uploadBtn.innerText = "Μεταφόρτωση Πολυμέσων";
             
             mediaBox.appendChild(uploadBtn);
             memoryContainer.appendChild(mediaBox);

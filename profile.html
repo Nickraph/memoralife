@@ -15,7 +15,7 @@
         <ul class="menu">
             <li><a href="#" onclick="openSettingsModal();">Ρυθμίσεις</a></li>
             <!--<li><a href="#">Export</a></li>-->
-            <li><a onclick="openUserGuideModal();" href="#">Προφίλ Χρήστη</a></li>
+            <li><a onclick="openUserGuideModal();" href="#">Οδηγίες Χρήσης</a></li>
         </ul>
         <!-- Placeholder for User's Name in the Center -->
         <div class="user-name">
@@ -40,11 +40,11 @@
           <div class="button-container">
               <!-- "Take Questionnaire" Button -->
               <div class="take-questionnaire">
-                  <button id="openQuestionnaireBtn">Ερωτηματολόγιο</button>
+                  <button id="openQuestionnaireBtn">Συμπλήρωση Ερωτηματολογίου</button>
               </div>
               <!-- "Edit Information" Button -->
               <div class="edit-information">
-                  <button id="editInformationBtn">Τροποποίηση</button>
+                  <button id="editInformationBtn">¨Λειτουργία Τροποποίησης</button>
               </div>
           </div>
       </section>
@@ -88,8 +88,8 @@
     
     <br><span style="font-size: small;" id="handleSpan"></span><br>
     <form>
-        <input type="radio" id="radio_private" name="visibility" value="private"> Ιδιωτικό
-        <input type="radio" id="radio_visible" name="visibility" value="visible"> Ορατό
+        <input type="radio" id="radio_private" name="visibility" value="private"> Ιδιωτικός
+        <input type="radio" id="radio_visible" name="visibility" value="visible"> Δημόσιος
     </form><br>
     
     <button onclick="saveSettings()" id="settingsModal-saveBtn">Αποθήκευση & Αποσύνδεση</button>
