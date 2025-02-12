@@ -1,7 +1,7 @@
 const express = require ('express');
 //socket.io declared below as io
 const multer = require('multer');
-const admin = require('firebase-admin');
+const admin = require('firebase-admin'); // Firebase Admin SDK (Backend Authentication)
 const cors = require('cors');
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
@@ -50,9 +50,6 @@ app.use(cors());
 
 // Helper function to delete files
 const unlinkFile = util.promisify(fs.unlink);
-
-// Firebase Admin SDK (Backend Authentication)
-const admin = require("firebase-admin");
 
 const serviceAccount = {
     type: "service_account",
