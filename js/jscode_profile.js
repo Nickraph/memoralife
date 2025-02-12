@@ -8,6 +8,8 @@ var informationColumns = [
     "name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
 ];
 
+const form = document.getElementById('file-form');
+
 document.addEventListener('DOMContentLoaded', () => { 
     //Retrieve user information from localStorage
     info = JSON.parse(localStorage.getItem("userInfo"));
@@ -96,15 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const mediaBox = document.createElement("div");
             mediaBox.classList.add("media-box");
 
-            /*for (let j = 0; j < 3; j++) {
-                const mediaPlaceholder = document.createElement("div");
-                mediaPlaceholder.classList.add("media-placeholder");
-                mediaBox.appendChild(mediaPlaceholder);
-            }*/
-
             const uploadBtn = document.createElement("button");
             uploadBtn.classList.add("upload-buttons");
             uploadBtn.innerText = "Μεταφόρτωση Πολυμέσων";
+            uploadBtn.onclick = () => fileUpload(i);
             
             mediaBox.appendChild(uploadBtn);
             memoryContainer.appendChild(mediaBox);
@@ -417,6 +414,10 @@ function saveSettings() {
     }
 
     logout();
+}
+
+function fileUpload(mediaIndex) {
+    
 }
 
 function logout() {
