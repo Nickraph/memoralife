@@ -416,10 +416,29 @@ function saveSettings() {
     logout();
 }
 
+// file uploading
+const fileFormModal = document.getElementById("fileFormModal");
+const fileFormModalCloseBtn = document.getElementById("fileFormModal-closeBtn");
+const fileformModal_input = document.getElementById("file");
+const fileUploadBtn = document.getElementById("fileUploadBtn");
+
+// Open file upload modal
 function fileUpload(mediaIndex) {
-    
+    fileFormModal.style.display = "block"; // Show modal
 }
 
+// Click "Upload File" button to trigger file input
+fileUploadBtn.addEventListener("click", () => {
+    fileformModal_input.click(); // Opens the file explorer
+});
+
+// Close modal when clicking the close button
+fileFormModalCloseBtn.addEventListener("click", () => {
+    fileFormModal.style.display = "none";
+});
+
+
+// Logout function
 function logout() {
     let sessionToken = sessionStorage.getItem("sessionToken");
     socket.emit("logout", sessionToken)

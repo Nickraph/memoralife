@@ -124,10 +124,17 @@
   </div>
 </div>
 
-<form id="file-form">
-  <label for="file">File</label>
-  <input id="file" type="file" style="display: none;" accept="image/*" />
-</form>
+<!-- File form modal -->
+<div id="fileFormModal" class="fileFormModal">
+  <div class="fileFormModal-content">
+    <form id="file-form">
+      <label for="file">Upload File</label>
+      <input id="file" type="file" style="display: none;" accept="image/*" />
+      <button type="button" id="fileUploadBtn">Upload File</button>
+    </form>
+    <span id="fileFormModal-closeBtn">&times;</span>
+  </div>
+</div>
 
   <!--SCRIPTS-->
 
