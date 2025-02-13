@@ -422,16 +422,58 @@ const fileFormModalCloseBtn = document.getElementById("fileFormModal-closeBtn");
 const fileformModal_input = document.getElementById("file");
 const fileUploadBtn = document.getElementById("fileUploadBtn");
 
-// Open file upload modal
+//File upload
+
 function fileUpload(mediaIndex) {
-    //fileFormModal.style.display = "block"; // Show modal
-    fileformModal_input.click();
+    //fileFormModal.style.display = "flex"; // Show modal
+    fileformModal_input.click(); //opens file explorer
+
+    // Attach mediaIndex to the file input change event so we know where to save the file
+    fileformModal_input.onchange = async (event) => {
+        const file = event.target.files[0]; // Get the uploaded file
+        if (file) {
+            // Handle the file upload using Firebase
+            const fileUrl = await uploadToFirebase(file);
+    
+            // Now send this URL to the server to save in the database
+            sendFileUrlToServer(mediaIndex, fileUrl);
+        }
+    };
 }
 
-// Click "Upload File" button to trigger file input
+// Firebase file upload function
+const uploadToFirebase = async (file) => {
+    const storageRef = firebase.storage().ref();
+    const fileRef = storageRef.child('user-images/' + file.name); // Specify the path
+
+    try {
+        // Upload the file
+        await fileRef.put(file);
+
+        // Get the download URL
+        const url = await fileRef.getDownloadURL();
+        console.log('File uploaded successfully! File URL:', url);
+
+        // Return the URL so we can send it to the server
+        return url;
+    } catch (error) {
+        console.error('Error uploading file:', error);
+    }
+};
+
+// Function to send the file URL to your server
+const sendFileUrlToServer = async (mediaIndex, fileUrl) => {
+    let sessionToken = sessionStorage.getItem("sessionToken");
+    let updatePacket = {mediaIndex, fileUrl, sessionToken};
+
+    socket.emit("updateMedia", updatePacket);
+};
+
+
+/*/ Click "Upload File" button to trigger file input
 fileUploadBtn.addEventListener("click", () => {
     fileformModal_input.click(); // Opens the file explorer
-});
+});*/
 
 // Close modal when clicking the close button
 fileFormModalCloseBtn.addEventListener("click", () => {
