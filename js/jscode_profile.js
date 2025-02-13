@@ -424,7 +424,8 @@ const fileUploadBtn = document.getElementById("fileUploadBtn");
 
 // Open file upload modal
 function fileUpload(mediaIndex) {
-    fileFormModal.style.display = "block"; // Show modal
+    //fileFormModal.style.display = "block"; // Show modal
+    fileformModal_input.click();
 }
 
 // Click "Upload File" button to trigger file input
