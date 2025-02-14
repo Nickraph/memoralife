@@ -161,8 +161,12 @@
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app); // Initialize Firebase Storage
-  window.firebaseStorage = storage; // Expose storage globally
-  window.firebaseRef = ref; // Expose ref globally
+
+  // Expose Firebase Storage and functions globally
+  window.firebaseStorage = storage;
+  window.firebaseRef = ref;
+  window.uploadBytes = uploadBytes;
+  window.getDownloadURL = getDownloadURL;
 </script>
 
 </body>

@@ -495,10 +495,10 @@ const sendFileUrlToServer = async (mediaIndex, fileUrl) => {
 
 // Handling file upload
 const uploadToFirebase = async (file) => {
-    const fileRef = window.firebaseRef(window.firebaseStorage, 'user-images/' + file.name); // Create a reference to the file
+    const fileRef = window.firebaseRef(window.firebaseStorage, 'user-images/' + file.name);
     try {
-        await uploadBytes(fileRef, file); // Upload the file to Firebase
-        const url = await getDownloadURL(fileRef); // Get the download URL
+        await window.uploadBytes(fileRef, file); // Upload file
+        const url = await window.getDownloadURL(fileRef); // Get download URL
         console.log('File uploaded successfully! File URL:', url);
         return url;
     } catch (error) {
