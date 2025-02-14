@@ -425,7 +425,6 @@ const fileUploadBtn = document.getElementById("fileUploadBtn");
 //File upload
 
 function fileUpload(mediaIndex) {
-    //fileFormModal.style.display = "flex"; // Show modal
     fileformModal_input.click(); //opens file explorer
 
     // Attach mediaIndex to the file input change event so we know where to save the file
@@ -440,26 +439,6 @@ function fileUpload(mediaIndex) {
         }
     };
 }
-
-// Firebase file upload function
-const uploadToFirebase = async (file) => {
-    const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child('user-images/' + file.name); // Specify the path
-
-    try {
-        // Upload the file
-        await fileRef.put(file);
-
-        // Get the download URL
-        const url = await fileRef.getDownloadURL();
-        console.log('File uploaded successfully! File URL:', url);
-
-        // Return the URL so we can send it to the server
-        return url;
-    } catch (error) {
-        console.error('Error uploading file:', error);
-    }
-};
 
 // Function to send the file URL to your server
 const sendFileUrlToServer = async (mediaIndex, fileUrl) => {
@@ -515,48 +494,36 @@ window.addEventListener("beforeunload", function () {
 
 //firebase+++
 
-// Initialize Firebase
+// Import Firebase Modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAEhAbZ_nCVFXgsivbiTZBqrWPjMnQj274",
     authDomain: "memoralife-58976.firebaseapp.com",
     projectId: "memoralife-58976",
-    storageBucket: "memoralife-58976.firebasestorage.app",
+    storageBucket: "memoralife-58976.appspot.com", // ✅ Fixed
     messagingSenderId: "500325739438",
     appId: "1:500325739438:web:0839afd9558960b856b63f",
     measurementId: "G-1N1WP7HH6B"
-  };
-  firebase.initializeApp(firebaseConfig);
-  
-  // Reference to Firebase Storage
-  const storage = firebase.storage();
-  const storageRef = storage.ref();
-  
-  // Handling file upload
-  const uploadFile = async (file) => {
-    const fileRef = storageRef.child('user-images/' + file.name); // Specify the path where the file will be stored in Firebase
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app); // ✅ Use only modular syntax
+
+// Handling file upload
+const uploadToFirebase = async (file) => {
+    const fileRef = ref(storage, 'user-images/' + file.name);
     try {
-      // Upload the file
-      await fileRef.put(file);
-  
-      // Get the download URL
-      const url = await fileRef.getDownloadURL();
-      console.log('File uploaded successfully! File URL:', url);
-  
-      // Show the file URL in the UI (or handle it as needed)
-      return url;
+        await uploadBytes(fileRef, file);
+        const url = await getDownloadURL(fileRef);
+        console.log('File uploaded successfully! File URL:', url);
+        return url;
     } catch (error) {
-      console.error('Error uploading file:', error);
+        console.error('Error uploading file:', error);
     }
-  };
-  
-  // Example of how to call the function (use this after selecting the file in the input)
-  const fileInput = document.getElementById('file-input');
-  fileInput.addEventListener('change', async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const fileUrl = await uploadFile(file);
-      console.log('Uploaded file URL:', fileUrl);
-    }
-  });
+};
 
 //firebase---

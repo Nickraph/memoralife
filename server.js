@@ -333,9 +333,10 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		for(i in accountSessions){
 			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
 				let userID = accountSessions[i].accountID;
+				console.log("url: " + updatePacket.fileUrl);
 
 				if(updatePacket.mediaIndex == 14){ //media_childhood
-					client.query('UPDATE information SET media_childhood = $1 WHERE id = $2', [updatePacket.fileUrl, userID]) //update email
+					client.query('UPDATE information SET media_childhood = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
 					.then(()=>{							
 						// database updated
 					})
