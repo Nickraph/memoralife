@@ -329,6 +329,41 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		}
 	});
 
+	socket.on("updateMedia", function(updatePacket){//called when user updates/edits media
+		for(i in accountSessions){
+			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
+				let userID = accountSessions[i].accountID;
+
+				if(updatePacket.mediaIndex == 14){ //media_childhood
+					client.query('UPDATE information SET media_childhood = $1 WHERE id = $2', [updatePacket.fileUrl, userID]) //update email
+					.then(()=>{							
+						// database updated
+					})
+					.catch(err => {
+						console.error('Database query error:', err);
+						socket.emit('showMessage', 'An error occurred');
+					})
+				}
+				else if(updatePacket.mediaIndex == 20){ //media_adulthood
+				
+				}
+				else if(updatePacket.mediaIndex == 21){ //media_seniority
+				
+				}
+				else if(updatePacket.mediaIndex == 33){ //media_misc
+				
+				}
+				else{
+					socket.emit("showMessage", "Invalid media update request.");
+				}
+			
+			}
+			else{
+				socket.emit("showMessage", "Invalid session or user not found.");
+			}
+		}
+	});
+
 	socket.on("logout", function(sessionToken){
 		for(i in accountSessions){
 			if(sessionToken == accountSessions[i].accountSessionToken){
