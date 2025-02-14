@@ -142,33 +142,6 @@
     <script src = "https://cdn.socket.io/socket.io-3.0.5.js"></script>
     <script type="text/javascript" src="js/jscode_profile.js"></script>
 
-<!-- Firebase SDK -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
-
-  // Firebase Configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAEhAbZ_nCVFXgsivbiTZBqrWPjMnQj274",
-    authDomain: "memoralife-58976.firebaseapp.com",
-    projectId: "memoralife-58976",
-    storageBucket: "memoralife-58976.appspot.com",
-    messagingSenderId: "500325739438",
-    appId: "1:500325739438:web:0839afd9558960b856b63f",
-    measurementId: "G-1N1WP7HH6B"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const storage = getStorage(app); // Initialize Firebase Storage
-
-  // Expose Firebase Storage and functions globally
-  window.firebaseStorage = storage;
-  window.firebaseRef = ref;
-  window.uploadBytes = uploadBytes;
-  window.getDownloadURL = getDownloadURL;
-</script>
-
 </body>
 
 </html>

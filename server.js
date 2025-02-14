@@ -2,6 +2,7 @@ const express = require ('express');
 //socket.io declared below as io
 const multer = require('multer');
 const admin = require('firebase-admin'); // Firebase Admin SDK (Backend Authentication)
+const cloudinary = require('cloudinary').v2; // cloudinary
 const cors = require('cors');
 const fs = require('fs');
 const util = require('util');
@@ -44,68 +45,24 @@ app.use('/js', express.static(__dirname + '/js'));
 app.use('/images', express.static(__dirname + '/images'));
 app.use('/assets', express.static(__dirname + '/assets'));
 
-//FIREBASE STORAGE++++++
 
 // Allow cross-origin requests
 app.use(cors());
 
-// Helper function to delete files
-const unlinkFile = util.promisify(fs.unlink);
+//CLOUDINARY SETUP++++++
 
-const serviceAccount = {
-    type: "service_account",
-    project_id: process.env.FIREBASE_PROJECT_ID,
-    private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-    private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    client_email: process.env.FIREBASE_CLIENT_EMAIL,
-    client_id: process.env.FIREBASE_CLIENT_ID,
-    auth_uri: process.env.FIREBASE_AUTH_URI,
-    token_uri: process.env.FIREBASE_TOKEN_URI,
-    auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_CERT_URL,
-    client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT_URL,
-    universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN,
-};
+// Allow cross-origin requests
+app.use(cors());
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    storageBucket: `${process.env.FIREBASE_PROJECT_ID}.appspot.com`,
+// Cloudinary config
+cloudinary.config({
+	cloud_name: 'dbf34ckzm', // Cloudinary cloud name
+	api_key: '251761166187897', // Cloudinary API key
+	api_secret: 'dZlxwHSzUfJw189sJGH-g76dsBs' // Cloudinary API secret
 });
 
-const bucket = admin.storage().bucket();
 
-// Multer storage setup (store files temporarily before uploading to Firebase)
-const upload = multer({ dest: 'uploads/' });
-
-// Upload endpoint (User uploads file → Sent to Firebase)
-app.post('/upload', upload.single('file'), async (req, res) => {
-	if (!req.file) {
-	  return res.status(400).send('No file uploaded.');
-	}
-
-	try {
-		// Upload file to Firebase Storage
-		const filePath = req.file.path;
-		const destination = `user-images/${req.file.originalname}`;
-		await bucket.upload(filePath, { destination });
-
-		// Get public download URL
-		const fileRef = bucket.file(destination);
-		const [url] = await fileRef.getSignedUrl({
-			action: 'read',
-			expires: '01-01-2030'
-		});
-
-		// ✅ Delete the temporary file after uploading
-		await unlinkFile(filePath);
-
-		res.json({ url });
-	} catch (error) {
-		console.error("Upload error:", error);
-		res.status(500).send("Error uploading file.");
-	}
-});
-
-//FIREBASE STORAGE------
+//CLOUDINARY SETUP------
 
 const port = process.env.PORT || 5000;
 

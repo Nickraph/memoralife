@@ -416,41 +416,6 @@ function saveSettings() {
     logout();
 }
 
-// file uploading
-const fileFormModal = document.getElementById("fileFormModal");
-const fileFormModalCloseBtn = document.getElementById("fileFormModal-closeBtn");
-const fileformModal_input = document.getElementById("file");
-const fileUploadBtn = document.getElementById("fileUploadBtn");
-
-// File upload
-
-function fileUpload(mediaIndex) {
-    fileformModal_input.click(); // opens file explorer
-
-    // Attach mediaIndex to the file input change event so we know where to save the file
-    fileformModal_input.onchange = async (event) => {
-        const file = event.target.files[0]; // Get the uploaded file
-        if (file) {
-            // Handle the file upload using Firebase
-            const fileUrl = await uploadToFirebase(file);
-    
-            // Now send this URL to the server to save in the database
-            sendFileUrlToServer(mediaIndex, fileUrl);
-        }
-    };
-}
-
-/*/ Click "Upload File" button to trigger file input
-fileUploadBtn.addEventListener("click", () => {
-    fileformModal_input.click(); // Opens the file explorer
-});*/
-
-// Close modal when clicking the close button
-fileFormModalCloseBtn.addEventListener("click", () => {
-    fileFormModal.style.display = "none";
-});
-
-
 // Logout function
 function logout() {
     let sessionToken = sessionStorage.getItem("sessionToken");
@@ -483,27 +448,68 @@ window.addEventListener("beforeunload", function () {
     logout();
 });
 
-//firebase+++
+// file uploading
+const fileFormModal = document.getElementById("fileFormModal");
+const fileFormModalCloseBtn = document.getElementById("fileFormModal-closeBtn");
+const fileformModal_input = document.getElementById("file");
+const fileUploadBtn = document.getElementById("fileUploadBtn");
 
-// Function to send the file URL to your server
-const sendFileUrlToServer = async (mediaIndex, fileUrl) => {
+// File upload function using Cloudinary
+function fileUpload(mediaIndex) {
+    fileformModal_input.click(); // Opens file explorer
+
+    // Attach mediaIndex to the file input change event so we know where to save the file
+    fileformModal_input.onchange = async (event) => {
+        const file = event.target.files[0]; // Get the uploaded file
+        if (file) {
+            // Upload the file directly to Cloudinary
+            const fileUrl = await uploadToCloudinary(file);
+    
+            // Send the file URL to the server using socket.emit
+            sendFileUrlToServer(mediaIndex, fileUrl);
+        }
+    };
+}
+
+// Close modal when clicking the close button
+fileFormModalCloseBtn.addEventListener("click", () => {
+    fileFormModal.style.display = "none";
+});
+
+// Function to send the file URL to the server
+const sendFileUrlToServer = (mediaIndex, fileUrl) => {
     let sessionToken = sessionStorage.getItem("sessionToken");
     let updatePacket = { mediaIndex, fileUrl, sessionToken };
 
+    // Emit the updateMedia event with the file URL
     socket.emit("updateMedia", updatePacket);
 };
 
-// Handling file upload
-const uploadToFirebase = async (file) => {
-    const fileRef = window.firebaseRef(window.firebaseStorage, 'user-images/' + file.name);
+// CLOUDINARY++++++
+
+// Handle file upload to Cloudinary
+const uploadToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "unsigned_preset_ml"); // Replace with your Cloudinary preset name
+
     try {
-        await window.uploadBytes(fileRef, file); // Upload file
-        const url = await window.getDownloadURL(fileRef); // Get download URL
-        console.log('File uploaded successfully! File URL:', url);
-        return url;
+        // Upload file to Cloudinary
+        const response = await fetch("https://api.cloudinary.com/v1_1/dbf34ckzm/image/upload", {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log("File uploaded successfully:", data);
+            return data.secure_url; // Return the URL from Cloudinary
+        } else {
+            console.error("Error uploading file:", data);
+        }
     } catch (error) {
-        console.error('Error uploading file:', error);
+        console.error("Error uploading file:", error);
     }
 };
 
-//firebase---
+// CLOUDINARY------
