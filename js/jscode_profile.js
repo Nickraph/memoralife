@@ -495,7 +495,7 @@ const sendFileUrlToServer = async (mediaIndex, fileUrl) => {
 
 // Handling file upload
 const uploadToFirebase = async (file) => {
-    const fileRef = ref(window.firebaseStorage, 'user-images/' + file.name); // Use the globally exposed firebaseStorage
+    const fileRef = window.firebaseRef(window.firebaseStorage, 'user-images/' + file.name); // Create a reference to the file
     try {
         await uploadBytes(fileRef, file); // Upload the file to Firebase
         const url = await getDownloadURL(fileRef); // Get the download URL
