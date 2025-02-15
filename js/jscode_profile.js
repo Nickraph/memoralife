@@ -111,32 +111,48 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create a container for images
             const imageContainer = document.createElement("div");
             imageContainer.classList.add("image-container");
-            imageContainer.style.display = "grid"; // Hidden by default
+            imageContainer.style.display = "grid"; // grid by default
 
             // Check if there are stored images for this mediaBox
-            if(informationColumns[i] === "media_childhood") {
-                const img = document.createElement("img");
-                img.src = info["media_childhood"];
-                img.classList.add("media-image"); 
-                imageContainer.appendChild(img);
+            if(informationColumns[i] === "media_childhood" && info["media_childhood"] !== "[]") {
+                let imageArray = JSON.parse(info["media_childhood"]);
+
+                for(var imageIndex in imageArray){
+                    const img = document.createElement("img");
+                    img.src = imageArray[imageIndex];
+                    img.classList.add("media-image"); 
+                    imageContainer.appendChild(img);
+                }
             }
-            else if(informationColumns[i] === "media_adulthood") {
-                const img = document.createElement("img");
-                img.src = info["media_adulthood"];
-                img.classList.add("media-image"); 
-                imageContainer.appendChild(img);
+            else if(informationColumns[i] === "media_adulthood" && info["media_adulthood"] !== "[]") {
+                let imageArray = JSON.parse(info["media_adulthood"]);
+
+                for(var imageIndex in imageArray){
+                    const img = document.createElement("img");
+                    img.src = imageArray[imageIndex];
+                    img.classList.add("media-image"); 
+                    imageContainer.appendChild(img);
+                }
             }
-            else if(informationColumns[i] === "media_seniority") {
-                const img = document.createElement("img");
-                img.src = info["media_seniority"];
-                img.classList.add("media-image"); 
-                imageContainer.appendChild(img);
+            else if(informationColumns[i] === "media_seniority" && info["media_seniority"] !== "[]") {
+                let imageArray = JSON.parse(info["media_seniority"]);
+
+                for(var imageIndex in imageArray){
+                    const img = document.createElement("img");
+                    img.src = imageArray[imageIndex];
+                    img.classList.add("media-image"); 
+                    imageContainer.appendChild(img);
+                }
             }
-            else if(informationColumns[i] === "media_misc") {
-                const img = document.createElement("img");
-                img.src = info["media_misc"];
-                img.classList.add("media-image"); 
-                imageContainer.appendChild(img);
+            else if(informationColumns[i] === "media_misc" && info["media_misc"] !== "[]") {
+                let imageArray = JSON.parse(info["media_misc"]);
+
+                for(var imageIndex in imageArray){
+                    const img = document.createElement("img");
+                    img.src = imageArray[imageIndex];
+                    img.classList.add("media-image"); 
+                    imageContainer.appendChild(img);
+                }
             }
                 
             mediaBox.appendChild(imageContainer);
@@ -249,7 +265,7 @@ function openQuestionaire() {
         textArea.classList.add("questionnaireTextarea");
         textArea.id = `questionnaireAnswer_${i}`;
         let index = parseInt(i, 10);
-        textArea.innerText = document.getElementById(`divinfo${index+2}`).innerText;
+        textArea.innerText = document.getElementById(`divinfo${index+1}`).innerText;
       
         labelContainer.appendChild(questionLabel);
         questionDiv.appendChild(labelContainer);
@@ -336,7 +352,7 @@ var editedMemory;
 function openEditingModal(buttonNumber){
     editedMemory = buttonNumber;
     editingModal_input.value = document.getElementById(`divinfo${buttonNumber}`).innerText; // Set the input field to the current content
-    editingModal_header.innerText = memoryFieldNames_global[buttonNumber-1];
+    editingModal_header.innerText = memoryFieldNames_global[buttonNumber];
     editingModal.style.display = "block";
 }
 
