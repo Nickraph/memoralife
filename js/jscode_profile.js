@@ -42,6 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 1; i <= divNumber; i++) { // dynamic div creation
 
+
+        //Create and append category dividers
+        if(i === 1 || i === 11 || i === 16 || i === 22 || i === 23 || i === 34){
+            const categoryLine = document.createElement("div");
+            categoryLine.classList.add("category-headers");
+            categoryLine.innerText = categoryNames[categoryIndex];
+            categoryIndex++;
+            memoryContainer.appendChild(categoryLine);
+        }
+
+        // memory divs
         if(informationColumns[i].substring(0, 6) != "media_"){ //skip media columns
             
             //Create memory divs
@@ -83,19 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
             memoryBox.appendChild(paragraph);
             memoryBox.appendChild(editBtn);
             memoryBox.appendChild(readMoreBtn);
+
+            //Append memory div to memory container
+            memoryContainer.appendChild(memoryBox);
         } //media columns skipped
-
-        //Create and append category dividers
-        if(i === 1 || i === 11 || i === 16 || i === 22 || i === 23 || i === 34){
-            const categoryLine = document.createElement("div");
-            categoryLine.classList.add("category-headers");
-            categoryLine.innerText = categoryNames[categoryIndex];
-            categoryIndex++;
-            memoryContainer.appendChild(categoryLine);
-        }
-
-        //Append memory div to memory container
-        memoryContainer.appendChild(memoryBox);
 
         //Create and append media divs + upload buttons at the bottom of each category
         if (informationColumns[i].substring(0, 6) === "media_") { //media columns
