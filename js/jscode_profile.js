@@ -104,14 +104,19 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadBtn.innerText = "Μεταφόρτωση Πολυμέσων";
             uploadBtn.onclick = () => fileUpload(i);
 
+            // Create a container for images
+            const imageContainer = document.createElement("div");
+            imageContainer.classList.add("image-container");
+            imageContainer.style.display = "none"; // Hidden by default
+
             // Check if there are stored images for this mediaBox
             
-                    const img = document.createElement("img");
-                    img.src = info["media_childhood"];
-                    img.classList.add("media-image"); // Add a class for styling if needed
-                    mediaBox.appendChild(img);
+                const img = document.createElement("img");
+                img.src = info["media_childhood"];
+                img.classList.add("media-image"); // Add a class for styling if needed
+                imageContainer.appendChild(img);
                 
-            
+            mediaBox.appendChild(imageContainer);
             mediaBox.appendChild(uploadBtn);
             memoryContainer.appendChild(mediaBox);
         }
@@ -265,6 +270,11 @@ editInfoBtn.onclick = function() {
         editInfoBtn.style.backgroundColor = "#00bfa5";
         editInfoBtn.innerText = "Λειτουργία Επεξεργασίας";
 
+        // Show images again
+        document.querySelectorAll(".image-container").forEach(container => {
+            container.style.display = "grid";
+        });
+
         //hide edit buttons
         const editButtons = document.querySelectorAll(".edit-btn");
         editButtons.forEach(button => {button.style.display = "none"});
@@ -277,6 +287,11 @@ editInfoBtn.onclick = function() {
         document.body.style.backgroundColor = "#ede6e6";
         editInfoBtn.style.backgroundColor = "#eb3626";
         editInfoBtn.innerText = "Κλείσιμο Επεξεργασίας";
+
+        // Hide images
+        document.querySelectorAll(".image-container").forEach(container => {
+            container.style.display = "none";
+        });
 
         //show edit buttons
         const editButtons = document.querySelectorAll(".edit-btn");

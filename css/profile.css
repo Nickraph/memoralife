@@ -169,7 +169,7 @@ main {
 /* Media Box (Larger Divs) */
 .media-box {
     background-color: white;
-    border: 2px solid rgb(57, 100, 194)
+    border: 2px solid rgb(57, 100, 194);
     border-radius: 8px;
     padding: 2rem;
     display: flex;
@@ -629,8 +629,20 @@ main {
     display: none;
 }
 
+/* Grid for images */
+.image-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Up to 4 images per row */
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+}
+
+/* Style images */
 .media-image {
     width: 100%;
+    max-width: 150px; /* Adjust as needed */
     height: auto;
     border-radius: 5px;
 }
