@@ -297,9 +297,9 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					if (results.rows.length > 0) {
 
 						// Check which media box is being updated, push url in media column and update it.
-						
+
 						if(updatePacket.mediaIndex == 14){ //media_childhood
-							const media_childhood = JSON.parse(results.rows[0].media_childhood);
+							let media_childhood = JSON.parse(results.rows[0].media_childhood);
 							media_childhood.push(updatePacket.fileUrl);
 							media_childhood = JSON.stringify(media_childhood);
 							client.query('UPDATE information SET media_childhood = $1 WHERE id = $2', [media_childhood, userID])
@@ -312,7 +312,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 							})
 						}
 						else if(updatePacket.mediaIndex == 20){ //media_adulthood
-							const media_adulthood = JSON.parse(results.rows[0].media_adulthood);
+							let media_adulthood = JSON.parse(results.rows[0].media_adulthood);
 							media_adulthood.push(updatePacket.fileUrl);
 							media_adulthood = JSON.stringify(media_adulthood);
 							client.query('UPDATE information SET media_adulthood = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
@@ -325,7 +325,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 							})
 						}
 						else if(updatePacket.mediaIndex == 21){ //media_seniority
-							const media_seniority = JSON.parse(results.rows[0].media_seniority);
+							let media_seniority = JSON.parse(results.rows[0].media_seniority);
 							media_seniority.push(updatePacket.fileUrl);
 							media_seniority = JSON.stringify(media_seniority);
 							client.query('UPDATE information SET media_seniority = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
@@ -338,7 +338,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 							})
 						}
 						else if(updatePacket.mediaIndex == 33){ //media_misc
-							const media_misc = JSON.parse(results.rows[0].media_misc);
+							let media_misc = JSON.parse(results.rows[0].media_misc);
 							media_misc.push(updatePacket.fileUrl);
 							media_misc = JSON.stringify(media_misc);
 							client.query('UPDATE information SET media_misc = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
