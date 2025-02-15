@@ -96,12 +96,21 @@ document.addEventListener('DOMContentLoaded', () => {
         //Create and append media divs + upload buttons at the bottom of each category
         if (i === 14 || i === 20 || i === 21 || i === 33) {
             const mediaBox = document.createElement("div");
+            mediaBox.id = `mediaBox_${i}`;
             mediaBox.classList.add("media-box");
 
             const uploadBtn = document.createElement("button");
             uploadBtn.classList.add("upload-buttons");
             uploadBtn.innerText = "Μεταφόρτωση Πολυμέσων";
             uploadBtn.onclick = () => fileUpload(i);
+
+            // Check if there are stored images for this mediaBox
+            
+                    const img = document.createElement("img");
+                    img.src = info["media_childhood"];
+                    img.classList.add("media-image"); // Add a class for styling if needed
+                    mediaBox.appendChild(img);
+                
             
             mediaBox.appendChild(uploadBtn);
             memoryContainer.appendChild(mediaBox);

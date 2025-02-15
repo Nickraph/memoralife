@@ -628,3 +628,9 @@ main {
 #file {
     display: none;
 }
+
+.media-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}

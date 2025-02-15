@@ -303,13 +303,34 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					})
 				}
 				else if(updatePacket.mediaIndex == 20){ //media_adulthood
-				
+					client.query('UPDATE information SET media_adulthood = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
+					.then(()=>{							
+						// database updated
+					})
+					.catch(err => {
+						console.error('Database query error:', err);
+						socket.emit('showMessage', 'An error occurred');
+					})
 				}
 				else if(updatePacket.mediaIndex == 21){ //media_seniority
-				
+					client.query('UPDATE information SET media_seniority = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
+					.then(()=>{							
+						// database updated
+					})
+					.catch(err => {
+						console.error('Database query error:', err);
+						socket.emit('showMessage', 'An error occurred');
+					})
 				}
 				else if(updatePacket.mediaIndex == 33){ //media_misc
-				
+					client.query('UPDATE information SET media_misc = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
+					.then(()=>{							
+						// database updated
+					})
+					.catch(err => {
+						console.error('Database query error:', err);
+						socket.emit('showMessage', 'An error occurred');
+					})
 				}
 				else{
 					socket.emit("showMessage", "Invalid media update request.");
