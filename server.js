@@ -184,7 +184,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			.then( () => { //if email doesnt already exist continue with account creation
 				client.query('INSERT INTO credentials(email, password, accstatus, visibility, handle, init) VALUES($1, $2, $3, $4, $5, $6)', [email, password, 'active', 'private', handle, 'not_init']);
 				client.query(`INSERT INTO information(name, surname, dob, pob, nickname, generalinfo, address, familynames, familyoccupations, pets, childhoodinfo, address_childhood, school_childhood, lovememories, memories_childhood_misc, media_childhood, studies, occupations, marriage, partnerinfo, kids, memories_adulthood_misc, media_adulthood, grandchildren, media_seniority, values, achievements, fav_foods, fav_scents, fav_fun, fav_seasons, fav_media, fav_memories, fav_music, fav_hobbies, fav_misc, leastfav, routine, media_misc) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39)
-`, [firstname, lastname, "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "[]", "-", "-", "-", "-", "[]", "-", "[]", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "[]"]);
+`, [firstname, lastname, "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "[]", "-", "[]", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "[]"]);
 				//Database entry created. Inform client:
 				socket.emit("showMessage", "Account Created!");
 			})
@@ -298,7 +298,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 						// Check which media box is being updated, push url in media column and update it.
 
-						if(updatePacket.mediaIndex == 14){ //media_childhood
+						if(updatePacket.mediaIndex == 15){ //media_childhood
 							let media_childhood = JSON.parse(results.rows[0].media_childhood);
 							media_childhood.push(updatePacket.fileUrl);
 							media_childhood = JSON.stringify(media_childhood);
@@ -311,7 +311,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 								socket.emit('showMessage', 'An error occurred');
 							})
 						}
-						else if(updatePacket.mediaIndex == 20){ //media_adulthood
+						else if(updatePacket.mediaIndex == 21){ //media_adulthood
 							let media_adulthood = JSON.parse(results.rows[0].media_adulthood);
 							media_adulthood.push(updatePacket.fileUrl);
 							media_adulthood = JSON.stringify(media_adulthood);
@@ -324,7 +324,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 								socket.emit('showMessage', 'An error occurred');
 							})
 						}
-						else if(updatePacket.mediaIndex == 21){ //media_seniority
+						else if(updatePacket.mediaIndex == 22){ //media_seniority
 							let media_seniority = JSON.parse(results.rows[0].media_seniority);
 							media_seniority.push(updatePacket.fileUrl);
 							media_seniority = JSON.stringify(media_seniority);
