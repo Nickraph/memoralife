@@ -5,7 +5,7 @@ const memoryFieldNames_global = [
     "Όνομα:","Επώνυμο:","Ημερομηνία Γέννησης:","Τόπος Γέννησης:","Ψευδώνυμο:", "Γενικότερα:", "Τρέχουσα Διεύθυνση:","Οικογένεια","Επαγγέλματα Μελών Οικογένειας:","Κατοικίδια:","Παιδική Ηλικία:","Διεύθυνση των Παιδικών σας Χρόνων:","Σχολείο:","Έρωτες:","Πρόσθετες Πληροφορίες:","Σπουδές:","Καριέρα:","Έγγαμος Βίος:","Σύντροφος:","Τέκνα:","Πρόσθετες Πληροφορίες:","Εγγόνια/Δισέγγονα:","Αξίες και Ιδανικά:","Κατορθώματα για τα οποία είστε υπερήφανος/-η:","Φαγητά & Αγαπημένες Συνταγές:","Αγαπημένες μυρωδιές:","Αγαπημένες δραστηριότητες:","Αγαπημνένες εποχές:","Αγαπημένες ταινίες/σειρές:", "Αγαπημένη μουσική:","Χόμπι μου:","Πρόσθετα:","Τι δεν μου αρέσει:","Η ρουτίνα μου:"
 ];
 var informationColumns = [
-    "name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "media_adulthood", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
+    "name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "media_adulthood", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine", "media_misc"
 ];
 
 const form = document.getElementById('file-form');
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.setItem("sessionToken", token);
 
     var informationColumns = [
-        "name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "media_adulthood", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
+        "name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "media_adulthood", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine", "media_misc"
     ];
 
     //add settings details
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Generate all memory (text & media) storing divs & category dividers dynamically.
     const memoryContainer = document.getElementById("memory-container");
 	const memoryFieldNames = [
-        "Όνομα:","Επώνυμο:","Ημερομηνία Γέννησης:","Τόπος Γέννησης:","Ψευδώνυμο:", "Γενικότερα:", "Τρέχουσα Διεύθυνση:","Οικογένεια","Επαγγέλματα Μελών Οικογένειας:","Κατοικίδια:","Παιδική Ηλικία:","Διεύθυνση των Παιδικών σας Χρόνων:","Σχολείο:","Έρωτες:","Πρόσθετες Πληροφορίες:","Σπουδές:","Καριέρα:","Έγγαμος Βίος:","Σύντροφος:","Τέκνα:","Πρόσθετες Πληροφορίες:","Εγγόνια/Δισέγγονα:","Αξίες και Ιδανικά:","Κατορθώματα για τα οποία είστε υπερήφανος/-η:","Φαγητά & Αγαπημένες Συνταγές:","Αγαπημένες μυρωδιές:","Αγαπημένες δραστηριότητες:","Αγαπημνένες εποχές:","Αγαπημένες ταινίες/σειρές:", "Αγαπημένη μουσική:","Χόμπι μου:","Πρόσθετα:","Τι δεν μου αρέσει:","Η ρουτίνα μου:"
+        "Όνομα:","Επώνυμο:","Ημερομηνία Γέννησης:","Τόπος Γέννησης:","Ψευδώνυμο:", "Γενικότερα:", "Τρέχουσα Διεύθυνση:","Οικογένεια","Επαγγέλματα Μελών Οικογένειας:","Κατοικίδια:","Παιδική Ηλικία:","Διεύθυνση των Παιδικών σας Χρόνων:","Σχολείο:","Έρωτες:", "media", "Πρόσθετες Πληροφορίες:","Σπουδές:","Καριέρα:","Έγγαμος Βίος:","Σύντροφος:","Τέκνα:","Πρόσθετες Πληροφορίες:", "media", "Εγγόνια/Δισέγγονα:", "media", "Αξίες και Ιδανικά:","Κατορθώματα για τα οποία είστε υπερήφανος/-η:","Φαγητά & Αγαπημένες Συνταγές:","Αγαπημένες μυρωδιές:","Αγαπημένες δραστηριότητες:","Αγαπημνένες εποχές:","Αγαπημένες ταινίες/σειρές:", "Αγαπημένη μουσική:","Χόμπι μου:","Πρόσθετα:","Τι δεν μου αρέσει:","Η ρουτίνα μου:", "media" 
     ];
     const categoryNames = ["—Γενικές Πληροφορίες—", "—Παιδικά Χρόνια—", "—Ενήλικη Ζωή—", "—Μεταγενέστερα Χρόνια—", "—Προσωπικές Προτιμήσεις—", "—Ρουτίνα—"];
     var categoryIndex = 0;
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //Heading
             const heading = document.createElement("div");
             heading.classList.add("memory-heading");
-            heading.textContent = memoryFieldNames[i-1];
+            heading.textContent = memoryFieldNames[i];
 
             //Information inside
             const paragraph = document.createElement("p");
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Enter information in their fields
     informationColumns.forEach((data_name, index) => {
-        const divInfoElement = document.getElementById(`divinfo${index + 1}`);
+        const divInfoElement = document.getElementById(`divinfo${index}`);
         if (divInfoElement) {
             divInfoElement.innerHTML = info[data_name];
         }
@@ -249,7 +249,7 @@ function openQuestionaire() {
         textArea.classList.add("questionnaireTextarea");
         textArea.id = `questionnaireAnswer_${i}`;
         let index = parseInt(i, 10);
-        textArea.innerText = document.getElementById(`divinfo${index+3}`).innerText;
+        textArea.innerText = document.getElementById(`divinfo${index+2}`).innerText;
       
         labelContainer.appendChild(questionLabel);
         questionDiv.appendChild(labelContainer);
@@ -268,9 +268,9 @@ questionnaireSave.onclick = function() {
     for (let i in questions) {
         let index = parseInt(i, 10);
         let answer = document.getElementById(`questionnaireAnswer_${i}`).value;
-        document.getElementById(`divinfo${index+3}`).innerText = answer;
-        info[informationColumns[index+2]] = answer;
-        updateInfo(informationColumns[index+2], answer); //update database
+        document.getElementById(`divinfo${index+2}`).innerText = answer;
+        info[informationColumns[index+1]] = answer;
+        updateInfo(informationColumns[index+1], answer); //update database
     }
 
     questionnaireModal.style.display = "none";
