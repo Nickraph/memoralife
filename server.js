@@ -339,8 +339,11 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 						}
 						else if(updatePacket.mediaType == "media_misc"){ //media_misc
 							let media_misc = JSON.parse(results.rows[0].media_misc);
+							console.log(media_misc);
 							media_misc.push(updatePacket.fileUrl);
+							console.log(media_misc);
 							media_misc = JSON.stringify(media_misc);
+							console.log(media_misc);
 							client.query('UPDATE information SET media_misc = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
 							.then(()=>{							
 								// database updated
