@@ -315,7 +315,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 							let media_adulthood = JSON.parse(results.rows[0].media_adulthood);
 							media_adulthood.push(updatePacket.fileUrl);
 							media_adulthood = JSON.stringify(media_adulthood);
-							client.query('UPDATE information SET media_adulthood = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
+							client.query('UPDATE information SET media_adulthood = $1 WHERE id = $2', [media_adulthood, userID])
 							.then(()=>{							
 								// database updated
 							})
@@ -328,7 +328,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 							let media_seniority = JSON.parse(results.rows[0].media_seniority);
 							media_seniority.push(updatePacket.fileUrl);
 							media_seniority = JSON.stringify(media_seniority);
-							client.query('UPDATE information SET media_seniority = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
+							client.query('UPDATE information SET media_seniority = $1 WHERE id = $2', [media_seniority, userID])
 							.then(()=>{							
 								// database updated
 							})
@@ -339,12 +339,9 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 						}
 						else if(updatePacket.mediaType == "media_misc"){ //media_misc
 							let media_misc = JSON.parse(results.rows[0].media_misc);
-							console.log(media_misc);
 							media_misc.push(updatePacket.fileUrl);
-							console.log(media_misc);
 							media_misc = JSON.stringify(media_misc);
-							console.log(media_misc);
-							client.query('UPDATE information SET media_misc = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
+							client.query('UPDATE information SET media_misc = $1 WHERE id = $2', [media_misc, userID])
 							.then(()=>{							
 								// database updated
 							})
