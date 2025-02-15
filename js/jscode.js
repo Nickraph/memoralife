@@ -103,7 +103,7 @@ socket.on("showMessage", function(msg){
         document.getElementById("su_lastname_field").value = "";
 
         //show success modal
-        openSignupSuccessModal();
+        //openSignupSuccessModal();
     }
     else{
         alert(msg);

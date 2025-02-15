@@ -38,48 +38,52 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     const categoryNames = ["—Γενικές Πληροφορίες—", "—Παιδικά Χρόνια—", "—Ενήλικη Ζωή—", "—Μεταγενέστερα Χρόνια—", "—Προσωπικές Προτιμήσεις—", "—Ρουτίνα—"];
     var categoryIndex = 0;
-    const divNumber = memoryFieldNames.length;
+    const divNumber = informationColumns.length; // make as many divs as entries in informationColumns
 
-    for (let i = 1; i <= divNumber; i++) {
-        //Create memory divs
-        const memoryBox = document.createElement("div");
-        memoryBox.classList.add("memory-box");
+    for (let i = 1; i <= divNumber; i++) { // dynamic div creation
 
-        //Heading
-        const heading = document.createElement("div");
-        heading.classList.add("memory-heading");
-        heading.textContent = memoryFieldNames[i-1];
+        if(informationColumns[i].substring(0, 6) != "media_"){ //skip media columns
+            
+            //Create memory divs
+            const memoryBox = document.createElement("div");
+            memoryBox.classList.add("memory-box");
 
-        //Information inside
-        const paragraph = document.createElement("p");
-        paragraph.id = `divinfo${i}`;
-        paragraph.textContent = info[informationColumns[i]];
+            //Heading
+            const heading = document.createElement("div");
+            heading.classList.add("memory-heading");
+            heading.textContent = memoryFieldNames[i-1];
 
-        //Hidden edit buttons
-        const editBtn = document.createElement("button");
-        editBtn.classList.add("edit-btn");
-        editBtn.textContent = "Επεξεργασία";
+            //Information inside
+            const paragraph = document.createElement("p");
+            paragraph.id = `divinfo${i}`;
+            paragraph.textContent = info[informationColumns[i]];
 
-        //Handle edit buttons logic
-        editBtn.addEventListener("click", function (){
-            openEditingModal(i);
-        });
+            //Hidden edit buttons
+            const editBtn = document.createElement("button");
+            editBtn.classList.add("edit-btn");
+            editBtn.textContent = "Επεξεργασία";
 
-        //Read more buttons
-        const readMoreBtn = document.createElement("span");
-        readMoreBtn.classList.add("read-more-btn");
-        readMoreBtn.textContent = "Επέκταση";
+            //Handle edit buttons logic
+            editBtn.addEventListener("click", function (){
+                openEditingModal(i);
+            });
 
-        //Handle full text modal logic
-        readMoreBtn.addEventListener("click", function (){
-            openFullTextModal(i);
-        });
+            //Read more buttons
+            const readMoreBtn = document.createElement("span");
+            readMoreBtn.classList.add("read-more-btn");
+            readMoreBtn.textContent = "Επέκταση";
 
-        //Append elements to memoryBox
-        memoryBox.appendChild(heading);
-        memoryBox.appendChild(paragraph);
-        memoryBox.appendChild(editBtn);
-        memoryBox.appendChild(readMoreBtn);
+            //Handle full text modal logic
+            readMoreBtn.addEventListener("click", function (){
+                openFullTextModal(i);
+            });
+
+            //Append elements to memoryBox
+            memoryBox.appendChild(heading);
+            memoryBox.appendChild(paragraph);
+            memoryBox.appendChild(editBtn);
+            memoryBox.appendChild(readMoreBtn);
+        } //media columns skipped
 
         //Create and append category dividers
         if(i === 1 || i === 11 || i === 16 || i === 22 || i === 23 || i === 34){
@@ -94,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         memoryContainer.appendChild(memoryBox);
 
         //Create and append media divs + upload buttons at the bottom of each category
-        if (i === 15 || i === 21 || i === 22 || i === 34) {
+        if (informationColumns[i].substring(0, 6) === "media_") { //media columns
             const mediaBox = document.createElement("div");
             mediaBox.id = `mediaBox_${i}`;
             mediaBox.classList.add("media-box");
