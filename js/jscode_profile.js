@@ -98,9 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //Append memory div to memory container
             memoryContainer.appendChild(memoryBox);
         } //media columns skipped
-
-        //Create and append media divs + upload buttons at the bottom of each category
-        if (informationColumns[i].substring(0, 6) === "media_") { //media columns
+        else { //media columns
             const mediaBox = document.createElement("div");
             mediaBox.id = `mediaBox_${i}`;
             mediaBox.classList.add("media-box");
@@ -108,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const uploadBtn = document.createElement("button");
             uploadBtn.classList.add("upload-buttons");
             uploadBtn.innerText = "Μεταφόρτωση Πολυμέσων";
-            uploadBtn.onclick = () => fileUpload(i);
+            uploadBtn.onclick = () => fileUpload(informationColumns[i]);
 
             // Create a container for images
             const imageContainer = document.createElement("div");
@@ -116,25 +114,25 @@ document.addEventListener('DOMContentLoaded', () => {
             imageContainer.style.display = "grid"; // Hidden by default
 
             // Check if there are stored images for this mediaBox
-            if(i === 15 && info["media_childhood"] !== "") {
+            if(informationColumns[i] === "media_childhood") {
                 const img = document.createElement("img");
                 img.src = info["media_childhood"];
                 img.classList.add("media-image"); 
                 imageContainer.appendChild(img);
             }
-            else if(i === 21 && info["media_adulthood"] !== "") {
+            else if(informationColumns[i] === "media_adulthood") {
                 const img = document.createElement("img");
                 img.src = info["media_adulthood"];
                 img.classList.add("media-image"); 
                 imageContainer.appendChild(img);
             }
-            else if(i === 22 && info["media_seniority"] !== "") {
+            else if(informationColumns[i] === "media_seniority") {
                 const img = document.createElement("img");
                 img.src = info["media_seniority"];
                 img.classList.add("media-image"); 
                 imageContainer.appendChild(img);
             }
-            else if(i === 34 && info["media_misc"] !== "") {
+            else if(informationColumns[i] === "media_misc") {
                 const img = document.createElement("img");
                 img.src = info["media_misc"];
                 img.classList.add("media-image"); 
@@ -504,7 +502,7 @@ const fileformModal_input = document.getElementById("file");
 const fileUploadBtn = document.getElementById("fileUploadBtn");
 
 // File upload function using Cloudinary
-function fileUpload(mediaIndex) {
+function fileUpload(mediaType) {
     fileformModal_input.click(); // Opens file explorer
 
     // Attach mediaIndex to the file input change event so we know where to save the file
@@ -515,7 +513,7 @@ function fileUpload(mediaIndex) {
             const fileUrl = await uploadToCloudinary(file);
     
             // Send the file URL to the server using socket.emit
-            sendFileUrlToServer(mediaIndex, fileUrl);
+            sendFileUrlToServer(mediaType, fileUrl);
         }
     };
 }
@@ -526,9 +524,9 @@ fileFormModalCloseBtn.addEventListener("click", () => {
 });
 
 // Function to send the file URL to the server
-const sendFileUrlToServer = (mediaIndex, fileUrl) => {
+const sendFileUrlToServer = (mediaType, fileUrl) => {
     let sessionToken = sessionStorage.getItem("sessionToken");
-    let updatePacket = { mediaIndex, fileUrl, sessionToken };
+    let updatePacket = { mediaType, fileUrl, sessionToken };
 
     // Emit the updateMedia event with the file URL
     socket.emit("updateMedia", updatePacket);

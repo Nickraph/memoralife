@@ -298,7 +298,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 
 						// Check which media box is being updated, push url in media column and update it.
 
-						if(updatePacket.mediaIndex == 15){ //media_childhood
+						if(updatePacket.mediaType == "media_childhood"){ //media_childhood
 							let media_childhood = JSON.parse(results.rows[0].media_childhood);
 							media_childhood.push(updatePacket.fileUrl);
 							media_childhood = JSON.stringify(media_childhood);
@@ -311,7 +311,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 								socket.emit('showMessage', 'An error occurred');
 							})
 						}
-						else if(updatePacket.mediaIndex == 21){ //media_adulthood
+						else if(updatePacket.mediaType == "media_adulthood"){ //media_adulthood
 							let media_adulthood = JSON.parse(results.rows[0].media_adulthood);
 							media_adulthood.push(updatePacket.fileUrl);
 							media_adulthood = JSON.stringify(media_adulthood);
@@ -324,7 +324,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 								socket.emit('showMessage', 'An error occurred');
 							})
 						}
-						else if(updatePacket.mediaIndex == 22){ //media_seniority
+						else if(updatePacket.mediaType == "media_seniority"){ //media_seniority
 							let media_seniority = JSON.parse(results.rows[0].media_seniority);
 							media_seniority.push(updatePacket.fileUrl);
 							media_seniority = JSON.stringify(media_seniority);
@@ -337,7 +337,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 								socket.emit('showMessage', 'An error occurred');
 							})
 						}
-						else if(updatePacket.mediaIndex == 34){ //media_misc
+						else if(updatePacket.mediaType == "media_misc"){ //media_misc
 							let media_misc = JSON.parse(results.rows[0].media_misc);
 							media_misc.push(updatePacket.fileUrl);
 							media_misc = JSON.stringify(media_misc);
