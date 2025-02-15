@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("i: "+i+" | "+informationColumns[i]+" | "+memoryFieldNames[i]);
 
         //Create and append category dividers
-        if(i === 0 || i === 10 || i === 16 || i === 24 || i === 26 || i === 37){
+        if(i === 0 || i === 10 || i === 16 || i === 23 || i === 25 || i === 37){
             const categoryLine = document.createElement("div");
             categoryLine.classList.add("category-headers");
             categoryLine.innerText = categoryNames[categoryIndex];
