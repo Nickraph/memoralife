@@ -337,7 +337,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 								socket.emit('showMessage', 'An error occurred');
 							})
 						}
-						else if(updatePacket.mediaIndex == 33){ //media_misc
+						else if(updatePacket.mediaIndex == 34){ //media_misc
 							let media_misc = JSON.parse(results.rows[0].media_misc);
 							media_misc.push(updatePacket.fileUrl);
 							media_misc = JSON.stringify(media_misc);

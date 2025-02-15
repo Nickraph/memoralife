@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         memoryBox.appendChild(readMoreBtn);
 
         //Create and append category dividers
-        if(i === 1 || i === 10 || i === 15 || i === 21 || i === 22 || i === 33){
+        if(i === 1 || i === 11 || i === 16 || i === 22 || i === 23 || i === 34){
             const categoryLine = document.createElement("div");
             categoryLine.classList.add("category-headers");
             categoryLine.innerText = categoryNames[categoryIndex];
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         memoryContainer.appendChild(memoryBox);
 
         //Create and append media divs + upload buttons at the bottom of each category
-        if (i === 14 || i === 20 || i === 21 || i === 33) {
+        if (i === 15 || i === 21 || i === 22 || i === 34) {
             const mediaBox = document.createElement("div");
             mediaBox.id = `mediaBox_${i}`;
             mediaBox.classList.add("media-box");
