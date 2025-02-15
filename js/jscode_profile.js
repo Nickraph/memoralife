@@ -110,25 +110,25 @@ document.addEventListener('DOMContentLoaded', () => {
             imageContainer.style.display = "grid"; // Hidden by default
 
             // Check if there are stored images for this mediaBox
-            if(i === 14 && info["media_childhood"] !== "") {
+            if(i === 15 && info["media_childhood"] !== "") {
                 const img = document.createElement("img");
                 img.src = info["media_childhood"];
                 img.classList.add("media-image"); 
                 imageContainer.appendChild(img);
             }
-            else if(i === 20 && info["media_adulthood"] !== "") {
+            else if(i === 21 && info["media_adulthood"] !== "") {
                 const img = document.createElement("img");
                 img.src = info["media_adulthood"];
                 img.classList.add("media-image"); 
                 imageContainer.appendChild(img);
             }
-            else if(i === 21 && info["media_seniority"] !== "") {
+            else if(i === 22 && info["media_seniority"] !== "") {
                 const img = document.createElement("img");
                 img.src = info["media_seniority"];
                 img.classList.add("media-image"); 
                 imageContainer.appendChild(img);
             }
-            else if(i === 33 && info["media_misc"] !== "") {
+            else if(i === 34 && info["media_misc"] !== "") {
                 const img = document.createElement("img");
                 img.src = info["media_misc"];
                 img.classList.add("media-image"); 
