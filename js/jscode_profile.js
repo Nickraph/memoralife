@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     //add settings details
-    document.getElementById("handleSpan").innerHTML = "Το handle: "+info.handle;
-    document.getElementById("currentEmail").innerHTML = "Τρεχόν email: "+info.email;
+    document.getElementById("handleSpan").innerHTML = "Αναγνωριστηκό: "+info.handle;
+    document.getElementById("currentEmail").innerHTML = "Τρέχον email: "+info.email;
     if(info.visibility == "private"){
         document.getElementById('radio_private').checked = true;
     }
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var categoryIndex = 0;
     const divNumber = informationColumns.length; // make as many divs as entries in informationColumns
 
-    for (let i = 0; i <= divNumber; i++) { // dynamic div creation
+    for (let i = 0; i < divNumber; i++) { // dynamic div creation
         console.log("i: "+i+" | "+informationColumns[i]+" | "+memoryFieldNames[i]);
 
         //Create and append category dividers
