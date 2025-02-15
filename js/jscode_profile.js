@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const memoryFieldNames = [
         "Όνομα:","Επώνυμο:","Ημερομηνία Γέννησης:","Τόπος Γέννησης:","Ψευδώνυμο:","Τρέχουσα Διεύθυνση:","Οικογένεια","Επαγγέλματα Μελών Οικογένειας:","Κατοικίδια:","Παιδική Ηλικία:","Διεύθυνση των Παιδικών σας Χρόνων:","Σχολείο:","Έρωτες:","Πρόσθετες Πληροφορίες:","Σπουδές:","Καριέρα:","Έγγαμος Βίος:","Σύντροφος:","Τέκνα:","Πρόσθετες Πληροφορίες:","Εγγόνια/Δισέγγονα:","Αξίες και Ιδανικά:","Κατορθώματα για τα οποία είστε υπερήφανος/-η:","Φαγητά & Αγαπημένες Συνταγές:","Μυρωδιές & Ήχοι:","Ψυχαγωγία:","Εποχές:","Πολυμέσα:","Μουσική:","Χόμπι και Δραστηριότητες:","Πρόσθετα:","Τι Δεν Σας Αρέσει:","Η ρουτίνα σας:"
     ];
-    const categoryNames = ["—Γενικές Πληροφορίες—", "—Πρώιμα Παιδικά Χρόνια—", "—Ενήλικη Ζωή—", "—Μεταγενέστερα Χρόνια—", "—Προσωπικές Προτιμήσεις—", "—Ρουτίνα—"];
+    const categoryNames = ["—Γενικές Πληροφορίες—", "—Παιδικά Χρόνια—", "—Ενήλικη Ζωή—", "—Μεταγενέστερα Χρόνια—", "—Προσωπικές Προτιμήσεις—", "—Ρουτίνα—"];
     var categoryIndex = 0;
     const divNumber = memoryFieldNames.length;
 
@@ -107,14 +107,33 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create a container for images
             const imageContainer = document.createElement("div");
             imageContainer.classList.add("image-container");
-            imageContainer.style.display = "none"; // Hidden by default
+            imageContainer.style.display = "grid"; // Hidden by default
 
             // Check if there are stored images for this mediaBox
-            
+            if(i === 14 && info["media_childhood"] !== "") {
                 const img = document.createElement("img");
                 img.src = info["media_childhood"];
-                img.classList.add("media-image"); // Add a class for styling if needed
+                img.classList.add("media-image"); 
                 imageContainer.appendChild(img);
+            }
+            else if(i === 20 && info["media_adulthood"] !== "") {
+                const img = document.createElement("img");
+                img.src = info["media_adulthood"];
+                img.classList.add("media-image"); 
+                imageContainer.appendChild(img);
+            }
+            else if(i === 21 && info["media_seniority"] !== "") {
+                const img = document.createElement("img");
+                img.src = info["media_seniority"];
+                img.classList.add("media-image"); 
+                imageContainer.appendChild(img);
+            }
+            else if(i === 33 && info["media_misc"] !== "") {
+                const img = document.createElement("img");
+                img.src = info["media_misc"];
+                img.classList.add("media-image"); 
+                imageContainer.appendChild(img);
+            }
                 
             mediaBox.appendChild(imageContainer);
             mediaBox.appendChild(uploadBtn);

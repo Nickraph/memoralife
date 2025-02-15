@@ -166,17 +166,6 @@ main {
     text-overflow: ellipsis;
 }
 
-/* Media Box (Larger Divs) */
-.media-box {
-    background-color: white;
-    border: 2px solid rgb(57, 100, 194);
-    border-radius: 8px;
-    padding: 2rem;
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
 /* Memory Box Expanded */
 .memory-box.expanded {
     max-height: 1000px; /* Expandable height */
@@ -629,6 +618,17 @@ main {
     display: none;
 }
 
+/* Media Box (Larger Divs) */
+.media-box {
+    background-color: #4e7de25e;
+    border: 2px solid #3964c2;
+    border-radius: 8px;
+    padding: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
 /* Grid for images */
 .image-container {
     display: grid;
@@ -642,7 +642,7 @@ main {
 /* Style images */
 .media-image {
     width: 100%;
-    max-width: 150px; /* Adjust as needed */
+    max-width: 300px; /* Adjust as needed */
     height: auto;
     border-radius: 5px;
 }
