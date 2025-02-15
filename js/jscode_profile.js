@@ -105,14 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadBtn.onclick = () => fileUpload(i);
 
             // Check if there are stored images for this mediaBox
-            if (info["media_childhood"].length > 0) {
-                info["media_childhood"].forEach(url => {
+            
                     const img = document.createElement("img");
-                    img.src = url;
+                    img.src = info["media_childhood"];
                     img.classList.add("media-image"); // Add a class for styling if needed
                     mediaBox.appendChild(img);
-                });
-            }
+                
             
             mediaBox.appendChild(uploadBtn);
             memoryContainer.appendChild(mediaBox);
