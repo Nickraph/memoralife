@@ -78,7 +78,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 	SOCKET_LIST[socket.id] = socket;
 	console.log("socket connection");
 	var informationColumns = [
-		"name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
+		"name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "media_adulthood", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine"
 	];
 	var credentialsColumns = ["email", "password", "accstatus", "visibility", "handle", "init"];
 
@@ -183,8 +183,8 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			})
 			.then( () => { //if email doesnt already exist continue with account creation
 				client.query('INSERT INTO credentials(email, password, accstatus, visibility, handle, init) VALUES($1, $2, $3, $4, $5, $6)', [email, password, 'active', 'private', handle, 'not_init']);
-				client.query(`INSERT INTO information(name, surname, dob, pob, nickname, generalinfo, address, familynames, familyoccupations, pets, childhoodinfo, address_childhood, school_childhood, lovememories, memories_childhood_misc, media_childhood, studies, occupations, marriage, partnerinfo, kids, memories_adulthood_misc, grandchildren, media_seniority, values, achievements, fav_foods, fav_scents, fav_fun, fav_seasons, fav_media, fav_memories, fav_music, fav_hobbies, fav_misc, leastfav, routine, media_misc) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38)
-`, [firstname, lastname, "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]);
+				client.query(`INSERT INTO information(name, surname, dob, pob, nickname, generalinfo, address, familynames, familyoccupations, pets, childhoodinfo, address_childhood, school_childhood, lovememories, memories_childhood_misc, media_childhood, studies, occupations, marriage, partnerinfo, kids, memories_adulthood_misc, media_adulthood, grandchildren, media_seniority, values, achievements, fav_foods, fav_scents, fav_fun, fav_seasons, fav_media, fav_memories, fav_music, fav_hobbies, fav_misc, leastfav, routine, media_misc) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39)
+`, [firstname, lastname, "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "[]", "-", "-", "-", "-", "-", "-", "[]", "-", "[]", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "[]"]);
 				//Database entry created. Inform client:
 				socket.emit("showMessage", "Account Created!");
 			})
@@ -290,52 +290,79 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		for(i in accountSessions){
 			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
 				let userID = accountSessions[i].accountID;
-				console.log("url: " + updatePacket.fileUrl);
+				
+				//retrieve existing media URLs
+				client.query('SELECT media_childhood, media_adulthood, media_seniority, media_misc FROM information WHERE id = $1', [userID])
+				.then(results => {    
+					if (results.rows.length > 0) {
 
-				if(updatePacket.mediaIndex == 14){ //media_childhood
-					client.query('UPDATE information SET media_childhood = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
-					.then(()=>{							
-						// database updated
-					})
-					.catch(err => {
-						console.error('Database query error:', err);
-						socket.emit('showMessage', 'An error occurred');
-					})
-				}
-				else if(updatePacket.mediaIndex == 20){ //media_adulthood
-					client.query('UPDATE information SET media_adulthood = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
-					.then(()=>{							
-						// database updated
-					})
-					.catch(err => {
-						console.error('Database query error:', err);
-						socket.emit('showMessage', 'An error occurred');
-					})
-				}
-				else if(updatePacket.mediaIndex == 21){ //media_seniority
-					client.query('UPDATE information SET media_seniority = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
-					.then(()=>{							
-						// database updated
-					})
-					.catch(err => {
-						console.error('Database query error:', err);
-						socket.emit('showMessage', 'An error occurred');
-					})
-				}
-				else if(updatePacket.mediaIndex == 33){ //media_misc
-					client.query('UPDATE information SET media_misc = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
-					.then(()=>{							
-						// database updated
-					})
-					.catch(err => {
-						console.error('Database query error:', err);
-						socket.emit('showMessage', 'An error occurred');
-					})
-				}
-				else{
-					socket.emit("showMessage", "Invalid media update request.");
-				}
-			
+						// Check which media box is being updated, push url in media column and update it.
+						
+						if(updatePacket.mediaIndex == 14){ //media_childhood
+							const media_childhood = JSON.parse(results.rows[0].media_childhood);
+							media_childhood.push(updatePacket.fileUrl);
+							media_childhood = JSON.stringify(media_childhood);
+							client.query('UPDATE information SET media_childhood = $1 WHERE id = $2', [media_childhood, userID])
+							.then(()=>{							
+								// database updated
+							})
+							.catch(err => {
+								console.error('Database query error:', err);
+								socket.emit('showMessage', 'An error occurred');
+							})
+						}
+						else if(updatePacket.mediaIndex == 20){ //media_adulthood
+							const media_adulthood = JSON.parse(results.rows[0].media_adulthood);
+							media_adulthood.push(updatePacket.fileUrl);
+							media_adulthood = JSON.stringify(media_adulthood);
+							client.query('UPDATE information SET media_adulthood = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
+							.then(()=>{							
+								// database updated
+							})
+							.catch(err => {
+								console.error('Database query error:', err);
+								socket.emit('showMessage', 'An error occurred');
+							})
+						}
+						else if(updatePacket.mediaIndex == 21){ //media_seniority
+							const media_seniority = JSON.parse(results.rows[0].media_seniority);
+							media_seniority.push(updatePacket.fileUrl);
+							media_seniority = JSON.stringify(media_seniority);
+							client.query('UPDATE information SET media_seniority = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
+							.then(()=>{							
+								// database updated
+							})
+							.catch(err => {
+								console.error('Database query error:', err);
+								socket.emit('showMessage', 'An error occurred');
+							})
+						}
+						else if(updatePacket.mediaIndex == 33){ //media_misc
+							const media_misc = JSON.parse(results.rows[0].media_misc);
+							media_misc.push(updatePacket.fileUrl);
+							media_misc = JSON.stringify(media_misc);
+							client.query('UPDATE information SET media_misc = $1 WHERE id = $2', [updatePacket.fileUrl, userID])
+							.then(()=>{							
+								// database updated
+							})
+							.catch(err => {
+								console.error('Database query error:', err);
+								socket.emit('showMessage', 'An error occurred');
+							})
+						}
+						else{
+							socket.emit("showMessage", "Invalid media update request.");
+						}
+						
+					} else {
+						console.log("No data found.");
+					}
+
+				})
+				.catch(err => {
+					console.error('Database query error:', err);
+					socket.emit('showMessage', 'An error occurred');
+				})			
 			}
 			else{
 				socket.emit("showMessage", "Invalid session or user not found.");
