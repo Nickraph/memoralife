@@ -40,11 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
     var categoryIndex = 0;
     const divNumber = informationColumns.length; // make as many divs as entries in informationColumns
 
-    for (let i = 1; i <= divNumber; i++) { // dynamic div creation
-
+    for (let i = 0; i <= divNumber; i++) { // dynamic div creation
+        console.log("i: "+i+" | "+informationColumns[i]+" | "+memoryFieldNames[i]);
 
         //Create and append category dividers
-        if(i === 1 || i === 11 || i === 16 || i === 22 || i === 23 || i === 34){
+        if(i === 0 || i === 10 || i === 15 || i === 21 || i === 22 || i === 33){
             const categoryLine = document.createElement("div");
             categoryLine.classList.add("category-headers");
             categoryLine.innerText = categoryNames[categoryIndex];
