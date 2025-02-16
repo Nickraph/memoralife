@@ -214,7 +214,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					}
 			}
 			else{
-				socket.emit("showMessage", "Invalid session or user not found.");
+				socket.emit("showMessage", "1 Invalid session or user not found.");
 			}
 		}
 	});
@@ -281,7 +281,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				}
 			}
 			else{
-				socket.emit("showMessage", "Invalid session or user not found.");
+				socket.emit("showMessage", "2 Invalid session or user not found.");
 			}
 		}
 	});
@@ -365,7 +365,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				})			
 			}
 			else{
-				socket.emit("showMessage", "Invalid session or user not found.");
+				socket.emit("showMessage", "3 Invalid session or user not found.");
 			}
 		}
 	});
