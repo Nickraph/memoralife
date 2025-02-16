@@ -102,6 +102,8 @@ socket.on("showMessage", function(msg){
         document.getElementById("su_firstname_field").value = "";
         document.getElementById("su_lastname_field").value = "";
 
+        // refresh page
+        window.open("https://memoralife.onrender.com/", "_self");
         //show success modal
         //openSignupSuccessModal();
     }
