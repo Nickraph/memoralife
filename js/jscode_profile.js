@@ -180,10 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.emit("updateCredentials", updatePacket);
     }
 
-    /*/Enter information in their fields
-    document.getElementById("divinfo1").innerHTML = info.name;
-    document.getElementById("divinfo2").innerHTML = info.surname;*/
-
     // Enter information in their fields
     informationColumns.forEach((data_name, index) => {
         const divInfoElement = document.getElementById(`divinfo${index}`);
@@ -252,25 +248,27 @@ questionnaireBtn.onclick = openQuestionaire;
 function openQuestionaire() {
 
     for (let i in questions) {
-        const questionDiv = document.createElement("div");
-        questionDiv.classList.add("question");
-        
-        const labelContainer = document.createElement("div");
-        labelContainer.classList.add("labelContainer");
+        if(document.getElementById('divinfo'+i) != null){
+            const questionDiv = document.createElement("div");
+            questionDiv.classList.add("question");
+            
+            const labelContainer = document.createElement("div");
+            labelContainer.classList.add("labelContainer");
 
-        const questionLabel = document.createElement("label");
-        questionLabel.textContent = questions[i];
+            const questionLabel = document.createElement("label");
+            questionLabel.textContent = questions[i];
+            
+            const textArea = document.createElement("textarea");
+            textArea.classList.add("questionnaireTextarea");
+            textArea.id = `questionnaireAnswer_${i}`;
+            let index = parseInt(i, 10);
+            textArea.innerText = document.getElementById(`divinfo${index+2}`).innerText;//skip onoma + epwnymo me +2
         
-        const textArea = document.createElement("textarea");
-        textArea.classList.add("questionnaireTextarea");
-        textArea.id = `questionnaireAnswer_${i}`;
-        let index = parseInt(i, 10);
-        textArea.innerText = document.getElementById(`divinfo${index+1}`).innerText;
-      
-        labelContainer.appendChild(questionLabel);
-        questionDiv.appendChild(labelContainer);
-        questionDiv.appendChild(textArea);
-        questionsContainer.appendChild(questionDiv);
+            labelContainer.appendChild(questionLabel);
+            questionDiv.appendChild(labelContainer);
+            questionDiv.appendChild(textArea);
+            questionsContainer.appendChild(questionDiv);
+        }
     }
 
     questionnaireModal.style.display = "flex";
