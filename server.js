@@ -370,6 +370,24 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		}
 	});
 
+	socket.on("updatePfp", function(updatePacket){ //called when user updates/edits pfp
+        for(i in accountSessions){
+            if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
+                let userID = accountSessions[i].accountID;
+				let pfp = updatePacket.fileUrl;
+
+                client.query('UPDATE information SET pfp = $1 WHERE id = $2', [pfp, userID])
+                    .then(()=>{
+                        // database updated
+                    })
+                    .catch(err => {
+                        console.error('Database query error:', err);
+                        socket.emit('showMessage', 'An error occurred');
+                    })    
+			}
+        }
+    });
+
 	socket.on("logout", function(sessionToken){
 		for(i in accountSessions){
 			if(sessionToken == accountSessions[i].accountSessionToken){

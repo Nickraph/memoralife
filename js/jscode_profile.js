@@ -525,6 +525,36 @@ window.addEventListener("beforeunload", function () {
     logout();
 });
 
+// Profile Pic updating
+function changePfp() {
+    fileformModal_input.click(); // Opens file explorer
+
+    // Attach mediaIndex to the file input change event so we know where to save the file
+    fileformModal_input.onchange = async (event) => {
+        const file = event.target.files[0]; // Get the uploaded file
+        if (file) {
+            // Upload the file directly to Cloudinary
+            const fileUrl = await uploadToCloudinary(file);
+    
+            // Send the file URL to the server using socket.emit
+            updatePfp(fileUrl);
+        }
+    };
+
+
+    //update pfp image source
+    const pfpImg = document.getElementById("pfpImg");
+    pfpImg.src = fileformModal_input.value;
+}
+
+function updatePfp(fileUrl) {
+    let sessionToken = sessionStorage.getItem("sessionToken");
+    let updatePacket = {fileUrl, sessionToken};
+
+    // Emit the updateMedia event with the file URL
+    socket.emit("updatePfp", updatePacket);
+}
+
 // file uploading
 const fileFormModal = document.getElementById("fileFormModal");
 const fileFormModalCloseBtn = document.getElementById("fileFormModal-closeBtn");
