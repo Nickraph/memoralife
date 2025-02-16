@@ -66,7 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //Information inside
             const paragraph = document.createElement("p");
-            paragraph.id = `divinfo${divinfo_index}`;
+            paragraph.id = `divinfo${divinfo_index}`; // give divinfo id + index number (ignores media columns)
+            paragraph.dataset.number = i; // give divinfo data-number i for info() update (does not ignore media columns)
             paragraph.textContent = info[informationColumns[i]];
 
             //Increase divinfo_index
@@ -79,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //Handle edit buttons logic
             editBtn.addEventListener("click", function (){
-                openEditingModal(i);
+                openEditingModal(divinfo_index);
             });
 
             //Read more buttons
@@ -366,9 +367,11 @@ editingModal_closeBtn.onclick = function() {
 
 editingModal_saveButton.onclick = function() {
     //change info (localStorage)
-    info[informationColumns[editedMemory]] = editingModal_input.value;
+    let columnIndex = document.getElementById("divinfo"+editedMemory).dataset.number; // get the data-number of the divinfo element NOT the divinfo index
+    info[informationColumns[columnIndex]] = editingModal_input.value;
+
     //update database
-    let data_name = informationColumns[editedMemory]; //name of variable that changed
+    let data_name = informationColumns[columnIndex]; //name of variable that changed
     let data_value = editingModal_input.value; //data of variable that changed
     updateInfo(data_name, data_value); // update database
 
