@@ -170,6 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
     //Set user's full name in the menu bar
     document.getElementById("usernameHeader").innerText = info.name +" "+ info.surname;
 
+    //Set profile picture
+    let pfpImg = document.getElementById("pfpImg");
+    pfpImg.src = info.pfp;
+
     //add prompt to guide and/or questionnaire
     if(info.init === "not_init"){
         document.getElementById("initModal").style.display = "flex"; // Display modal
@@ -543,7 +547,7 @@ function changePfp() {
 
 
     //update pfp image source
-    const pfpImg = document.getElementById("pfpImg");
+    let pfpImg = document.getElementById("pfpImg");
     pfpImg.src = fileformModal_input.value;
 }
 
