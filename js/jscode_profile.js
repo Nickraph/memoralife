@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryNames = ["—Γενικές Πληροφορίες—", "—Παιδικά Χρόνια—", "—Ενήλικη Ζωή—", "—Μεταγενέστερα Χρόνια—", "—Προσωπικές Προτιμήσεις—", "—Ρουτίνα—"];
     var categoryIndex = 0;
     const divNumber = informationColumns.length; // make as many divs as entries in informationColumns
+    let divinfo_index = 0;
 
     for (let i = 0; i < divNumber; i++) { // dynamic div creation
         console.log("i: "+i+" | "+informationColumns[i]+" | "+memoryFieldNames[i]);
@@ -66,8 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //Information inside
             const paragraph = document.createElement("p");
-            paragraph.id = `divinfo${i}`;
+            paragraph.id = `divinfo${divinfo_index}`;
             paragraph.textContent = info[informationColumns[i]];
+
+            //Increase divinfo_index
+            divinfo_index++;
 
             //Hidden edit buttons
             const editBtn = document.createElement("button");
