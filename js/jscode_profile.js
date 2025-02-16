@@ -171,8 +171,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("usernameHeader").innerText = info.name +" "+ info.surname;
 
     //Set profile picture
-    let pfpImg = document.getElementById("pfpImg");
-    pfpImg.src = info.pfp;
+    if(info.pfp != "-"){
+        let pfpImg = document.getElementById("pfpImg");
+        pfpImg.src = info.pfp;
+    }
 
     //add prompt to guide and/or questionnaire
     if(info.init === "not_init"){
@@ -525,6 +527,12 @@ socket.on("forceLogout", function(sessionToLogout){
     }
 });
 
+socket.on("changeImgSrc", function(pfp){
+   //update pfp image source
+   let pfpImg = document.getElementById("pfpImg");
+   pfpImg.src = pfp;
+});
+
 window.addEventListener("beforeunload", function () {
     logout();
 });
@@ -544,11 +552,6 @@ function changePfp() {
             updatePfp(fileUrl);
         }
     };
-
-
-    //update pfp image source
-    let pfpImg = document.getElementById("pfpImg");
-    pfpImg.src = fileformModal_input.value;
 }
 
 function updatePfp(fileUrl) {
