@@ -70,9 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
             paragraph.dataset.number = i; // give divinfo data-number i for info() update (does not ignore media columns)
             paragraph.textContent = info[informationColumns[i]];
 
-            //Increase divinfo_index
-            divinfo_index++;
-
             //Hidden edit buttons
             const editBtn = document.createElement("button");
             editBtn.classList.add("edit-btn");
@@ -92,6 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
             readMoreBtn.addEventListener("click", function (){
                 openFullTextModal(i);
             });
+
+            //Increase divinfo_index
+            divinfo_index++;
 
             //Append elements to memoryBox
             memoryBox.appendChild(heading);
