@@ -186,11 +186,20 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.emit("updateCredentials", updatePacket);
     }
 
+    let currentIndex = 0; // local variable for information input
     // Enter information in their fields
     informationColumns.forEach((data_name, index) => {
-        const divInfoElement = document.getElementById(`divinfo${index}`);
-        if (divInfoElement) {
-            divInfoElement.innerHTML = info[data_name];
+        
+        if(informationColumns[index].substring(0, 6) != "media_"){ //skip media columns
+
+            // get informationColumns
+            const divInfoElement = document.getElementById(`divinfo${currentIndex}`);
+            if (divInfoElement) {
+                divInfoElement.innerHTML = info[data_name];
+            }
+
+            // Increase currentIndex
+            currentIndex++;
         }
     });
 
