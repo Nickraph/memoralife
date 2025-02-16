@@ -351,8 +351,8 @@ const editingModal_input = document.getElementById("editingModal-input");
 const editingModal_header = document.getElementById("editingModal-header");
 var editedMemory;
 
-function openEditingModal(buttonNumber){
-    editedMemory = buttonNumber;
+function openEditingModal(buttonNumber){ console.log( "buttonNumber: "+buttonNumber);
+    editedMemory = buttonNumber; //divinfo index number (ignores media columns)
     editingModal_input.value = document.getElementById(`divinfo${buttonNumber}`).innerText; // Set the input field to the current content
     editingModal_header.innerText = memoryFieldNames_global[buttonNumber];
     editingModal.style.display = "block";
@@ -369,7 +369,7 @@ editingModal_saveButton.onclick = function() {
     //change info (localStorage)
     let columnIndex = document.getElementById("divinfo"+editedMemory).dataset.number; // get the data-number of the divinfo element NOT the divinfo index
     info[informationColumns[columnIndex]] = editingModal_input.value;
-
+    console.log("columnIndex: "+columnIndex);
     //update database
     let data_name = informationColumns[columnIndex]; //name of variable that changed
     let data_value = editingModal_input.value; //data of variable that changed
