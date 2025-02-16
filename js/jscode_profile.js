@@ -363,9 +363,9 @@ editingModal_closeBtn.onclick = function() {
 
 editingModal_saveButton.onclick = function() {
     //change info (localStorage)
-    info[informationColumns[editedMemory-1]] = editingModal_input.value;
+    info[informationColumns[editedMemory]] = editingModal_input.value;
     //update database
-    let data_name = informationColumns[editedMemory-1]; //name of variable that changed
+    let data_name = informationColumns[editedMemory]; //name of variable that changed
     let data_value = editingModal_input.value; //data of variable that changed
     updateInfo(data_name, data_value); // update database
 
