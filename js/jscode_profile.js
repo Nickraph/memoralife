@@ -54,6 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // memory divs
         if(informationColumns[i].substring(0, 6) != "media_"){ //skip media columns
+
+            let currentIndex = divinfo_index; // local variable otherwise all buttons will have the same index
             
             //Create memory divs
             const memoryBox = document.createElement("div");
@@ -66,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //Information inside
             const paragraph = document.createElement("p");
-            paragraph.id = `divinfo${divinfo_index}`; // give divinfo id + index number (ignores media columns)
+            paragraph.id = `divinfo${currentIndex}`; // give divinfo id + index number (ignores media columns)
             paragraph.dataset.number = i; // give divinfo data-number i for info() update (does not ignore media columns)
             paragraph.textContent = info[informationColumns[i]];
 
@@ -77,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //Handle edit buttons logic
             editBtn.addEventListener("click", function (){
-                openEditingModal(divinfo_index);
+                openEditingModal(currentIndex);
             });
 
             //Read more buttons
@@ -351,7 +353,7 @@ const editingModal_input = document.getElementById("editingModal-input");
 const editingModal_header = document.getElementById("editingModal-header");
 var editedMemory;
 
-function openEditingModal(buttonNumber){ console.log( "buttonNumber: "+buttonNumber);
+function openEditingModal(buttonNumber){
     editedMemory = buttonNumber; //divinfo index number (ignores media columns)
     editingModal_input.value = document.getElementById(`divinfo${buttonNumber}`).innerText; // Set the input field to the current content
     editingModal_header.innerText = memoryFieldNames_global[buttonNumber];
