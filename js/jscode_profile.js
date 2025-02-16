@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let divinfo_index = 0;
 
     for (let i = 0; i < divNumber; i++) { // dynamic div creation
-        console.log("i: "+i+" | "+informationColumns[i]+" | "+memoryFieldNames[i]);
 
         //Create and append category dividers
         if(i === 0 || i === 10 || i === 16 || i === 23 || i === 25 || i === 37){
@@ -378,7 +377,6 @@ editingModal_saveButton.onclick = function() {
         document.getElementById("usernameHeader").innerText = info.name +" "+ info.surname;
     }
 
-    
     editingModal.style.display = "none"; // Close editing modal
     document.getElementById("divinfo"+editedMemory).innerText = editingModal_input.value;
     editedMemory = undefined; //reset which memory is being edited
