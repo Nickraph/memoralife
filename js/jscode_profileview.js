@@ -4,7 +4,7 @@ var info; // ! USE THIS VARIABLE INSTEAD OF LOCALSTORAGE. LOCALSTORAGE BECOMES O
 
 document.addEventListener('DOMContentLoaded', () => { 
     //Retrieve user information from localStorage
-    info = JSON.parse(localStorage.getItem("userInfo"));
+    info = JSON.parse(localStorage.getItem("searchInfo"));
 
     var informationColumns = [
         "name", "surname", "dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", "media_childhood", "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", "media_adulthood", "grandchildren", "media_seniority", "values", "achievements", "fav_foods", "fav_scents", "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine", "media_misc"
