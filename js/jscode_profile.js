@@ -298,8 +298,8 @@ questionnaireSave.onclick = function() {
         let index = parseInt(i, 10);
         let answer = document.getElementById(`questionnaireAnswer_${i}`).value;
         document.getElementById(`divinfo${index+2}`).innerText = answer;
-        info[informationColumns[index+1]] = answer;
-        updateInfo(informationColumns[index+1], answer); //update database
+        info[informationColumns[index+2]] = answer;
+        updateInfo(informationColumns[index+2], answer); //update database
     }
 
     questionnaireModal.style.display = "none";

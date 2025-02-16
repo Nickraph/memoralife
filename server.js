@@ -214,13 +214,13 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 					}
 			}
 			else{
-				socket.emit("showMessage", "Invalid session or user not found.");
+				//socket.emit("showMessage", "Invalid session or user not found.");
 			}
 		}
 	});
 
 	socket.on("updateCredentials", function(updatePacket){//called when user updates login credentials
-		for(i in accountSessions){ console.log("accID: "+accountSessions[i].accountID+" - "+updatePacket.sessionToken +" - "+ accountSessions[i].accountSessionToken);
+		for(i in accountSessions){
 			if(updatePacket.sessionToken == accountSessions[i].accountSessionToken){
 				let userID = accountSessions[i].accountID;
 
@@ -281,7 +281,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				}
 			}
 			else{
-				socket.emit("showMessage", "Invalid session or user not found.");
+				//socket.emit("showMessage", "Invalid session or user not found.");
 			}
 		}
 	});
@@ -365,7 +365,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				})			
 			}
 			else{
-				socket.emit("showMessage", "Invalid session or user not found.");
+				//socket.emit("showMessage", "Invalid session or user not found.");
 			}
 		}
 	});
