@@ -310,7 +310,7 @@ questionnaireSave.onclick = function() {
         document.getElementById(`divinfo${index+2}`).innerText = answer;
 
         if(informationColumns[index+2].substring(0, 6) === "media_"){
-            skipMedia = 1;
+            skipMedia++;
         }
 
         console.log("infocolumns: "+informationColumns[index+2+skipMedia]+" answer: "+answer);
