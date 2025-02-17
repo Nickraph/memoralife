@@ -229,6 +229,12 @@ const questionnaireModal = document.getElementById("questionnaireModal"); // mod
 const questionnaireClose= document.getElementById("closeQModal"); // X button modal
 const questionnaireSave = document.getElementById("questionnaireModal-saveButton"); // save button modal
 
+const infoCols = ["dob", "pob", "nickname", "generalinfo", "address", "familynames", "familyoccupations", 
+    "pets", "childhoodinfo", "address_childhood", "school_childhood", "lovememories", "memories_childhood_misc", 
+    "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", 
+    "grandchildren", "values", "achievements", "fav_foods", "fav_scents", 
+    "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine", 
+]
 
 const questions = [
     "Ποιά είναι η ημερομηνία γέννησης σας;",
@@ -309,10 +315,10 @@ questionnaireSave.onclick = function() {
         
         let index = parseInt(i, 10);
         let answer = document.getElementById(`questionnaireAnswer_${i}`).value;
-        document.getElementById(`divinfo${index+2}`).innerText = answer;
+        document.getElementById(`divinfo${index}`).innerText = answer;
 
-        info[informationColumns[index+2]] = answer;
-        updateInfo(informationColumns[index+2], answer); //update database
+        info[infoCols[index]] = answer;
+        updateInfo(infoCols[index], answer); //update database
     }
 
     questionnaireModal.style.display = "none";
