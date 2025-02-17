@@ -175,6 +175,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// full text modal (the read more button)
+const fullTextModal = document.getElementById("fullTextModal");
+const fullTextModal_closeBtn = document.getElementById("fullTextModal-closeBtn");
+const fullTextModal_text = document.getElementById("fullTextModal-text");
+
+function openFullTextModal(memoryNumber) {
+    fullTextModal_text.innerText = document.getElementById(`divinfo${memoryNumber}`).innerText;
+    fullTextModal.style.display = "flex";
+}
+
+fullTextModal_closeBtn.onclick = function() {
+    fullTextModal.style.display = "none";
+}
 
 socket.on("showMessage", function(msg) {
     alert(msg);
