@@ -54,7 +54,7 @@ socket.on("confirmLogin", function(data){//change username to email in css & ind
     
     if(infodata.response == "logged"){//if server verified user credentials:
 
-        let rememberMe = document.getElementById("rememberMe-checkbox").checked;
+        /*let rememberMe = document.getElementById("rememberMe-checkbox").checked;
         // save user's email for next visit
         if(rememberMe){
             localStorage.setItem("rememberEmail", true);
@@ -63,7 +63,7 @@ socket.on("confirmLogin", function(data){//change username to email in css & ind
         else{
             localStorage.setItem("rememberEmail", false);
             localStorage.setItem("SavedEmail", "");
-        }
+        }*/
 
         //save user information in local storage to load them in profile.html
         //if infoCompletion is not complete then
