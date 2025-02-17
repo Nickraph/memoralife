@@ -178,7 +178,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			.then(results => {
 				if(results.rows.length > 0 && results.rows[0].email == email){
 					var response = "Υπάρχει ήδη λογαριασμός με το συγκεκριμένο email.";
-					socket.emit('show_error', response);
+					socket.emit('showMessage', response);
 					return Promise.reject('Email already exists'); // Reject promise if email exists
 				}
 
@@ -197,7 +197,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 			})
 			.catch(err => {
 				console.error('Database query error:', err);
-				socket.emit('showMessage', 'An error occurred');
+				//socket.emit('showMessage', 'An error occurred');
 			})
 	});
 
