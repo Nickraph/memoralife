@@ -315,7 +315,7 @@ questionnaireSave.onclick = function() {
         
         let index = parseInt(i, 10);
         let answer = document.getElementById(`questionnaireAnswer_${i}`).value;
-        document.getElementById(`divinfo${index}`).innerText = answer;
+        document.getElementById(`divinfo${index+2}`).innerText = answer;
 
         info[infoCols[index]] = answer;
         updateInfo(infoCols[index], answer); //update database
