@@ -234,7 +234,7 @@ const infoCols = ["dob", "pob", "nickname", "generalinfo", "address", "familynam
     "studies", "occupations", "marriage", "partnerinfo", "kids", "memories_adulthood_misc", 
     "grandchildren", "values", "achievements", "fav_foods", "fav_scents", 
     "fav_fun", "fav_seasons", "fav_media", "fav_memories", "fav_music", "fav_hobbies", "fav_misc", "leastfav", "routine", 
-]
+]; // informationColumns without media columns
 
 const questions = [
     "Ποιά είναι η ημερομηνία γέννησης σας;",
