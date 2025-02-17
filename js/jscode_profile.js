@@ -269,8 +269,6 @@ const answers = [];
 
 questionnaireBtn.onclick = openQuestionaire;
 
-var skipMedia = 0; //skip media columns
-
 function openQuestionaire() {
     questionsContainer.innerHTML = ""; // Clear previous content
     skipMedia = 0;
@@ -313,14 +311,8 @@ questionnaireSave.onclick = function() {
         let answer = document.getElementById(`questionnaireAnswer_${i}`).value;
         document.getElementById(`divinfo${index+2}`).innerText = answer;
 
-        if(informationColumns[index+2].substring(0, 6) === "media_"){
-            skipMedia++;
-        }
-
-        console.log("infocolumns: "+informationColumns[index+2+skipMedia]+" answer: "+answer);
-
-        info[informationColumns[index+2+skipMedia]] = answer;
-        updateInfo(informationColumns[index+2+skipMedia], answer); //update database
+        info[informationColumns[index+2]] = answer;
+        updateInfo(informationColumns[index+2], answer); //update database
     }
 
     questionnaireModal.style.display = "none";
