@@ -10,6 +10,7 @@ const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
+const e = require('express');
 dotenv.config();
 
 const poolConfig = {
@@ -174,18 +175,24 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		let password = hashPass(pass);
 		
 		client.query('SELECT email FROM credentials WHERE email = $1', [email])//check if email already exists
-			.then(results => { console.log("email in db: " + results.rows[0].email +" -user email: " + email);
-				if(results.rows[0] != null && results.rows[0].email == email){
+			.then(results => {
+				if(results.rows.length > 0 && results.rows[0].email == email){
 					var response = "Υπάρχει ήδη λογαριασμός με το συγκεκριμένο email.";
 					socket.emit('show_error', response);
-					return false;
+					return; // stop further promise execution
 				}
+
+				// email does not exist, create new account (CREDENTIALS ENTRY)
+				return client.query('INSERT INTO credentials(email, password, accstatus, visibility, handle, init) VALUES($1, $2, $3, $4, $5, $6)', [email, password, 'active', 'private', handle, 'not_init']);
+				
 			})
-			.then( () => { //if email doesnt already exist continue with account creation
-				client.query('INSERT INTO credentials(email, password, accstatus, visibility, handle, init) VALUES($1, $2, $3, $4, $5, $6)', [email, password, 'active', 'private', handle, 'not_init']);
-				client.query(`INSERT INTO information(name, surname, dob, pob, nickname, generalinfo, address, familynames, familyoccupations, pets, childhoodinfo, address_childhood, school_childhood, lovememories, memories_childhood_misc, media_childhood, studies, occupations, marriage, partnerinfo, kids, memories_adulthood_misc, media_adulthood, grandchildren, media_seniority, values, achievements, fav_foods, fav_scents, fav_fun, fav_seasons, fav_media, fav_memories, fav_music, fav_hobbies, fav_misc, leastfav, routine, media_misc, pfp) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40)
+			.then(() => { // create new account (INFORMATION ENTRY)
+				return client.query(`INSERT INTO information(name, surname, dob, pob, nickname, generalinfo, address, familynames, familyoccupations, pets, childhoodinfo, address_childhood, school_childhood, lovememories, memories_childhood_misc, media_childhood, studies, occupations, marriage, partnerinfo, kids, memories_adulthood_misc, media_adulthood, grandchildren, media_seniority, values, achievements, fav_foods, fav_scents, fav_fun, fav_seasons, fav_media, fav_memories, fav_music, fav_hobbies, fav_misc, leastfav, routine, media_misc, pfp) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40)
 `, [firstname, lastname, "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "[]", "-", "-", "-", "-", "-", "-", "[]", "-", "[]", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "[]", "-"]);
-				//Database entry created. Inform client:
+
+			})
+			.then(() => {
+				//Database entries created. Inform client:
 				socket.emit("showMessage", "Account Created!");
 			})
 			.catch(err => {
