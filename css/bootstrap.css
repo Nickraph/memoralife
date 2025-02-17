@@ -5903,8 +5903,8 @@ a.close.disabled {
 }
 
 .modal-header .close {
-  padding: 1.5rem 1.5rem;
-  margin: -1rem -1rem -1rem 1rem;
+  padding: 2.5rem 2.5rem;
+  margin: -2rem -0.5rem -1rem 1rem;
 }
 
 .modal-title {
