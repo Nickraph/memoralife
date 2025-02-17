@@ -174,7 +174,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 		let password = hashPass(pass);
 		
 		client.query('SELECT email FROM credentials WHERE email = $1', [email])//check if email already exists
-			.then(results => { 
+			.then(results => { console.log("email in db: " + results.rows[0].email +" -user email: " + email);
 				if(results.rows[0] != null && results.rows[0].email == email){
 					var response = "Υπάρχει ήδη λογαριασμός με το συγκεκριμένο email.";
 					socket.emit('show_error', response);
