@@ -502,6 +502,7 @@ main {
 }
 
 .fullTextModal-content {
+    position: relative;
     background-color: white;
     padding: 20px;
     border-radius: 10px;
@@ -511,6 +512,12 @@ main {
     overflow-y: auto; /* Enable vertical scrolling */
     overflow-x: hidden; /* Disable horizontal scrolling */
     text-align: left;
+}
+
+#fullTextModal-text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 #fullTextModal-closeBtn {
