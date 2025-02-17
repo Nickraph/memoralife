@@ -179,7 +179,7 @@ io.sockets.on('connection', function(socket){//SOCKETS++++++
 				if(results.rows.length > 0 && results.rows[0].email == email){
 					var response = "Υπάρχει ήδη λογαριασμός με το συγκεκριμένο email.";
 					socket.emit('show_error', response);
-					return; // stop further promise execution
+					return Promise.reject('Email already exists'); // Reject promise if email exists
 				}
 
 				// email does not exist, create new account (CREDENTIALS ENTRY)
