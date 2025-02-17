@@ -313,6 +313,8 @@ questionnaireSave.onclick = function() {
             skipMedia = 1;
         }
 
+        console.log("infocolumns: "+informationColumns[index+2+skipMedia]+" answer: "+answer);
+
         info[informationColumns[index+2+skipMedia]] = answer;
         updateInfo(informationColumns[index+2+skipMedia], answer); //update database
     }
