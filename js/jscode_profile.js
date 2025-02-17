@@ -304,11 +304,17 @@ questionnaireClose.onclick = function() {
 
 questionnaireSave.onclick = function() {
     for (let i in questions) {
+        let skipMedia = 0;
         let index = parseInt(i, 10);
         let answer = document.getElementById(`questionnaireAnswer_${i}`).value;
         document.getElementById(`divinfo${index+2}`).innerText = answer;
-        info[informationColumns[index+2]] = answer;
-        updateInfo(informationColumns[index+2], answer); //update database
+
+        if(informationColumns[index+2].substring(0, 6) === "media_"){
+            skipMedia = 1;
+        }
+
+        info[informationColumns[index+2+skipMedia]] = answer;
+        updateInfo(informationColumns[index+2+skipMedia], answer); //update database
     }
 
     questionnaireModal.style.display = "none";
