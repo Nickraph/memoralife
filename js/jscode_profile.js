@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     //add settings details
-    document.getElementById("handleSpan").innerHTML = "Αναγνωριστηκό: "+info.handle;
+    document.getElementById("handleSpan").innerHTML = "Αναγνωριστικό: "+info.handle;
     document.getElementById("currentEmail").innerHTML = "Τρέχον email: "+info.email;
     if(info.visibility == "private"){
         document.getElementById('radio_private').checked = true;
@@ -269,6 +269,7 @@ const answers = [];
 questionnaireBtn.onclick = openQuestionaire;
 
 function openQuestionaire() {
+    questionsContainer.innerHTML = ""; // Clear previous content
 
     for (let i in questions) {
         if(document.getElementById('divinfo'+i) != null){
