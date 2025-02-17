@@ -268,8 +268,11 @@ const answers = [];
 
 questionnaireBtn.onclick = openQuestionaire;
 
+var skipMedia = 0; //skip media columns
+
 function openQuestionaire() {
     questionsContainer.innerHTML = ""; // Clear previous content
+    skipMedia = 0;
 
     for (let i in questions) {
         if(document.getElementById('divinfo'+i) != null){
@@ -304,7 +307,7 @@ questionnaireClose.onclick = function() {
 
 questionnaireSave.onclick = function() {
     for (let i in questions) {
-        let skipMedia = 0;
+        
         let index = parseInt(i, 10);
         let answer = document.getElementById(`questionnaireAnswer_${i}`).value;
         document.getElementById(`divinfo${index+2}`).innerText = answer;
