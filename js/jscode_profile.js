@@ -117,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create a container for images
             const imageContainer = document.createElement("div");
             imageContainer.classList.add("image-container");
+            imageContainer.setAttribute("data-container", informationColumns[i]);
             imageContainer.style.display = "grid"; // grid by default
 
             // Check if there are stored images for this mediaBox
@@ -595,6 +596,24 @@ function fileUpload(mediaType) {
     
             // Send the file URL to the server using socket.emit
             sendFileUrlToServer(mediaType, fileUrl);
+
+            // UPDATE LOCAL DISPLAY OF IMAGES:
+
+            // update info image array
+            let imageArray = JSON.parse(info[mediaType]);
+            imageArray.push(fileUrl);
+            info[mediaType] = JSON.stringify(imageArray);
+
+            // clear existing images
+            document.querySelector(`[data-container="${mediaType}"]`).innerHTML = "";
+
+            // reappend old and new images
+            for(var imageIndex in imageArray){
+                const img = document.createElement("img");
+                img.src = imageArray[imageIndex];
+                img.classList.add("media-image"); 
+                document.querySelector(`[data-container="${mediaType}"]`).appendChild(img);
+            }
         }
     };
 }
