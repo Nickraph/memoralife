@@ -17,7 +17,7 @@ const poolConfig = {
     max: 5,
     min: 2,
     idleTimeoutMillis: 60000,
-    connectionString: `postgresql://mluser:rncy2mDN8PuPxfYGKrWoRA55NzIH4D8B@dpg-cr0hqoi3esus73ainrl0-a.frankfurt-postgres.render.com/mldb_l4pp`,
+    connectionString: process.env.DB_CONNECTION_STRING,
     ssl: {
         rejectUnauthorized: false
     }
